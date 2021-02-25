@@ -17,15 +17,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kj-p1-7gV">
+                                <rect key="frame" x="57" y="103" width="42" height="21"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Label">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioE-yX-3d7">
+                                <rect key="frame" x="315" y="343" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H7P-zP-LNK">
-                                <rect key="frame" x="40" y="97" width="334" height="271"/>
+                                <rect key="frame" x="57" y="124" width="300" height="219"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="271" id="njQ-6v-GTq"/>
-                                    <constraint firstAttribute="width" constant="334" id="wRF-9e-bVr"/>
+                                    <constraint firstAttribute="height" constant="219" id="njQ-6v-GTq"/>
+                                    <constraint firstAttribute="width" constant="300" id="wRF-9e-bVr"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="0.0" sectionInsetReference="safeArea" id="dcU-5f-IaN">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="safeArea" id="dcU-5f-IaN">
                                     <size key="itemSize" width="64" height="64"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -35,8 +52,9 @@
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="TnH-34-Awt" customClass="CollectionViewCell" customModule="CollectionViewTesting">
                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cA-Hy-jGl">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0cA-Hy-jGl">
                                             <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cf-U0-ZgX">
                                                     <rect key="frame" x="30" y="27" width="4" height="10"/>
@@ -50,12 +68,6 @@
                                                 <constraint firstItem="5cf-U0-ZgX" firstAttribute="centerY" secondItem="0cA-Hy-jGl" secondAttribute="centerY" id="kUm-K6-dl1"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <constraints>
-                                            <constraint firstItem="0cA-Hy-jGl" firstAttribute="top" secondItem="TnH-34-Awt" secondAttribute="topMargin" constant="-8" id="6WP-5S-Xu2"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="0cA-Hy-jGl" secondAttribute="trailing" constant="-8" id="HhN-Iw-BYY"/>
-                                            <constraint firstItem="0cA-Hy-jGl" firstAttribute="leading" secondItem="TnH-34-Awt" secondAttribute="leadingMargin" constant="-8" id="jji-sE-9kL"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="0cA-Hy-jGl" secondAttribute="bottom" constant="-8" id="zra-lF-IHb"/>
-                                        </constraints>
                                         <size key="customSize" width="64" height="64"/>
                                         <connections>
                                             <outlet property="label" destination="5cf-U0-ZgX" id="Om2-95-ICb"/>
@@ -65,23 +77,42 @@
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="LEZ-52-s1F"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="D9O-uf-ck2"/>
+                                    <outletCollection property="gestureRecognizers" destination="miA-tD-XYF" appends="YES" id="lXL-vP-SyI"/>
+                                    <outletCollection property="gestureRecognizers" destination="eZz-Hh-B3w" appends="YES" id="NOf-RE-aJ8"/>
                                 </connections>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H7P-zP-LNK" secondAttribute="trailing" constant="40" id="HaE-6I-e12"/>
-                            <constraint firstItem="H7P-zP-LNK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="53" id="Krg-X6-YcI"/>
-                            <constraint firstItem="H7P-zP-LNK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="ZRN-eg-Ov2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="H7P-zP-LNK" secondAttribute="bottom" constant="494" id="oEh-AV-IuT"/>
+                            <constraint firstItem="H7P-zP-LNK" firstAttribute="top" secondItem="1kj-p1-7gV" secondAttribute="bottom" id="4WE-Y7-c0Z"/>
+                            <constraint firstItem="ioE-yX-3d7" firstAttribute="top" secondItem="H7P-zP-LNK" secondAttribute="bottom" id="9u3-sj-MEJ"/>
+                            <constraint firstItem="ioE-yX-3d7" firstAttribute="trailing" secondItem="H7P-zP-LNK" secondAttribute="trailing" id="HZf-Gc-cfm"/>
+                            <constraint firstItem="H7P-zP-LNK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="Krg-X6-YcI"/>
+                            <constraint firstItem="1kj-p1-7gV" firstAttribute="leading" secondItem="H7P-zP-LNK" secondAttribute="leading" id="ZoA-MK-mTs"/>
+                            <constraint firstItem="H7P-zP-LNK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="axU-HD-9Pm"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="H7P-zP-LNK" id="a4K-8K-sKS"/>
+                        <outlet property="monthLabel" destination="1kj-p1-7gV" id="4H7-dU-TRh"/>
+                        <outlet property="yearLabel" destination="ioE-yX-3d7" id="7oP-6B-e6c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="eZz-Hh-B3w" userLabel="Right">
+                    <connections>
+                        <action selector="swipeRightCollectionView:" destination="BYZ-38-t0r" id="bnE-YR-xcR"/>
+                        <outlet property="delegate" destination="H7P-zP-LNK" id="JRQ-8q-P1L"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="miA-tD-XYF" userLabel="Left">
+                    <connections>
+                        <action selector="swipeLeftCollectionView:" destination="BYZ-38-t0r" id="aug-NI-XOH"/>
+                        <outlet property="delegate" destination="H7P-zP-LNK" id="Upv-gQ-mrH"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="115.84821428571428"/>
         </scene>
