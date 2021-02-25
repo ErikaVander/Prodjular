@@ -13,7 +13,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	@IBOutlet weak var monthLabel: UILabel!
 	@IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+	@IBOutlet var stackViewHorizontalCenterConstraint: UIView!
+	
     var selectedDate = Date()
     
     override func viewDidLoad() {
@@ -28,7 +29,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         fillMonth()
     }
     
-    
+    //Setting stackViewConstraints
+//	func setStackView()
+//	{
+//		stackViewHorizontalCenterConstraint.constraintsAffectingLayout(for: NSLayoutConstraint)
+//	}
     
     
     //Functions to create the calendar and scroll to other months
