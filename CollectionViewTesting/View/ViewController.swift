@@ -28,14 +28,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         //fillTitlesF(month: "Jan")
         fillMonth()
     }
-    
-    //Setting stackViewConstraints
-//	func setStackView()
-//	{
-//		stackViewHorizontalCenterConstraint.constraintsAffectingLayout(for: NSLayoutConstraint)
-//	}
-    
-    
+
     //Functions to create the calendar and scroll to other months
     
 	func fillMonth()

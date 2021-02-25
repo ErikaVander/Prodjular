@@ -19,10 +19,10 @@
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" id="tqw-tv-tYA">
                                 <rect key="frame" x="57" y="124" width="300" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kj-p1-7gV">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="29.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Label">
                                                 <attributes>
@@ -33,7 +33,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H7P-zP-LNK">
-                                        <rect key="frame" x="0.0" y="29.5" width="300" height="200"/>
+                                        <rect key="frame" x="0.0" y="50" width="300" height="200"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -79,24 +79,26 @@
                                             <outletCollection property="gestureRecognizers" destination="eZz-Hh-B3w" appends="YES" id="NOf-RE-aJ8"/>
                                         </connections>
                                     </collectionView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioE-yX-3d7">
-                                        <rect key="frame" x="0.0" y="229.5" width="300" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="2I0-zf-UoX"/>
                                     <constraint firstAttribute="width" constant="300" id="pcr-FC-Px7"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioE-yX-3d7">
+                                <rect key="frame" x="315.5" y="359" width="41.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="tqw-tv-tYA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="9CP-wg-fpS"/>
+                            <constraint firstItem="ioE-yX-3d7" firstAttribute="top" secondItem="H7P-zP-LNK" secondAttribute="bottom" constant="-15" id="QWx-cB-AjE"/>
+                            <constraint firstItem="ioE-yX-3d7" firstAttribute="trailing" secondItem="H7P-zP-LNK" secondAttribute="trailing" id="TPN-xL-Fwb"/>
                             <constraint firstItem="tqw-tv-tYA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" identifier="portrait" id="X26-42-fBj"/>
                         </constraints>
                     </view>
