@@ -29,17 +29,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioE-yX-3d7">
-                                <rect key="frame" x="315" y="343" width="42" height="21"/>
+                                <rect key="frame" x="315" y="324" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H7P-zP-LNK">
-                                <rect key="frame" x="57" y="124" width="300" height="219"/>
+                                <rect key="frame" x="57" y="124" width="300" height="200"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="219" id="njQ-6v-GTq"/>
+                                    <constraint firstAttribute="height" constant="200" id="njQ-6v-GTq"/>
                                     <constraint firstAttribute="width" constant="300" id="wRF-9e-bVr"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="safeArea" id="dcU-5f-IaN">
