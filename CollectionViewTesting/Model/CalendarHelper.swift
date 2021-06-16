@@ -57,13 +57,13 @@ func dayOfMonth(date: Date) -> Int
 
 func weekDay(date: Date) ->  Int
 {
-	let firstDay: Date = firstDayOfMonth(date: date)
-	let theComponent = calendar.dateComponents([.weekday], from: firstDay)
+	let theComponent = calendar.dateComponents([.weekday], from: date)
 	return theComponent.weekday! - 1
 }
 
 func firstDayOfMonth(date: Date) -> Date
 {
-    let firstDay: Date = calendar.date(bySetting: .day, value: 1, of: date)!
+	let firstDay: Date = calendar.nextDate(after: date, matching: DateComponents(day: 1), matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .backward)!
+	print("This is the first Day: \(firstDay)")
     return firstDay
 }
