@@ -57,8 +57,9 @@ func dayOfMonth(date: Date) -> Int
 
 func weekDay(date: Date) ->  Int
 {
-    let component = calendar.dateComponents([.weekday], from: date)
-    return component.weekday! - 1
+	let firstDay: Date = firstDayOfMonth(date: date)
+	let theComponent = calendar.dateComponents([.weekday], from: firstDay)
+	return theComponent.weekday! - 1
 }
 
 func firstDayOfMonth(date: Date) -> Date

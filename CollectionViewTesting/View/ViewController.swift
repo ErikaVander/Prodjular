@@ -23,8 +23,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.delegate = self
         collectionView.dataSource = self
         
+		print("First")
+		
+		print(selectedDate)
+		
         setCellViews()
         
+		print("Second")
+		print(selectedDate)
+		
         //fillTitlesF(month: "Jan")
         fillMonth()
     }
@@ -35,6 +42,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	{
 		num.removeAll()
 		
+		print("Third")
+		print(selectedDate)
 		let daysInMonth = numDaysInMonth(date: selectedDate)
 		let firstDayMonth = firstDayOfMonth(date: selectedDate)
 		let startingSpaces = weekDay(date: firstDayMonth)
