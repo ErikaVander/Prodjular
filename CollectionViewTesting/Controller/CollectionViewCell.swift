@@ -8,6 +8,9 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var label: UILabel!
+    var eventsForThisCell = [Event]()
+	var monthDate: Date!
+	
+	@IBOutlet weak var label: UILabel!
+
 }
