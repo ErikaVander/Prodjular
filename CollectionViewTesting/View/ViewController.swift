@@ -42,7 +42,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		//tableView.reloadData()
 	}
 
-    //Functions to create the calendar and scroll to other months
+	//Functions to create the calendar and scroll to other months
     
 	func fillMonth()
 	{
@@ -157,9 +157,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 				let view = UIView()
 				view.layer.cornerRadius = 15
 				view.backgroundColor = UIColor.darkGray
-				userSelectedDate = cellOne.monthDate
 	
-				tableView.reloadData()
 				return view
 			}()
 			

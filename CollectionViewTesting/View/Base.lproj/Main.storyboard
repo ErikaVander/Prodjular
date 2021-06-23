@@ -57,9 +57,6 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cf-U0-ZgX">
                                                             <rect key="frame" x="24.5" y="21.5" width="4" height="10"/>
-                                                            <accessibility key="accessibilityConfiguration">
-                                                                <accessibilityTraits key="traits" button="YES" staticText="YES"/>
-                                                            </accessibility>
                                                             <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -70,6 +67,7 @@
                                                         <constraint firstItem="5cf-U0-ZgX" firstAttribute="centerY" secondItem="0cA-Hy-jGl" secondAttribute="centerY" id="kUm-K6-dl1"/>
                                                     </constraints>
                                                 </collectionViewCellContentView>
+                                                <gestureRecognizers/>
                                                 <size key="customSize" width="53" height="53"/>
                                                 <connections>
                                                     <outlet property="label" destination="5cf-U0-ZgX" id="Om2-95-ICb"/>
