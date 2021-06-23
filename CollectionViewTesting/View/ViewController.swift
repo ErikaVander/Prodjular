@@ -34,12 +34,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
-		//tableView.reloadData()
+		tableView.reloadData()
 		print("ViewWillAppear")
 	}
 	
 	@IBAction func BackSegue(unwindSegue: UIStoryboardSegue) {
-		//tableView.reloadData()
+		tableView.reloadData()
 	}
 
 	//Functions to create the calendar and scroll to other months
@@ -174,8 +174,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
 		
-		//cellOne.EventLabel.text = eventList[indexPath.item].name
-		cellOne.EventLabel.text = eventsForDate(parDate: userSelectedDate)[indexPath.item].name
+		cellOne.EventLabel.text = eventList[indexPath.item].name
+		//cellOne.EventLabel.text = eventsForDate(parDate: userSelectedDate)[indexPath.item].name
 		print("reloaded")
 		
 		let temp = DateFormatter()
