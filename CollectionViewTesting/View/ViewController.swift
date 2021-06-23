@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	@IBOutlet var stackViewHorizontalCenterConstraint: UIView!
 	
     var selectedDate = Date()
+	var userSelectedDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +34,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
-		tableView.reloadData()
+		//tableView.reloadData()
 		print("ViewWillAppear")
 	}
 	
 	@IBAction func BackSegue(unwindSegue: UIStoryboardSegue) {
-		tableView.reloadData()
+		//tableView.reloadData()
 	}
 
     //Functions to create the calendar and scroll to other months
@@ -84,7 +85,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		print("done with fillMonth")
 		setCellViews()
 	}
-    
+	
     func fillNextMonth()
     {
         selectedDate = minusMonth(date: selectedDate)
@@ -113,7 +114,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     //Setting up the Collection view
     
 	func setCellViews() {
-		let cellWidth = (collectionView.frame.size.width)/7
+		let relativeWidth: CGFloat = 5
+		let cellWidth = ((collectionView.frame.size.width-(relativeWidth*2))/7)
 		let cellHeight = (collectionView.frame.size.height)/7
 		
 		print("Height = ")
@@ -123,19 +125,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		flowLayout.itemSize = CGSize(width: cellWidth, height: cellHeight)
 		flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		flowLayout.sectionInsetReference = .fromSafeArea
+		flowLayout.sectionInset = UIEdgeInsets(top: 0, left: relativeWidth, bottom: 0, right: relativeWidth)
 		
 		collectionView.layer.cornerRadius = 5
 	}
-//    func setCellViews() {
-//        let width = (collectionView.frame.size.width)/9
-//        let height = (collectionView.frame.size.height - 2)/5
-//
-//        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-//        flowLayout.itemSize = CGSize(width: width, height: height)
-//
-//        collectionView.layer.cornerRadius = 5
-//    }
 
+	
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -154,11 +149,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			temp.dateFormat = "yyyy-MM-d"
 			let tempDate: String = "\(yearString(date: selectedDate))-\(monthString(date: selectedDate))-\(num[indexPath.item])"
 			
-			//print(tempDate)
-			
 			cellOne.monthDate = temp.date(from: tempDate)
 			
-			//print(cellOne.monthDate!)
+			cellOne.automaticallyUpdatesBackgroundConfiguration = true
+			
+			let _: () = cellOne.selectedBackgroundView = {
+				let view = UIView()
+				view.layer.cornerRadius = 15
+				view.backgroundColor = UIColor.darkGray
+				userSelectedDate = cellOne.monthDate
+	
+				tableView.reloadData()
+				return view
+			}()
+			
+			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
 		}
 		cellOne.label.text = num[indexPath.item]
 		
@@ -171,7 +176,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
 		
-		cellOne.EventLabel.text = eventList[indexPath.item].name
+		//cellOne.EventLabel.text = eventList[indexPath.item].name
+		cellOne.EventLabel.text = eventsForDate(parDate: userSelectedDate)[indexPath.item].name
+		print("reloaded")
 		
 		let temp = DateFormatter()
 		temp.timeStyle = .short

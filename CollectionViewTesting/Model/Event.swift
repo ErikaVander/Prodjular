@@ -13,16 +13,16 @@ class Event {
 	var id: Int!
 	var name: String!
 	var date: Date!
-	
-	func eventsForDate(date: Date) -> [Event] {
-		var daysEvents = [Event]()
-		for event in eventList
+}
+
+func eventsForDate(parDate: Date) -> [Event] {
+	var daysEvents = [Event]()
+	for event in eventList
+	{
+		if(event.date == parDate)
 		{
-			if(event.date == date)
-			{
-				daysEvents.append(event)
-			}
+			daysEvents.append(event)
 		}
-		return daysEvents
 	}
+	return daysEvents
 }
