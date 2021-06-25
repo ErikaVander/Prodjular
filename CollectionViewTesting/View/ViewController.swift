@@ -135,6 +135,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return 1
     }
     
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if Int(num[indexPath.item]) != nil
+		{
+			let temp = DateFormatter()
+			temp.dateFormat = "yyyy-MM-d"
+			let tempDate: String = "\(yearString(date: selectedDate))-\(monthString(date: selectedDate))-\(num[indexPath.item])"
+			
+			userSelectedDate = temp.date(from: tempDate)!
+		}
+		tableView.reloadData()
+	}
+	
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
 		return num.count
@@ -145,12 +157,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		
 		if Int(num[indexPath.item]) != nil
 		{
-			let temp = DateFormatter()
-			temp.dateFormat = "yyyy-MM-d"
-			let tempDate: String = "\(yearString(date: selectedDate))-\(monthString(date: selectedDate))-\(num[indexPath.item])"
-			
-			cellOne.monthDate = temp.date(from: tempDate)
-			
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
 			
 			let _: () = cellOne.selectedBackgroundView = {
@@ -169,13 +175,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return eventList.count
+		return eventsForDate(parDate: userSelectedDate).count
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
 		
-		cellOne.EventLabel.text = eventList[indexPath.item].name
-		//cellOne.EventLabel.text = eventsForDate(parDate: userSelectedDate)[indexPath.item].name
+		//cellOne.EventLabel.text = eventList[indexPath.item].name
+		cellOne.EventLabel.text = eventsForDate(parDate: userSelectedDate)[indexPath.item].name
 		print("reloaded")
 		
 		let temp = DateFormatter()
