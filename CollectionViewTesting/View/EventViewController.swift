@@ -21,6 +21,7 @@ class EventViewController: UIViewController
 	@IBAction func saveEvent(_ sender: Any) {
 		save()
 	}
+	
 	func save() {
 		let newEvent = Event()
 		newEvent.id = eventList.count

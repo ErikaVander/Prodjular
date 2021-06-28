@@ -26,16 +26,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.dataSource = self
 		
         setCellViews()
-        
-		print("Second")
-		print(selectedDate)
 		
         fillMonth()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
 		tableView.reloadData()
-		print("ViewWillAppear")
+		//print("ViewWillAppear")
 	}
 	
 	@IBAction func BackSegue(unwindSegue: UIStoryboardSegue) {
@@ -48,9 +45,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	{
 		num.removeAll()
 		var x: Int = 0
+		var startDate = minusMonth(date: selectedDate)
 		while x < 3 {
-			let daysInMonth = numDaysInMonth(date: selectedDate)
-			let firstDayMonth = firstDayOfMonth(date: selectedDate)
+			print("x in loop: \(x)")
+			let daysInMonth = numDaysInMonth(date: startDate)
+			let firstDayMonth = firstDayOfMonth(date: startDate)
 			let startingSpaces = weekDay(date: firstDayMonth)
 			
 			num.append("SU")
@@ -61,9 +60,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			num.append("FR")
 			num.append("SA")
 			
-			var count: Int = 0
+			var count: Int = 1
 			
-			while (count < 42)
+			while (count < 43)
 			{
 				if (count <= startingSpaces || count - startingSpaces > daysInMonth)
 				{
@@ -75,39 +74,46 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 				}
 				count += 1
 			}
-			
-			monthLabel.text = monthString(date: selectedDate)
-			yearLabel.text = yearString(date: selectedDate)
 			x  += 1
+			startDate = plusmonth(date: startDate)
 		}
+		
+		monthLabel.text = monthString(date: selectedDate)
+		yearLabel.text = yearString(date: selectedDate)
+		
+		collectionView.isPagingEnabled = false
+		collectionView.scrollToItem(at: IndexPath.init(item: 50, section: 0), at: .top, animated: false)
+		collectionView.isPagingEnabled = true
+		
 		collectionView.reloadData()
 		
 		print("done with fillMonth")
 		setCellViews()
 	}
+
 	
-    func fillNextMonth()
-    {
-        selectedDate = minusMonth(date: selectedDate)
-        fillMonth()
-    }
-    
-    func fillPreviousMonth()
-    {
-        selectedDate = plusmonth(date: selectedDate)
-        fillMonth()
-    }
+//    func fillNextMonth()
+//    {
+//        selectedDate = minusMonth(date: selectedDate)
+//        fillMonth()
+//    }
+//
+//    func fillPreviousMonth()
+//    {
+//        selectedDate = plusmonth(date: selectedDate)
+//        fillMonth()
+//    }
     
     
 	@IBAction func swipeRightCollectionView(_ sender: UISwipeGestureRecognizer) {
-		selectedDate = minusMonth(date: selectedDate)
-		fillMonth()
-		print("Swiped")
+		//selectedDate = minusMonth(date: selectedDate)
+		//fillMonth()
+		//print("Swiped")
 	}
 	@IBAction func swipeLeftCollectionView(_ sender: UISwipeGestureRecognizer) {
-		selectedDate = plusmonth(date: selectedDate)
-		fillMonth()
-		print("Swiped")
+		//selectedDate = plusmonth(date: selectedDate)
+		//fillMonth()
+		//print("Swiped")
 	}
 	
     
@@ -118,8 +124,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		let cellWidth = ((collectionView.frame.size.width-(relativeWidth*2))/7)
 		let cellHeight = (collectionView.frame.size.height)/7
 		
-		print("Height = ")
-		print(cellHeight)
+		//print("Height = ")
+		//print(cellHeight)
 		
 		let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
 		flowLayout.itemSize = CGSize(width: cellWidth, height: cellHeight)
@@ -134,6 +140,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+	
+	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		if(indexPath.item == 146) {
+			selectedDate = plusmonth(date: selectedDate)
+			fillMonth()
+		}
+		if(indexPath.item == 1) {
+			selectedDate = minusMonth(date: selectedDate)
+			fillMonth()
+		}
+	}
     
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if Int(num[indexPath.item]) != nil
@@ -148,13 +165,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	}
 	
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
 		return num.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
-		
+		print(indexPath.item)
 		if Int(num[indexPath.item]) != nil
 		{
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
@@ -182,7 +198,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		
 		//cellOne.EventLabel.text = eventList[indexPath.item].name
 		cellOne.EventLabel.text = eventsForDate(parDate: userSelectedDate)[indexPath.item].name
-		print("reloaded")
+		//print("reloaded")
 		
 		let temp = DateFormatter()
 		temp.timeStyle = .short
