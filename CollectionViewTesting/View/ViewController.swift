@@ -50,13 +50,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		let centerOffsetY: CGFloat = (contentHeight - collectionView.bounds.size.height)/2.0
 		let distanceFromCenter: CGFloat = currentOffset.y - centerOffsetY
 		
-		//let number: CGFloat = 28
-		
-		//print("distanceFromCenter = \(abs(distanceFromCenter)), collectionView.frame.size.height + \(number) = \(collectionView.frame.size.height - number)")
-		
 		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) == distanceFromCenter) {
-			
-			print("A")
 			
 			selectedDate = plusmonth(date: selectedDate)
 			monthLabel.text = monthString(date: selectedDate)
@@ -66,8 +60,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		}
 		
 		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) != distanceFromCenter) {
-			
-			print("B")
 			
 			selectedDate = minusMonth(date: selectedDate)
 			monthLabel.text = monthString(date: selectedDate)
@@ -119,11 +111,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		
-		//print(indexPath.item)
+		cellOne.isUserInteractionEnabled = false
 		
 		if Int(num[indexPath.item]) != nil
 		{
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
+			cellOne.isUserInteractionEnabled = true
 			
 			let _: () = cellOne.selectedBackgroundView = {
 				let view = UIView()
