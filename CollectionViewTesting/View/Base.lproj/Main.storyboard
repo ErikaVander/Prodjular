@@ -190,9 +190,6 @@
                                 <rect key="frame" x="34" y="46" width="183" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="NameOfEvent:" destination="yyd-Wo-NWp" eventType="editingDidEnd" id="6jV-sl-zdp"/>
-                                </connections>
                             </textField>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="AEt-wo-d26">
                                 <rect key="frame" x="34" y="105" width="345" height="216"/>
