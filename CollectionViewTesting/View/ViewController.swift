@@ -25,9 +25,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.delegate = self
         collectionView.dataSource = self
 		
+		monthLabel.text = monthString(date: selectedDate)
+		yearLabel.text = yearString(date: selectedDate)
+		collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
         setCellViews()
 		
-        fillMonth()
+		fillMonth(parDate: selectedDate)
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -40,83 +43,40 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	}
 
 	//Functions to create the calendar and scroll to other months
-    
-	func fillMonth()
-	{
-		num.removeAll()
-		var x: Int = 0
-		var startDate = minusMonth(date: selectedDate)
-		while x < 3 {
-			print("x in loop: \(x)")
-			let daysInMonth = numDaysInMonth(date: startDate)
-			let firstDayMonth = firstDayOfMonth(date: startDate)
-			let startingSpaces = weekDay(date: firstDayMonth)
+
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		let currentOffset: CGPoint = collectionView.contentOffset
+		let contentHeight: CGFloat = collectionView.contentSize.height
+		let centerOffsetY: CGFloat = (contentHeight - collectionView.bounds.size.height)/2.0
+		let distanceFromCenter: CGFloat = currentOffset.y - centerOffsetY
+		
+		//let number: CGFloat = 28
+		
+		//print("distanceFromCenter = \(abs(distanceFromCenter)), collectionView.frame.size.height + \(number) = \(collectionView.frame.size.height - number)")
+		
+		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) == distanceFromCenter) {
 			
-			num.append("SU")
-			num.append("MO")
-			num.append("TU")
-			num.append("WE")
-			num.append("TH")
-			num.append("FR")
-			num.append("SA")
+			print("A")
 			
-			var count: Int = 1
-			
-			while (count < 43)
-			{
-				if (count <= startingSpaces || count - startingSpaces > daysInMonth)
-				{
-					num.append("")
-				}
-				else
-				{
-					num.append(String(count - startingSpaces))
-				}
-				count += 1
-			}
-			x  += 1
-			startDate = plusmonth(date: startDate)
+			selectedDate = plusmonth(date: selectedDate)
+			monthLabel.text = monthString(date: selectedDate)
+			yearLabel.text = yearString(date: selectedDate)
+			fillMonth(parDate: selectedDate)
+			collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
 		}
 		
-		monthLabel.text = monthString(date: selectedDate)
-		yearLabel.text = yearString(date: selectedDate)
-		
-		collectionView.isPagingEnabled = false
-		collectionView.scrollToItem(at: IndexPath.init(item: 50, section: 0), at: .top, animated: false)
-		collectionView.isPagingEnabled = true
-		
-		collectionView.reloadData()
-		
-		print("done with fillMonth")
-		setCellViews()
-	}
-
-	
-//    func fillNextMonth()
-//    {
-//        selectedDate = minusMonth(date: selectedDate)
-//        fillMonth()
-//    }
-//
-//    func fillPreviousMonth()
-//    {
-//        selectedDate = plusmonth(date: selectedDate)
-//        fillMonth()
-//    }
-    
-    
-	@IBAction func swipeRightCollectionView(_ sender: UISwipeGestureRecognizer) {
-		//selectedDate = minusMonth(date: selectedDate)
-		//fillMonth()
-		//print("Swiped")
-	}
-	@IBAction func swipeLeftCollectionView(_ sender: UISwipeGestureRecognizer) {
-		//selectedDate = plusmonth(date: selectedDate)
-		//fillMonth()
-		//print("Swiped")
+		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) != distanceFromCenter) {
+			
+			print("B")
+			
+			selectedDate = minusMonth(date: selectedDate)
+			monthLabel.text = monthString(date: selectedDate)
+			yearLabel.text = yearString(date: selectedDate)
+			fillMonth(parDate: selectedDate)
+			collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
+		}
 	}
 	
-    
     //Setting up the Collection view
     
 	func setCellViews() {
@@ -135,22 +95,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		
 		collectionView.layer.cornerRadius = 5
 	}
-
 	
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-	
-	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if(indexPath.item == 146) {
-			selectedDate = plusmonth(date: selectedDate)
-			fillMonth()
-		}
-		if(indexPath.item == 1) {
-			selectedDate = minusMonth(date: selectedDate)
-			fillMonth()
-		}
-	}
     
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if Int(num[indexPath.item]) != nil
@@ -167,10 +115,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return num.count
     }
-
+	
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
-		print(indexPath.item)
+		
+		//print(indexPath.item)
+		
 		if Int(num[indexPath.item]) != nil
 		{
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
@@ -186,6 +136,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
 		}
 		cellOne.label.text = num[indexPath.item]
+		
+		setCellViews()
 		
 		return cellOne
     }
