@@ -140,11 +140,20 @@
                                     <segue destination="5zO-0X-mHj" kind="show" id="y8A-Sb-8pB"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b4Y-HG-Uq9" customClass="GADBannerView">
+                                <rect key="frame" x="47" y="812" width="320" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="I71-vD-EIl"/>
+                                    <constraint firstAttribute="height" constant="50" id="WtJ-qZ-nHR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="b4Y-HG-Uq9" secondAttribute="bottom" id="8dL-Cu-YDC"/>
                             <constraint firstItem="tqw-tv-tYA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="79" id="9CP-wg-fpS"/>
                             <constraint firstItem="IQH-Yi-O6j" firstAttribute="trailing" secondItem="ioE-yX-3d7" secondAttribute="trailing" id="CTa-Eo-Ckw"/>
                             <constraint firstItem="ioE-yX-3d7" firstAttribute="bottom" secondItem="H7P-zP-LNK" secondAttribute="bottom" constant="-5" id="KBW-wq-eEj"/>
@@ -152,9 +161,11 @@
                             <constraint firstItem="tqw-tv-tYA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" identifier="portrait" id="X26-42-fBj"/>
                             <constraint firstItem="ioE-yX-3d7" firstAttribute="trailing" secondItem="tqw-tv-tYA" secondAttribute="trailing" id="eOH-UN-ezI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tqw-tv-tYA" secondAttribute="bottom" constant="76" id="u7k-jz-dzh"/>
+                            <constraint firstItem="b4Y-HG-Uq9" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vvD-PM-dTL"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bannerView" destination="b4Y-HG-Uq9" id="Q8E-Gd-mdm"/>
                         <outlet property="collectionView" destination="H7P-zP-LNK" id="x9e-vQ-HRm"/>
                         <outlet property="monthLabel" destination="1kj-p1-7gV" id="4H7-dU-TRh"/>
                         <outlet property="stackViewHorizontalCenterConstraint" destination="8bC-Xf-vdC" id="ZyL-7n-ApO"/>

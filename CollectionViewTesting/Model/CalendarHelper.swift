@@ -27,14 +27,6 @@ func numDaysInMonth(date: Date) -> Int
     return range.count
 }
 
-//This was the original function used by youtuber but didn't understand how it really worked behind the scenes so I went with something else bellow.
-//
-//func firstOfMonth(date: Date) -> Date
-//{
-//    let component = calendar.dateComponents([.month, .year], from: date)
-//    return calendar.date(from: component)!
-//}
-
 func monthString(date: Date) -> String
 {
     let dateFormatter = DateFormatter()
