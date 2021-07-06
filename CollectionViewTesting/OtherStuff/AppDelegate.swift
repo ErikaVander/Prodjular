@@ -10,11 +10,17 @@
 
 import UIKit
 import GoogleMobileAds
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+	override init() {
+		super.init()
+		
+		FirebaseApp.configure()
 
+	}
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		

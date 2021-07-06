@@ -7,10 +7,12 @@
 
 import UIKit
 import GoogleMobileAds
+import Firebase
+import FirebaseDatabase
+import FirebaseCore
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource
 {
-
 	@IBOutlet weak var monthLabel: UILabel!
 	@IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,13 +20,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	@IBOutlet var stackViewHorizontalCenterConstraint: UIView!
 	@IBOutlet weak var bannerView: GADBannerView!
 	
+	var ref: DatabaseReference!
+	
     var selectedDate = Date()
 	var userSelectedDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"//"ca-app-pub-6071058575504654/8848691990"
+		ref = Database.database().reference()
+		
+		ref.child("users").child("aoeu").observeSingleEvent(of: .value, with: {
+			(snapshot) in
+			let value = snapshot.value as? NSDictionary
+			let username = value?["username"] as? String ?? " "
+			print(username)
+		}) { (error) in
+			print(error.localizedDescription)
+		}
+		
+		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+		//bannerView.adUnitID = "ca-app-pub-6071058575504654/8848691990"
 		bannerView.rootViewController = self
 		bannerView.load(GADRequest())
 		
@@ -171,10 +187,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
 extension ViewController: GADBannerViewDelegate {
 	
-	func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+	/*func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
 		print("recieved ad")
 	}
 	private func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequest) {
 		print(error)
-	}
+	}*/
 }

@@ -24,7 +24,7 @@ func eventsForDate(parDate: Date) -> [Event] {
 		if(eventDate == parDateC)
 		{
 			daysEvents.append(event)
-			print("addedEvent")
+			//print("addedEvent")
 		}
 	}
 	return daysEvents

@@ -65,7 +65,7 @@ func fillMonth(parDate: Date)
 	var x: Int = 0
 	var startDate = minusMonth(date: parDate)
 	while x < 3 {
-		print("x in loop: \(x)")
+		//print("x in loop: \(x)")
 		let daysInMonth = numDaysInMonth(date: startDate)
 		let firstDayMonth = firstDayOfMonth(date: startDate)
 		let startingSpaces = weekDay(date: firstDayMonth)
