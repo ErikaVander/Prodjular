@@ -11,6 +11,8 @@ import Firebase
 import FirebaseDatabase
 import FirebaseCore
 
+var isLoggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource
 {
 	@IBOutlet weak var monthLabel: UILabel!
@@ -57,8 +59,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		fillMonth(parDate: selectedDate)
     }
 	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		tableView.reloadData()
 		//print("ViewWillAppear")
+		
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		if !isLoggedIn {
+			let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
+			
+			vc!.modalPresentationStyle = .fullScreen
+			
+			present(vc!, animated: true, completion: nil)
+		}
 	}
 	
 	//BackSegue after creating a new event
@@ -183,6 +199,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			
 			return cellOne
 		}
+	func show(UIViewController: ViewController, sender: Any?) {
+		
+	}
 }
 
 extension ViewController: GADBannerViewDelegate {
