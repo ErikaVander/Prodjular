@@ -2,7 +2,7 @@
 //  LogInViewController.swift
 //  CollectionViewTesting
 //
-//  Created by Vanderhoff on 7/6/21.
+//  Created by Vanderhoff on 7/19/21.
 //
 
 import UIKit
@@ -10,42 +10,47 @@ import FirebaseAuth
 
 class LogInViewController: UIViewController
 {
-	@IBOutlet weak var profilePicture: UIImageView!
-	@IBOutlet weak var emailTextField: UITextField!
-	@IBOutlet weak var passwordTextfield: UITextField!
-	@IBOutlet weak var EditPicButton: UIButton!
+	@IBOutlet weak var SignUpLogOut: UIButton!
 	
 	override func viewDidLoad() {
-		super .viewDidLoad()
-		setProfilePicImage()
+		super.viewDidLoad()
+	}
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(true)
+		setSignUpLogOutButton()
 	}
 	
-	func setProfilePicImage() {
-		//profilePicture.layer.cornerRadius = 10
-		//profilePicture.backgroundColor = UIColor.white
+	@IBAction func DismissViewController(_ sender: Any) {
+		self.dismiss(animated: true, completion: nil)
 	}
-	@IBAction func DoneAddingUser(_ sender: Any) {
-		guard
-			let email = emailTextField.text,
-			let password = passwordTextfield.text,
-			!password.isEmpty,
-			!email.isEmpty
-		else {
-			
-			print("FailedLogin")
-			return
+	
+	func setSignUpLogOutButton() {
+		if isLoggedIn == true {
+			SignUpLogOut.setTitle("Log Out", for: .normal)
+		} else {
+			SignUpLogOut.setTitle("Sign Up", for: .normal)
 		}
-		
-		FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
-			guard let result = authResult, error == nil else {
-				print("Error creating user")
-				return
+	}
+	@IBAction func LogOutOrSignUp(_ sender: Any) {
+		if isLoggedIn == true {
+			let firebaseAuth = Auth.auth()
+			do {
+				try firebaseAuth.signOut()
+			} catch let signOutError as NSError {
+				print("Error signing out: %@", signOutError)
 			}
-			let user: String = result.email!
-			isLoggedIn = true
-			print("Created User: \(user), Logged in: \(isLoggedIn)")
-			self.dismiss(animated: true, completion: nil)
-		})
+			print(">>>>>>>>>>>>>>>EndOfSignOut<<<<<<<<<<<<<<<<<")
+		} else {
+			print(">>>>>>>>>>>>>>WhyAmIHere<<<<<<<<<<<<<<<<")
+			showSignUp()
+		}
 	}
 	
+	func showSignUp() {
+		let vc = storyboard?.instantiateViewController(identifier: "SignInViewController")
+		
+		vc!.modalPresentationStyle = .popover
+		
+		present(vc!, animated: true, completion: nil)
+	}
 }

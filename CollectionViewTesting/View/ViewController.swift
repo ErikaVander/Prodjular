@@ -30,15 +30,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		ref = Database.database().reference()
-		
-		ref.child("users").child("aoeu").observeSingleEvent(of: .value, with: {
-			(snapshot) in
-			let value = snapshot.value as? NSDictionary
-			let username = value?["username"] as? String ?? " "
-			print(username)
-		}) { (error) in
-			print(error.localizedDescription)
+		FirebaseAuth.Auth.auth().addStateDidChangeListener{ auth, user in
+			if let user = user {
+				print("------- User: \(user.email ?? "Was a nil value") --------")
+				isLoggedIn = true
+				
+			} else {
+				self.showLogIn()
+				print("--------- No user is signed in. ---------")
+				
+			}
 		}
 		
 		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
@@ -58,6 +59,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		
 		fillMonth(parDate: selectedDate)
     }
+	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		tableView.reloadData()
@@ -67,19 +69,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		if !isLoggedIn {
-			let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
-			
-			vc!.modalPresentationStyle = .fullScreen
-			
-			present(vc!, animated: true, completion: nil)
-		}
 	}
 	
 	//BackSegue after creating a new event
 	@IBAction func BackSegue(unwindSegue: UIStoryboardSegue) {
 		tableView.reloadData()
+	}
+	
+	func showLogIn() {
+		let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
+		
+		vc!.modalPresentationStyle = .fullScreen
+		
+		present(vc!, animated: true, completion: nil)
 	}
 	
 	//CollectionView functions:
