@@ -23,10 +23,20 @@ class SettingsViewController: UIViewController
 	
 	
 	func showLogIn() {
-		let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
+		if isLoggedIn == true {
+			let vc = storyboard?.instantiateViewController(identifier: "AccountInfoViewController")
+			
+			vc!.modalPresentationStyle = .fullScreen
+			
+			present(vc!, animated: true, completion: nil)
+		} else {
+			let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
+			
+			vc!.modalPresentationStyle = .fullScreen
+			
+			present(vc!, animated: true, completion: nil)
+		}
 		
-		vc!.modalPresentationStyle = .fullScreen
-		
-		present(vc!, animated: true, completion: nil)
+		print(">>>>>>>>>>>>>>>>>>YouAreHere")
 	}
 }

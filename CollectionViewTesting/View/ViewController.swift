@@ -31,8 +31,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
 		
 		FirebaseAuth.Auth.auth().addStateDidChangeListener{ auth, user in
-			if let user = user {
-				print("------- User: \(user.email ?? "Was a nil value") --------")
+			if user != nil && user?.isEmailVerified == true {
+				print("------- User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --------")
 				isLoggedIn = true
 				
 			} else {
@@ -63,8 +63,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		tableView.reloadData()
-		//print("ViewWillAppear")
-		
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -201,9 +199,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			
 			return cellOne
 		}
-	func show(UIViewController: ViewController, sender: Any?) {
-		
-	}
+//	func show(UIViewController: ViewController, sender: Any?) {
+//	}
 }
 
 extension ViewController: GADBannerViewDelegate {
