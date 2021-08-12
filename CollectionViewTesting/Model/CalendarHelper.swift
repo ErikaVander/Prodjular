@@ -55,8 +55,12 @@ func weekDay(date: Date) ->  Int
 
 func firstDayOfMonth(date: Date) -> Date
 {
-	let firstDay: Date = calendar.nextDate(after: date, matching: DateComponents(day: 1), matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .backward)!
-    return firstDay
+	if calendar.component(.day, from: date) != 1 {
+		let firstDay: Date = calendar.nextDate(after: date, matching: DateComponents(day: 1), matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .backward)!
+		return firstDay
+	} else {
+		return date
+	}
 }
 
 func fillMonth(parDate: Date)
