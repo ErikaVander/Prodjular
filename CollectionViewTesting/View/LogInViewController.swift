@@ -74,22 +74,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate
 		Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
 			guard error == nil else {
 				print(">>>>>Error logging in: \(error!.localizedDescription)<<<<<")
-				self.alertUserOfError(title: "Error", content: error!.localizedDescription, goAway: false)
+				alertUserOfError(view: self, title: "Error", content: error!.localizedDescription, goAway: false)
 				return
 			}
 			isLoggedIn = true
 			print(">>>>>User has signed in: \(authResult?.email ?? "No user has signed in<<<<<") isLoggedIn: \(isLoggedIn)")
-			self.alertUserOfError(title: "Success", content: "You are now logged in", goAway: true)
+			alertUserOfError(view: self, title: "Success", content: "You are now logged in", goAway: true)
 		}
-	}
-	
-	func alertUserOfError(title: String, content: String, goAway: Bool) {
-		let alert = UIAlertController(title: title, message: content, preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: {_ in
-			if goAway == true {
-				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-			}
-		}))
-		present(alert, animated: true, completion: nil)
 	}
 }

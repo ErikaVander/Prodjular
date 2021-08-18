@@ -7,16 +7,12 @@
 
 import UIKit
 
-var eventList = [Event]()
+///An array of ProjdularEvents
+var eventList = [ProjdularEvent]()
 
-class Event {
-	var id: Int!
-	var name: String!
-	var date: Date!
-}
-
-func eventsForDate(parDate: Date) -> [Event] {
-	var daysEvents = [Event]()
+///Adds an event to daysEvents which is an array of ProjdularEvents
+func eventsForDate(parDate: Date) -> [ProjdularEvent] {
+	var daysEvents = [ProjdularEvent]()
 	for event in eventList
 	{
 		let eventDate = calendar.dateComponents([.day, .month, .year], from: event.date)

@@ -23,7 +23,9 @@
 		D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB026A6479000498ECB /* LogInViewController.swift */; };
 		D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */; };
 		D6BE7AB526C1981400498ECB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6BE7AB426C1981400498ECB /* GoogleService-Info.plist */; };
-		D6DAA77726951D55005B7D6B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DAA77626951D55005B7D6B /* SignInViewController.swift */; };
+		D6BE7AB726C6D95200498ECB /* ShowUserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB626C6D95200498ECB /* ShowUserError.swift */; };
+		D6BE7AB926C6DCE700498ECB /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB826C6DCE700498ECB /* DatabaseManager.swift */; };
+		D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DAA77626951D55005B7D6B /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +48,9 @@
 		D6BE7AB026A6479000498ECB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB426C1981400498ECB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D6DAA77626951D55005B7D6B /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		D6BE7AB626C6D95200498ECB /* ShowUserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowUserError.swift; sourceTree = "<group>"; };
+		D6BE7AB826C6DCE700498ECB /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		D6DAA77626951D55005B7D6B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E5BFA0924EBA89551B9722A9 /* Pods-CollectionViewTesting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.release.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +119,7 @@
 			children = (
 				D61F04C125D3891D00A2BC05 /* ViewController.swift */,
 				D630114D267A978C00128ADA /* EventViewController.swift */,
-				D6DAA77626951D55005B7D6B /* SignInViewController.swift */,
+				D6DAA77626951D55005B7D6B /* SignUpViewController.swift */,
 				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
 				D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */,
 				D6BE7AAE26A642E300498ECB /* SettingsViewController.swift */,
@@ -139,6 +143,7 @@
 			children = (
 				D673DA0425D486AA009C56EF /* CalendarHelper.swift */,
 				D6301150267AA10800128ADA /* Event.swift */,
+				D6BE7AB626C6D95200498ECB /* ShowUserError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				D61F04BD25D3891D00A2BC05 /* AppDelegate.swift */,
 				D61F04BF25D3891D00A2BC05 /* SceneDelegate.swift */,
 				D61F04C625D3891D00A2BC05 /* Assets.xcassets */,
+				D6BE7AB826C6DCE700498ECB /* DatabaseManager.swift */,
 			);
 			path = OtherStuff;
 			sourceTree = "<group>";
@@ -272,7 +278,9 @@
 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
 				D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */,
 				D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */,
-				D6DAA77726951D55005B7D6B /* SignInViewController.swift in Sources */,
+				D6BE7AB726C6D95200498ECB /* ShowUserError.swift in Sources */,
+				D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */,
+				D6BE7AB926C6DCE700498ECB /* DatabaseManager.swift in Sources */,
 				D6BE7AAF26A642E300498ECB /* SettingsViewController.swift in Sources */,
 				D61F04C225D3891D00A2BC05 /* ViewController.swift in Sources */,
 				D630114E267A978C00128ADA /* EventViewController.swift in Sources */,

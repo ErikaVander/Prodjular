@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EventViewController: UIViewController
 {
@@ -18,16 +19,8 @@ class EventViewController: UIViewController
 		NameOfEvent.becomeFirstResponder()
 	}
 
+	///The event that occurs after the user creates an event. The new event is made into a Prodular Event and added to the database using the function newEvent defined in the file DatabaseManager.swift.
 	@IBAction func saveEvent(_ sender: Any) {
-		save()
-	}
-	
-	func save() {
-		let newEvent = Event()
-		newEvent.id = eventList.count
-		newEvent.name = NameOfEvent.text
-		newEvent.date = DatePicker.date
-		
-		eventList.append(newEvent)
+		DatabaseManager.shared.newEvent(with: ProjdularEvent(nameOfEvent: NameOfEvent.text!, userID: Auth.auth().currentUser!.uid, date: DatePicker!.date, tag: "optional"))
 	}
 }

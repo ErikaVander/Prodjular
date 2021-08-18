@@ -318,8 +318,8 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cf-U0-ZgX">
-                                                            <rect key="frame" x="24.5" y="21.5" width="4" height="10"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                            <rect key="frame" x="23.5" y="19.5" width="6" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -455,8 +455,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="AEt-wo-d26">
-                                <rect key="frame" x="34" y="105" width="345" height="216"/>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="AEt-wo-d26">
+                                <rect key="frame" x="34" y="134" width="78" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Fls-BM-IFW"/>
+                                    <constraint firstAttribute="width" constant="78" id="pLy-iV-ZCB"/>
+                                </constraints>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyl-ab-Uye">
                                 <rect key="frame" x="354" y="20" width="34" height="30"/>
@@ -466,19 +470,45 @@
                                     <segue destination="yyd-Wo-NWp" kind="unwind" unwindAction="BackSegueWithUnwindSegue:" id="8pw-s0-4ng"/>
                                 </connections>
                             </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Tjr-1o-XVq">
+                                <rect key="frame" x="144" y="134" width="78" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="78" id="Gzf-N7-TOQ"/>
+                                    <constraint firstAttribute="height" constant="40" id="i1D-t6-M0a"/>
+                                </constraints>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cjW-RM-HuV">
+                                <rect key="frame" x="120" y="143.5" width="16" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="16" id="vhB-Wj-TrU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21F-aR-M6Y">
+                                <rect key="frame" x="34" y="105" width="43" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XqP-m1-BQb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="AEt-wo-d26" firstAttribute="top" secondItem="BbW-Iq-I0x" secondAttribute="bottom" constant="25" id="6pr-6l-DZm"/>
+                            <constraint firstItem="AEt-wo-d26" firstAttribute="top" secondItem="21F-aR-M6Y" secondAttribute="bottom" constant="8" symbolic="YES" id="01B-yh-L7Q"/>
                             <constraint firstItem="XqP-m1-BQb" firstAttribute="trailing" secondItem="BbW-Iq-I0x" secondAttribute="trailing" constant="197" id="BET-zW-TMc"/>
-                            <constraint firstItem="XqP-m1-BQb" firstAttribute="trailing" secondItem="AEt-wo-d26" secondAttribute="trailing" constant="35" id="Mv7-z2-btK"/>
                             <constraint firstItem="BbW-Iq-I0x" firstAttribute="top" secondItem="XqP-m1-BQb" secondAttribute="top" constant="46" id="Pfh-zi-Yp5"/>
                             <constraint firstItem="XqP-m1-BQb" firstAttribute="trailing" secondItem="oyl-ab-Uye" secondAttribute="trailing" constant="26" id="QD8-RC-nNl"/>
+                            <constraint firstItem="cjW-RM-HuV" firstAttribute="centerY" secondItem="AEt-wo-d26" secondAttribute="centerY" id="Say-Lf-17M"/>
+                            <constraint firstItem="21F-aR-M6Y" firstAttribute="leading" secondItem="BbW-Iq-I0x" secondAttribute="leading" id="UaG-sx-T91"/>
+                            <constraint firstItem="Tjr-1o-XVq" firstAttribute="top" secondItem="AEt-wo-d26" secondAttribute="top" id="VoR-4y-2qU"/>
+                            <constraint firstItem="Tjr-1o-XVq" firstAttribute="leading" secondItem="cjW-RM-HuV" secondAttribute="trailing" constant="8" symbolic="YES" id="XX7-Gh-10t"/>
+                            <constraint firstItem="21F-aR-M6Y" firstAttribute="top" secondItem="BbW-Iq-I0x" secondAttribute="bottom" constant="25" id="dca-Fa-L6B"/>
                             <constraint firstItem="oyl-ab-Uye" firstAttribute="top" secondItem="XqP-m1-BQb" secondAttribute="top" constant="20" id="imu-QY-RCT"/>
                             <constraint firstItem="AEt-wo-d26" firstAttribute="leading" secondItem="BbW-Iq-I0x" secondAttribute="leading" id="jtY-94-v02"/>
                             <constraint firstItem="BbW-Iq-I0x" firstAttribute="leading" secondItem="XqP-m1-BQb" secondAttribute="leading" constant="34" id="ki0-tt-dDI"/>
                             <constraint firstItem="oyl-ab-Uye" firstAttribute="leading" relation="lessThanOrEqual" secondItem="XqP-m1-BQb" secondAttribute="leading" constant="354" id="qvd-0I-5zZ"/>
+                            <constraint firstItem="cjW-RM-HuV" firstAttribute="leading" secondItem="AEt-wo-d26" secondAttribute="trailing" constant="8" symbolic="YES" id="xOt-em-ZCf"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dlJ-ec-zRG"/>
