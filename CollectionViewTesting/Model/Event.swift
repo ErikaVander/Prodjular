@@ -12,6 +12,7 @@ var eventList = [ProjdularEvent]()
 
 ///Adds an event to daysEvents which is an array of ProjdularEvents
 func eventsForDate(parDate: Date) -> [ProjdularEvent] {
+	
 	var daysEvents = [ProjdularEvent]()
 	for event in eventList
 	{

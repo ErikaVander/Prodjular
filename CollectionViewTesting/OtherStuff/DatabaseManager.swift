@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
+import UIKit
 
 final class DatabaseManager {
 	static let shared = DatabaseManager()
@@ -29,7 +30,8 @@ final class DatabaseManager {
 		database.child("events").childByAutoId().setValue([
 			"name": event.nameOfEvent,
 			"date": dateformat.string(from: event.date),
-			"tag": event.tag,
+			"tagName": event.tagName,
+			"tagColor": event.tagColor,
 			"userID": event.userID
 		])
 		print("--\(DateFormatter().string(from: event.date))--")
@@ -49,5 +51,6 @@ struct ProjdularEvent {
 	let nameOfEvent: String
 	let userID: String
 	var date: Date!
-	let tag: String
+	var tagName: String?
+	var tagColor: String?
 }
