@@ -296,7 +296,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 						print("--theDate: \(theDate)")
 						
 						for events in eventsForDate(parDate: theDate) {
-							cellOne.dotView.isHidden = false
+							
+							let theDotViewContainer = UIView(frame: CGRect(x: 4, y: 4, width: 4, height: 4))
+							
+							cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
+							
+							theDotViewContainer.backgroundColor = .green
+							
+							//cellOne.dotView.isHidden = false
+							cellOne.DotViewContainer.isHidden = true
 							
 							print("events: \(String(describing: events.date))")
 
