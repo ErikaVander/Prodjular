@@ -41,13 +41,13 @@ final class DatabaseManager {
 }
 
 ///The definition of a ProjdularUser.
-struct ProjdularUser {
+struct ProjdularUser : Equatable {
 	let email: String
 	let userID: String
 }
 
 ///The definition of a ProdjularEvent.
-struct ProjdularEvent {
+struct ProjdularEvent : Equatable {
 	let nameOfEvent: String
 	let userID: String
 	var date: Date!

@@ -12,6 +12,8 @@ import FirebaseDatabase
 import FirebaseCore
 
 var isLoggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
+var selectedDate = Date()
+let dateFormatter = DateFormatter()
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource
 {
@@ -23,8 +25,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	@IBOutlet weak var bannerView: GADBannerView!
 	
 	var ref: DatabaseReference!
-	
-    var selectedDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,10 +86,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 				{
 					if userID == Auth.auth().currentUser?.uid {
 					
-						let dateFormatter = DateFormatter()
-						dateFormatter.dateFormat = "MMM d, yyyy 'at' HH:mm:ss a zzz"
+						//let dateFormatter = DateFormatter()
+						dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
 						
-					let event = ProjdularEvent(nameOfEvent: nameOfEvent, userID: userID, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
+						let event = ProjdularEvent(nameOfEvent: nameOfEvent, userID: userID, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
 						
 						tempEvents.append(event)
 						
@@ -256,8 +256,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 				let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 
 				cellOne.isUserInteractionEnabled = false
-				cellOne.dotView.isHidden = true
-				
+				//cellOne.dotView.isHidden = true
+			
+				for theView in cellOne.StackViewForDotViews.subviews {
+					theView.removeFromSuperview()
+					cellOne.StackViewForDotViews.removeArrangedSubview(theView)
+				}
+			
 				if Int(num[indexPath.item]) != nil
 				{
 					let formatter = DateFormatter()
@@ -291,25 +296,38 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 					
 					if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
 						
-						print("--num[indexPath.item]: \(num[indexPath.item])")
-						print("--eventsForDate.count != 0: \(eventsForDate(parDate: theDate).count != 0)")
-						print("--theDate: \(theDate)")
+//						print("--num[indexPath.item]: \(num[indexPath.item])")
+//						print("--eventsForDate.count != 0: \(eventsForDate(parDate: theDate).count != 0)")
+//						print("--theDate: \(theDate)")
 						
 						for events in eventsForDate(parDate: theDate) {
 							
-							let theDotViewContainer = UIView(frame: CGRect(x: 4, y: 4, width: 4, height: 4))
+							let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: Int(cellOne.StackViewForDotViews.frame.width)/eventsForDate(parDate: theDate).count, height: 4))
+							
+							let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 4, height: 4))
 							
 							cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
 							
-							theDotViewContainer.backgroundColor = .green
+							cellOne.StackViewForDotViews.alignment = .fill
+							cellOne.StackViewForDotViews.distribution = .fillEqually
+							cellOne.StackViewForDotViews.spacing = 2
 							
-							//cellOne.dotView.isHidden = false
-							cellOne.DotViewContainer.isHidden = true
+							theDotViewContainer.addSubview(dotView)
+							dotView.backgroundColor = .white
 							
-							print("events: \(String(describing: events.date))")
-
-							cellOne.dotView.backgroundColor = UIColor.white
-							cellOne.dotView.layer.cornerRadius = 2.5
+							dotView.center = theDotViewContainer.center
+							dotView.layer.cornerRadius = 2
+							
+							if eventsForDate(parDate: theDate).count == 2 {
+								if(eventsForDate(parDate: theDate)[0] == events)
+								{
+									print("--FirstTime--")
+									dotView.center.x = theDotViewContainer.center.x+2.5
+								} else {
+									print("--SecondTime--")
+									dotView.center.x = theDotViewContainer.center.x-2.5
+								}
+							}
 						}
 					}
 					
@@ -354,7 +372,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 				temp.timeStyle = .short
 				temp.dateStyle = .none
 				
-				cellOne.TimeLabel.text = temp.string(from: eventList[indexPath.item].date)
+				cellOne.TimeLabel.text = temp.string(from: eventsForDate(parDate: selectedDate)[indexPath.item].date)
 				
 			}
 			
