@@ -77,6 +77,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
+				   let id = childSnapshot.key as? String,
 				   let dict = childSnapshot.value as? [String: Any],
 				   let date = dict["date"] as? String,
 				   let nameOfEvent = dict["name"] as? String,
@@ -89,7 +90,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 						//let dateFormatter = DateFormatter()
 						dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
 						
-						let event = ProjdularEvent(nameOfEvent: nameOfEvent, userID: userID, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
+						let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, userID: userID, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
 						
 						tempEvents.append(event)
 						
@@ -377,6 +378,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			}
 			
 			return cellOne
+		}
+		func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+			if eventsForDate(parDate: selectedDate).isEmpty == true && indexPath.item == 0 {
+				return false
+			} else {
+				return true
+			}
+		}
+		func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+			//let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
+			DatabaseManager.shared.deleteEvent(with: eventsForDate(parDate: selectedDate)[indexPath.item])
 		}
 }
 

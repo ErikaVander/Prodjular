@@ -43,6 +43,6 @@ class EventViewController: UIViewController
 		
 		print("--string of date: \(dateFormat.string(from: theNewDate!))")
 		
-		DatabaseManager.shared.newEvent(with: ProjdularEvent(nameOfEvent: NameOfEvent.text!, userID: Auth.auth().currentUser!.uid, date: theNewDate, tagName: "optional", tagColor: "red"))
+		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, userID: Auth.auth().currentUser!.uid, date: theNewDate, tagName: "optional", tagColor: "red"))
 	}
 }

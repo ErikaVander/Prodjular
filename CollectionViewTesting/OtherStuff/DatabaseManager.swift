@@ -38,6 +38,11 @@ final class DatabaseManager {
 		print("--\(String(describing: event.date))--")
 		eventList.append(event)
 	}
+	
+	///Deletes event
+	public func deleteEvent(with event: ProjdularEvent) {
+		self.database.ref.child("events/\(String(describing: event.id))").removeValue()
+	}
 }
 
 ///The definition of a ProjdularUser.
@@ -48,6 +53,7 @@ struct ProjdularUser : Equatable {
 
 ///The definition of a ProdjularEvent.
 struct ProjdularEvent : Equatable {
+	var id: String
 	let nameOfEvent: String
 	let userID: String
 	var date: Date!
