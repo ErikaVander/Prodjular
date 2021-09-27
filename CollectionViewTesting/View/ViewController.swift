@@ -56,6 +56,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.delegate = self
         collectionView.dataSource = self
 		
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		///Setting the month and year label
 		monthLabel.text = monthString(date: selectedDate)
 		yearLabel.text = yearString(date: selectedDate)
@@ -101,7 +104,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			self.tableView.reloadData()
 			self.collectionView.reloadData()
 			///Selecting the current date
-			self.selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) - (weekDay(date: Date()) + 1)) / 7)
+			let date = Date()
+			//let date = dateFromNumbers(date: "9 16, 2021")
+			
+			self.selectFirstDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
 		})
 		
 	}
@@ -205,6 +211,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		let cellWidth = ((collectionView.frame.size.width-(relativeWidth*2))/7)
 		let cellHeight = (collectionView.frame.size.height)/7
 		
+		print("--cell Width: \(cellWidth)")
+		
 		let point = CGPoint(x: cellWidth*CGFloat(theDateHorizontal) + (cellWidth/2), y: (cellHeight * 8) + (cellHeight/2) + (cellHeight * CGFloat(theDateVertical)))
 		
 		let indexPath = collectionView.indexPathForItem(at: point)!
@@ -223,6 +231,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			cellOne.isSelected = true
 			
 			collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt((7 + weekDay(date: firstDayOfMonth(date: selectedDate))))))
+
+			print("--selectFirstDayOfMonth: \(selectedDate)--")
 		}
 		
 		///The number of sections in the month collectionView calendar
@@ -244,10 +254,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		func selectCell(indexPath: IndexPath) {
 			if Int(num[indexPath.item]) != nil
 			{
-				let temp = DateFormatter()
-				temp.dateFormat = "yyyy-MM-d"
-				let tempDate: String = "\(yearString(date: selectedDate))-\(monthString(date: selectedDate))-\(num[indexPath.item])"
-				selectedDate = temp.date(from: tempDate)!
+			selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
 			}
 			tableView.reloadData()
 		}
@@ -289,17 +296,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 						let view = UIView()
 						view.layer.cornerRadius = 5
 						view.backgroundColor = UIColor.darkGray
-						
-						//print("--cellOne.backgroundView.width: \(view.layer.frame.width)--")
 			
 						return view
 					}()
 					
 					if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
-						
-//						print("--num[indexPath.item]: \(num[indexPath.item])")
-//						print("--eventsForDate.count != 0: \(eventsForDate(parDate: theDate).count != 0)")
-//						print("--theDate: \(theDate)")
 						
 						for events in eventsForDate(parDate: theDate) {
 							
@@ -344,9 +345,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 	
 	//TableView functions
 		///Determines the number of rows in each section of the tableView which is 	determined by the function eventsForDate which returns all the events that are 	associated with any givin date.
+		var eventsForTableViewCell = [ProjdularEvent]()
 		func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 			if eventsForDate(parDate: selectedDate).isEmpty == false {
-				return eventsForDate(parDate: selectedDate).count
+				eventsForTableViewCell = eventsForDate(parDate: selectedDate)
+				return eventsForTableViewCell.count
 			} else {
 				return 1
 			}
@@ -358,7 +361,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			
 			let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
 			
-			if eventsForDate(parDate: selectedDate).isEmpty == true && indexPath.item == 0 {
+			if eventsForTableViewCell.isEmpty == true && indexPath.item == 0 {
 				
 				cellOne.EventLabel.textColor = UIColor.placeholderText
 				cellOne.EventLabel.text = "no events scheduled"
@@ -367,28 +370,34 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 			} else {
 				
 				cellOne.EventLabel.textColor = UIColor.label
-				cellOne.EventLabel.text = eventsForDate(parDate: selectedDate)[indexPath.item].nameOfEvent
+				cellOne.EventLabel.text = eventsForTableViewCell[indexPath.item].nameOfEvent
 				
 				let temp = DateFormatter()
 				temp.timeStyle = .short
 				temp.dateStyle = .none
 				
-				cellOne.TimeLabel.text = temp.string(from: eventsForDate(parDate: selectedDate)[indexPath.item].date)
+				cellOne.TimeLabel.text = temp.string(from: eventsForTableViewCell[indexPath.item].date)
 				
 			}
 			
 			return cellOne
 		}
 		func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-			if eventsForDate(parDate: selectedDate).isEmpty == true && indexPath.item == 0 {
+			if eventsForTableViewCell.isEmpty == true && indexPath.item == 0 {
 				return false
 			} else {
 				return true
 			}
 		}
 		func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-			//let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
-			DatabaseManager.shared.deleteEvent(with: eventsForDate(parDate: selectedDate)[indexPath.item])
+			
+			DatabaseManager.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item])
+			
+			observeEvents()
+
+			eventsForTableViewCell.remove(at: indexPath.row)
+
+			tableView.deleteRows(at: [indexPath], with: .fade)
 		}
 }
 

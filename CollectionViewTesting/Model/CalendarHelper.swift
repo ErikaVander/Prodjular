@@ -111,3 +111,26 @@ func fillMonth(parDate: Date)
 	
 	print("done with fillMonth")
 }
+
+///Enter a date in the format "M d, yyyy" or "1 21, 2001" to get a date in return
+func dateFromNumbers(date: String) -> Date {
+	
+	let dateFormatter = DateFormatter()
+	dateFormatter.dateFormat = "M d, yyyy"
+	
+	let returnDate = dateFormatter.date(from: date)
+	
+	return returnDate!
+}
+
+///Enter a date in the format "MMMM d, yyyy" or " August 21, 2001" to get a date in return
+func dateFromNumbersAndMonthLabel(date: String) -> Date {
+	
+	let dateFormatter = DateFormatter()
+	dateFormatter.dateFormat = "MMMM d, yyyy"
+	
+	let returnDate = dateFormatter.date(from: date)
+	print("--returnDate: \(String(describing: returnDate))--")
+	
+	return returnDate!
+}

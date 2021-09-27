@@ -9,5 +9,5 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
 	@IBOutlet weak var EventLabel: UILabel!
-	@IBOutlet weak var TimeLabel: UILabel!	
+	@IBOutlet weak var TimeLabel: UILabel!
 }
