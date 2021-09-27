@@ -148,7 +148,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
 				if calendar.component(.month, from: plusmonth(date: selectedDate)) == calendar.component(.month, from: Date()) {
 					
-					selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) - (weekDay(date: Date()) + 1)) / 7)
+					selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) - (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
 					
 				} else {
 					
@@ -170,7 +170,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 				
 				if calendar.component(.month, from: minusMonth(date: selectedDate)) == calendar.component(.month, from: Date()) {
 					
-					selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) - (weekDay(date: Date()) + 1)) / 7)
+					selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) - (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
 					
 				} else {
 				
