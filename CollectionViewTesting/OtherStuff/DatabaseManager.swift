@@ -34,8 +34,9 @@ final class DatabaseManager {
 			"tagColor": event.tagColor,
 			"userID": event.userID
 		])
-		print("--\(DateFormatter().string(from: event.date))--")
-		print("--\(String(describing: event.date))--")
+		print("--newDateTwo: \(String(describing: event.date))--")
+		print("--selectedDate: \(String(describing: selectedDate))")
+		selectedDate = event.date
 		eventList.append(event)
 	}
 	

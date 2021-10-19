@@ -66,8 +66,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         setCellViews()
 		
 		fillMonth(parDate: selectedDate)
-		
-		//print("--selectedDate: \(calendar.component(.day, from: selectedDate))--")
     }
 	
 	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
@@ -247,6 +245,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		
 		///Updating userSelectedDate after a new cell is selected by the user
 		func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
 			selectCell(indexPath: indexPath)
 		}
 	

@@ -33,15 +33,15 @@ class EventViewController: UIViewController
 		
 		let theNewDate = calendar.date(from: component)
 		
-		print("--component: \(component)")
+		//print("--component: \(component)")
 		
-		print("--component.date: \(String(describing: theNewDate))")
+		//print("--component.date: \(String(describing: theNewDate))")
 		
 		let dateFormat = DateFormatter()
 		dateFormat.timeStyle = .full
 		dateFormat.dateStyle = .short
 		
-		print("--string of date: \(dateFormat.string(from: theNewDate!))")
+		//print("--string of date: \(dateFormat.string(from: theNewDate!))")
 		
 		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, userID: Auth.auth().currentUser!.uid, date: theNewDate, tagName: "optional", tagColor: "red"))
 	}

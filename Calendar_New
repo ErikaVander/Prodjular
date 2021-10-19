@@ -1,0 +1,339 @@
+diff --git a/CollectionViewTesting.xcodeproj/project.pbxproj b/CollectionViewTesting.xcodeproj/project.pbxproj
+index 7349fb9..0ad8a39 100644
+--- a/CollectionViewTesting.xcodeproj/project.pbxproj
++++ b/CollectionViewTesting.xcodeproj/project.pbxproj
+@@ -15,6 +15,7 @@
+ 		D61F04CA25D3891D00A2BC05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */; };
+ 		D61F04D725D38A0700A2BC05 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61F04D625D38A0700A2BC05 /* CollectionViewCell.swift */; };
+ 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
++		D69CDA3125DB436E001F03AF /* SchedulePerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69CDA3025DB436E001F03AF /* SchedulePerDate.swift */; };
+ /* End PBXBuildFile section */
+ 
+ /* Begin PBXFileReference section */
+@@ -28,6 +29,7 @@
+ 		D61F04CB25D3891D00A2BC05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+ 		D61F04D625D38A0700A2BC05 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+ 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
++		D69CDA3025DB436E001F03AF /* SchedulePerDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePerDate.swift; sourceTree = "<group>"; };
+ /* End PBXFileReference section */
+ 
+ /* Begin PBXFrameworksBuildPhase section */
+@@ -60,12 +62,11 @@
+ 		D61F04BC25D3891D00A2BC05 /* CollectionViewTesting */ = {
+ 			isa = PBXGroup;
+ 			children = (
++				D69CDA2E25DB35F5001F03AF /* Model */,
++				D69CDA2D25DB35E5001F03AF /* Controller */,
++				D69CDA2C25DB35DF001F03AF /* View */,
+ 				D61F04BD25D3891D00A2BC05 /* AppDelegate.swift */,
+ 				D61F04BF25D3891D00A2BC05 /* SceneDelegate.swift */,
+-				D61F04C125D3891D00A2BC05 /* ViewController.swift */,
+-				D673DA0425D486AA009C56EF /* CalendarHelper.swift */,
+-				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
+-				D61F04D625D38A0700A2BC05 /* CollectionViewCell.swift */,
+ 				D61F04C625D3891D00A2BC05 /* Assets.xcassets */,
+ 				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
+ 				D61F04CB25D3891D00A2BC05 /* Info.plist */,
+@@ -73,6 +74,32 @@
+ 			path = CollectionViewTesting;
+ 			sourceTree = "<group>";
+ 		};
++		D69CDA2C25DB35DF001F03AF /* View */ = {
++			isa = PBXGroup;
++			children = (
++				D61F04D625D38A0700A2BC05 /* CollectionViewCell.swift */,
++				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
++			);
++			path = View;
++			sourceTree = "<group>";
++		};
++		D69CDA2D25DB35E5001F03AF /* Controller */ = {
++			isa = PBXGroup;
++			children = (
++				D61F04C125D3891D00A2BC05 /* ViewController.swift */,
++			);
++			path = Controller;
++			sourceTree = "<group>";
++		};
++		D69CDA2E25DB35F5001F03AF /* Model */ = {
++			isa = PBXGroup;
++			children = (
++				D673DA0425D486AA009C56EF /* CalendarHelper.swift */,
++				D69CDA3025DB436E001F03AF /* SchedulePerDate.swift */,
++			);
++			path = Model;
++			sourceTree = "<group>";
++		};
+ /* End PBXGroup section */
+ 
+ /* Begin PBXNativeTarget section */
+@@ -145,6 +172,7 @@
+ 			files = (
+ 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
+ 				D61F04C225D3891D00A2BC05 /* ViewController.swift in Sources */,
++				D69CDA3125DB436E001F03AF /* SchedulePerDate.swift in Sources */,
+ 				D61F04BE25D3891D00A2BC05 /* AppDelegate.swift in Sources */,
+ 				D61F04D725D38A0700A2BC05 /* CollectionViewCell.swift in Sources */,
+ 				D61F04C025D3891D00A2BC05 /* SceneDelegate.swift in Sources */,
+diff --git a/CollectionViewTesting/ViewController.swift b/CollectionViewTesting/Controller/ViewController.swift
+similarity index 61%
+rename from CollectionViewTesting/ViewController.swift
+rename to CollectionViewTesting/Controller/ViewController.swift
+index f8c3d63..47eb9ff 100644
+--- a/CollectionViewTesting/ViewController.swift
++++ b/CollectionViewTesting/Controller/ViewController.swift
+@@ -11,6 +11,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
+ {
+ 
+     @IBOutlet weak var collectionView: UICollectionView!
++    @IBOutlet weak var monthLabel: UILabel!
++    @IBOutlet weak var yearLabel: UILabel!
+     
+     var selectedDate = Date()
+     
+@@ -22,16 +24,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
+         
+         setCellViews()
+         
+-        //fillTitlesF(month: "Jan")
+         fillMonth()
++        
+     }
+     
+     
+-    @IBAction func swipeRightCollectionView(_ sender: Any) {
+-        fillNextMonth()
++    @IBAction func swipeRightCollectionView(_ sender: UISwipeGestureRecognizer) {
++        selectedDate = minusMonth(date: selectedDate)
++        fillMonth()
++        print("Swiped")
+     }
+-    @IBAction func swipeLeftCollectionView(_ sender: Any) {
+-        fillPreviousMonth()
++    @IBAction func swipeLeftCollectionView(_ sender: UISwipeGestureRecognizer) {
++        selectedDate = plusmonth(date: selectedDate)
++        fillMonth()
++        print("Swiped")
+     }
+     
+     
+@@ -40,10 +46,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
+     func fillMonth()
+     {
+         num.removeAll()
++        
+         let daysInMonth = numDaysInMonth(date: selectedDate)
+         let firstDayMonth = firstDayOfMonth(date: selectedDate)
+         let startingSpaces = weekDay(date: firstDayMonth)
+         
++
++        
++        num.append("SU")
++        num.append("MO")
++        num.append("TU")
++        num.append("WE")
++        num.append("TH")
++        num.append("FR")
++        num.append("SA")
++        
+         var count: Int = 1
+      
+         while (count < 42)
+@@ -58,17 +75,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
+             }
+             count += 1
+         }
++        
++        monthLabel.text = monthString(date: selectedDate)
++        yearLabel.text = yearString(date: selectedDate)
++        collectionView.reloadData()
++
++        //print(daysInMonth)
++        //print(firstDayMonth)
++        //print(startingSpaces)
++//        print(selectedDate)
++//        print(num)
++        print("done with fillMonth")
+     }
+     
+-    func fillNextMonth()
++    func nextMonth()
+     {
++        print(selectedDate)
+         selectedDate = minusMonth(date: selectedDate)
++        print(selectedDate)
+         fillMonth()
+     }
+     
+-    func fillPreviousMonth()
++    func previousMonth()
+     {
++        print(selectedDate)
+         selectedDate = plusmonth(date: selectedDate)
++        print(selectedDate)
+         fillMonth()
+     }
+     
+@@ -79,8 +111,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
+     //Setting up the Collection view
+     
+     func setCellViews() {
+-        let width = (collectionView.frame.size.width - 2)/8
+-        let height = (collectionView.frame.size.height - 2)/8
++        let width = (collectionView.frame.size.width)/7
++        let height = (collectionView.frame.size.height)/7
++        
++        print("Height = ")
++        print(height)
+         
+         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+         flowLayout.itemSize = CGSize(width: width, height: height)
+@@ -93,17 +128,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
+     }
+     
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+-        let tempNum = num.count
+-        return tempNum
++        return num.count
+     }
+ 
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+         let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+-        let cellIndex = indexPath.item
+-        
+-        let tempString = num[cellIndex]
+         
+-        cellOne.label.text = tempString
++        cellOne.label.text = num[indexPath.item]
+         
+         return cellOne
+     }
+diff --git a/CollectionViewTesting/CalendarHelper.swift b/CollectionViewTesting/Model/CalendarHelper.swift
+similarity index 100%
+rename from CollectionViewTesting/CalendarHelper.swift
+rename to CollectionViewTesting/Model/CalendarHelper.swift
+diff --git a/CollectionViewTesting/Model/SchedulePerDate.swift b/CollectionViewTesting/Model/SchedulePerDate.swift
+new file mode 100644
+index 0000000..bf487da
+--- /dev/null
++++ b/CollectionViewTesting/Model/SchedulePerDate.swift
+@@ -0,0 +1,18 @@
++//
++//  SchedulePerdate.swift
++//  CollectionViewTesting
++//
++//  Created by Vanderhoff on 2/15/21.
++//
++
++import UIKit
++
++class Event {
++    var name: String
++
++    init(name: String)
++    {
++        self.name = name
++    }
++}
++
+diff --git a/CollectionViewTesting/Base.lproj/Main.storyboard b/CollectionViewTesting/View/Base.lproj/Main.storyboard
+similarity index 67%
+rename from CollectionViewTesting/Base.lproj/Main.storyboard
+rename to CollectionViewTesting/View/Base.lproj/Main.storyboard
+index 9c51de6..a4f8847 100644
+--- a/CollectionViewTesting/Base.lproj/Main.storyboard
++++ b/CollectionViewTesting/View/Base.lproj/Main.storyboard
+@@ -17,15 +17,27 @@
+                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                         <subviews>
++                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oev-7d-loW">
++                                <rect key="frame" x="40" y="103.5" width="42" height="20.5"/>
++                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
++                                <nil key="textColor"/>
++                                <nil key="highlightedColor"/>
++                            </label>
++                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsE-f3-Ppx">
++                                <rect key="frame" x="319" y="343.5" width="42" height="21"/>
++                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
++                                <nil key="textColor"/>
++                                <nil key="highlightedColor"/>
++                            </label>
+                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H7P-zP-LNK">
+-                                <rect key="frame" x="40" y="97" width="334" height="271"/>
++                                <rect key="frame" x="57" y="124" width="300" height="219.5"/>
+                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                 <gestureRecognizers/>
+                                 <constraints>
+-                                    <constraint firstAttribute="height" constant="271" id="njQ-6v-GTq"/>
+-                                    <constraint firstAttribute="width" constant="334" id="wRF-9e-bVr"/>
++                                    <constraint firstAttribute="height" constant="219.59999999999999" id="njQ-6v-GTq"/>
++                                    <constraint firstAttribute="width" constant="300" id="wRF-9e-bVr"/>
+                                 </constraints>
+-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="0.0" sectionInsetReference="safeArea" id="dcU-5f-IaN">
++                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="safeArea" id="dcU-5f-IaN">
+                                     <size key="itemSize" width="64" height="64"/>
+                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
+@@ -35,10 +47,11 @@
+                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="TnH-34-Awt" customClass="CollectionViewCell" customModule="CollectionViewTesting">
+                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cA-Hy-jGl">
++                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0cA-Hy-jGl">
+                                             <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
++                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                             <subviews>
+-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cf-U0-ZgX">
++                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cf-U0-ZgX">
+                                                     <rect key="frame" x="30" y="27" width="4" height="10"/>
+                                                     <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                     <nil key="textColor"/>
+@@ -57,22 +70,26 @@
+                                     </collectionViewCell>
+                                 </cells>
+                                 <connections>
+-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="LEZ-52-s1F"/>
+-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="D9O-uf-ck2"/>
++                                    <outletCollection property="gestureRecognizers" destination="c9v-dS-vEF" appends="YES" id="mBX-Yp-EwI"/>
++                                    <outletCollection property="gestureRecognizers" destination="M2e-Q9-Q7e" appends="YES" id="QDz-ik-HII"/>
+                                 </connections>
+                             </collectionView>
+                         </subviews>
+                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                         <constraints>
+-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H7P-zP-LNK" secondAttribute="trailing" constant="40" id="HaE-6I-e12"/>
+-                            <constraint firstItem="H7P-zP-LNK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="53" id="Krg-X6-YcI"/>
+-                            <constraint firstItem="H7P-zP-LNK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="ZRN-eg-Ov2"/>
+-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="H7P-zP-LNK" secondAttribute="bottom" constant="494" id="oEh-AV-IuT"/>
++                            <constraint firstItem="H7P-zP-LNK" firstAttribute="top" secondItem="oev-7d-loW" secondAttribute="bottom" id="6ns-aV-ySw"/>
++                            <constraint firstItem="H7P-zP-LNK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="Krg-X6-YcI"/>
++                            <constraint firstItem="oev-7d-loW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="f56-Wb-c9c"/>
++                            <constraint firstItem="H7P-zP-LNK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kAP-MK-eBg"/>
++                            <constraint firstItem="wsE-f3-Ppx" firstAttribute="top" secondItem="H7P-zP-LNK" secondAttribute="bottom" id="lcy-ql-l4I"/>
++                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wsE-f3-Ppx" secondAttribute="trailing" constant="53" id="mez-au-c30"/>
+                         </constraints>
+                     </view>
+                     <connections>
+-                        <outlet property="collectionView" destination="H7P-zP-LNK" id="a4K-8K-sKS"/>
++                        <outlet property="collectionView" destination="TnH-34-Awt" id="BDT-gv-I2j"/>
++                        <outlet property="monthLabel" destination="oev-7d-loW" id="my3-xh-VTY"/>
++                        <outlet property="yearLabel" destination="wsE-f3-Ppx" id="Ge6-GP-GQk"/>
+                     </connections>
+                 </viewController>
+                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+diff --git a/CollectionViewTesting/CollectionViewCell.swift b/CollectionViewTesting/View/CollectionViewCell.swift
+similarity index 97%
+rename from CollectionViewTesting/CollectionViewCell.swift
+rename to CollectionViewTesting/View/CollectionViewCell.swift
+index 78be52d..8b3d594 100644
+--- a/CollectionViewTesting/CollectionViewCell.swift
++++ b/CollectionViewTesting/View/CollectionViewCell.swift
+@@ -10,4 +10,6 @@ import UIKit
+ class CollectionViewCell: UICollectionViewCell {
+     
+     @IBOutlet weak var label: UILabel!
++    
+ }
++
