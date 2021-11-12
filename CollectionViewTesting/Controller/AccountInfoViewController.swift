@@ -22,6 +22,17 @@ class AccountInfoViewController: UIViewController {
 		super.viewWillAppear(true)
 		setUserEmail()
 	}
+}
+
+//MARK: EditAccount or Logout
+extension AccountInfoViewController {
+	func setUserEmail() {
+		UserEmail.text = Auth.auth().currentUser?.email
+	}
+	
+	@IBAction func changePhoto(_ sender: Any) {
+		
+	}
 	
 	@IBAction func logout(_ sender: Any) {
 		do {
@@ -32,19 +43,17 @@ class AccountInfoViewController: UIViewController {
 			alertUserOfError(title: "Error", content: error.localizedDescription, goAway: false)
 		}
 	}
-	
-	@IBAction func changePhoto(_ sender: Any) {
-		
-	}
-	
+}
+
+//MARK: Navigation
+extension AccountInfoViewController {
+	///Goes back to the settings page
 	@IBAction func backToSettings(_ sender: Any) {
 		self.dismiss(animated: true, completion: nil)
 	}
-	
-	func setUserEmail() {
-		UserEmail.text = Auth.auth().currentUser?.email
-	}
-	
+
+	///You cannot use alertUser, because, as of right now, alertUser does not support presenting another screen as opposed to dismissing the current one.
+	///Alerts user and presents LogInViewController if logOut was successful.
 	func alertUserOfError(title: String, content: String, goAway: Bool) {
 		let alert = UIAlertController(title: title, message: content, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: {_ in

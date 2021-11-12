@@ -9,14 +9,12 @@ import Foundation
 import FirebaseAuth
 import UIKit
 
-func alertUserOfError(view: UIViewController, title: String, content: String, goAway: Bool) {
+func alertUser(view: UIViewController, title: String, content: String, dismissView: Bool) {
 	let alert = UIAlertController(title: title, message: content, preferredStyle: .alert)
 	alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: {_ in
-		if goAway == true && FirebaseAuth.Auth.auth().currentUser?.isEmailVerified == true {
+		if dismissView == true && FirebaseAuth.Auth.auth().currentUser?.isEmailVerified == true {
 			view.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 		}
 	}))
 	view.present(alert, animated: true, completion: nil)
 }
-
-

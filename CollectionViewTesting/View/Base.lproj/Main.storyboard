@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -114,9 +114,7 @@
                                 <state key="normal" title="SignUp"/>
                                 <connections>
                                     <action selector="SignUp:" destination="xn0-7J-GWh" eventType="touchUpInside" id="OzN-PQ-DJN"/>
-                                    <segue destination="eOE-Ke-pXF" kind="popoverPresentation" popoverAnchorView="lXf-Iv-TOH" id="0eb-Xu-nkj">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
+                                    <segue destination="eOE-Ke-pXF" kind="presentation" id="0eb-Xu-nkj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xdj-Nb-0Jl">
@@ -151,16 +149,16 @@
             </objects>
             <point key="canvasLocation" x="-1871.0144927536232" y="-384.375"/>
         </scene>
-        <!--Sign In View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="JnG-1f-C02">
             <objects>
-                <viewController storyboardIdentifier="SignInViewController" id="eOE-Ke-pXF" customClass="SignInViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInViewController" id="eOE-Ke-pXF" customClass="SignUpViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6qn-Bg-emj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="af8-XX-1ap">
-                                <rect key="frame" x="80" y="238" width="254" height="40"/>
+                                <rect key="frame" x="80" y="294" width="254" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bz3-hr-jZT"/>
                                 </constraints>
@@ -168,7 +166,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y73-gk-yfg">
-                                <rect key="frame" x="80" y="190" width="254" height="40"/>
+                                <rect key="frame" x="80" y="246" width="254" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="CeJ-Af-pgg"/>
                                 </constraints>
@@ -176,13 +174,13 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Signup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsl-2i-Vmf">
-                                <rect key="frame" x="80" y="134" width="120.66666666666669" height="48"/>
+                                <rect key="frame" x="80" y="190" width="120.66666666666669" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zfA-4c-gkG">
-                                <rect key="frame" x="80" y="286" width="53" height="30"/>
+                                <rect key="frame" x="80" y="342" width="53" height="30"/>
                                 <state key="normal" title="Verified"/>
                                 <connections>
                                     <action selector="verifyAndGoBack:" destination="eOE-Ke-pXF" eventType="touchUpInside" id="jZU-Z8-9rd"/>
@@ -204,7 +202,7 @@
                             <constraint firstItem="bsl-2i-Vmf" firstAttribute="top" secondItem="d0e-G6-hgO" secondAttribute="top" constant="134" id="wVw-HD-1nM"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="YbT-P1-BeD"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="Verified" destination="zfA-4c-gkG" id="0hB-bL-w3h"/>
                         <outlet property="emailTextFieldSignUp" destination="Y73-gk-yfg" id="386-kW-9WY"/>
@@ -258,10 +256,10 @@
             </objects>
             <point key="canvasLocation" x="-765.21739130434787" y="324.77678571428572"/>
         </scene>
-        <!--View Controller-->
+        <!--Calendar View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CalendarViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -475,7 +473,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ltg-1C-BCU">
-                                <rect key="frame" x="25" y="117" width="248" height="50"/>
+                                <rect key="frame" x="25" y="117" width="251" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21F-aR-M6Y">
                                         <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="50"/>
@@ -488,19 +486,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Tjr-1o-XVq">
-                                        <rect key="frame" x="51.666666666666679" y="0.0" width="81.333333333333314" height="50"/>
+                                        <rect key="frame" x="52.666666666666679" y="0.0" width="81.333333333333314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="81.5" id="CiJ-L8-Hn1"/>
                                         </constraints>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cjW-RM-HuV">
-                                        <rect key="frame" x="142" y="0.0" width="15.333333333333343" height="50"/>
+                                        <rect key="frame" x="144" y="0.0" width="15.333333333333343" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="AEt-wo-d26">
-                                        <rect key="frame" x="166.33333333333334" y="0.0" width="81.666666666666657" height="50"/>
+                                        <rect key="frame" x="169.33333333333334" y="0.0" width="81.666666666666657" height="50"/>
                                     </datePicker>
                                 </subviews>
                                 <constraints>

@@ -27,7 +27,7 @@ final class DatabaseManager {
 		let dateformat = DateFormatter()
 		dateformat.dateStyle = .long
 		dateformat.timeStyle = .long
-		database.child("events").childByAutoId().setValue([
+		database.child("users").child("events").childByAutoId().setValue([
 			"name": event.nameOfEvent,
 			"date": dateformat.string(from: event.date),
 			"tagName": event.tagName,
