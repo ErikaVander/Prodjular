@@ -10,6 +10,15 @@ import UIKit
 ///An array of ProjdularEvents
 var eventList = [ProjdularEvent]()
 
+///The definition of a ProdjularEvent.
+struct ProjdularEvent : Equatable {
+	var id: String
+	let nameOfEvent: String
+	var date: Date!
+	var tagName: String?
+	var tagColor: String?
+}
+
 ///Adds an event to daysEvents which is an array of ProjdularEvents
 func eventsForDate(parDate: Date) -> [ProjdularEvent] {
 	

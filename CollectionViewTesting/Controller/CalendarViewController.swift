@@ -83,7 +83,7 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController {
 	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
 	func observeEvents() {
-		let eventRef = Database.database().reference().child("users").child("events")
+		let eventRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("events")
 		
 		eventRef.observe(.value, with: { snapshot in
 			
@@ -95,20 +95,15 @@ extension CalendarViewController {
 				   let dict = childSnapshot.value as? [String: Any],
 				   let date = dict["date"] as? String,
 				   let nameOfEvent = dict["name"] as? String,
-				   let tagName = dict["tagColor"] as? String,
-				   let tagColor = dict["tagName"] as? String,
-				   let userID = dict["userID"] as? String
+				   let tagName = dict["tagName"] as? String,
+				   let tagColor = dict["tagColor"] as? String
 				{
-				if userID == Auth.auth().currentUser?.uid {
-					
 					//let dateFormatter = DateFormatter()
 					dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
 					
-					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, userID: userID, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
+					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
 					
 					tempEvents.append(event)
-					
-				}
 				}
 			}
 			eventList = tempEvents
@@ -121,6 +116,24 @@ extension CalendarViewController {
 			self.selectFirstDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
 		})
 		
+	}
+	
+	func observeColors() {
+		let eventRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("colors")
+		
+		eventRef.observe(.value, with: { snapshot in
+			for child in snapshot.children {
+				if let childSnapshot = child as? DataSnapshot,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let name = dict["name"] as? String,
+				   let redValue = dict["redValue"] as? Float,
+				   let blueValue = dict["blueValue"] as? Float,
+				   let greenValue = dict["greenValue"] as? Float
+				{
+					ColorsArray.append(Colors(name: name, redValue: redValue, blueValue: blueValue, greenValue: greenValue))
+				}
+			}
+		})
 	}
 }
 
@@ -160,7 +173,12 @@ extension CalendarViewController: UICollectionViewDataSource {
 		return 1
 	}
 	
-	///Makes sure that only cells containing numbers can be selected by the user. Sets the default background view for selected cells. Sets each cells label to the elements within nums[] which keeps track of the content that will be added to the collectionView.
+	///The number of items in each section is determined by the lengthe of nums[] 	which keeps track of the content that will be added to the collectionView
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return num.count
+	}
+
+	///Makes sure that only cells containing numbers can be selected by the user. Sets the default background view for selected cells. Sets each cells label to the elements within nums[] which keeps track of the content that will be added to the collectionView. Creates dotViews for cells that have events.
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		
@@ -216,7 +234,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 				cellOne.StackViewForDotViews.spacing = 2
 				
 				theDotViewContainer.addSubview(dotView)
-				dotView.backgroundColor = .white
+				dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
 				
 				dotView.center = theDotViewContainer.center
 				dotView.layer.cornerRadius = 2
@@ -224,8 +242,8 @@ extension CalendarViewController: UICollectionViewDataSource {
 				if eventsForDate(parDate: theDate).count == 2 {
 					if(eventsForDate(parDate: theDate)[0] == events)
 					{
-					print("--FirstTime--")
-					dotView.center.x = theDotViewContainer.center.x+2.5
+						print("--FirstTime--")
+						dotView.center.x = theDotViewContainer.center.x+2.5
 					} else {
 						print("--SecondTime--")
 						dotView.center.x = theDotViewContainer.center.x-2.5
@@ -339,11 +357,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 		
 		print("--selectFirstDayOfMonth: \(selectedDate)--")
 	}
-	
-	///The number of items in each section is determined by the lengthe of nums[] 	which keeps track of the content that will be added to the collectionView
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return num.count
-	}
+
 	
 	///Updating userSelectedDate after a new cell is selected by the user
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -354,7 +368,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 	func selectCell(indexPath: IndexPath) {
 		if Int(num[indexPath.item]) != nil
 		{
-		selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
+			selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
 		}
 		tableView.reloadData()
 	}

@@ -28,6 +28,9 @@
 		D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */; };
 		D6F9C69E273DB712003298E1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C69C273DB712003298E1 /* TableViewCell.swift */; };
 		D6F9C69F273DB712003298E1 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F9C69D273DB712003298E1 /* TableViewCell.xib */; };
+		D6F9C6A2273DFD4B003298E1 /* ColorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */; };
+		D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */; };
+		D6F9C6A5273EFF03003298E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C6A4273EFF03003298E1 /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +58,9 @@
 		D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		D6F9C69C273DB712003298E1 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		D6F9C69D273DB712003298E1 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerCell.swift; sourceTree = "<group>"; };
+		D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerCell.xib; sourceTree = "<group>"; };
+		D6F9C6A4273EFF03003298E1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E5BFA0924EBA89551B9722A9 /* Pods-CollectionViewTesting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.release.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +134,8 @@
 				D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */,
 				D6F9C69C273DB712003298E1 /* TableViewCell.swift */,
 				D6F9C69D273DB712003298E1 /* TableViewCell.xib */,
+				D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */,
+				D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -150,6 +158,7 @@
 				D673DA0425D486AA009C56EF /* CalendarHelper.swift */,
 				D6301150267AA10800128ADA /* Event.swift */,
 				D6BE7AB626C6D95200498ECB /* alertUser.swift */,
+				D6F9C6A4273EFF03003298E1 /* Color.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -228,6 +237,7 @@
 				D6F9C69F273DB712003298E1 /* TableViewCell.xib in Resources */,
 				D6BE7AB526C1981400498ECB /* GoogleService-Info.plist in Resources */,
 				D61F04C725D3891D00A2BC05 /* Assets.xcassets in Resources */,
+				D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
 				D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */,
 			);
@@ -287,6 +297,8 @@
 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
 				D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */,
 				D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */,
+				D6F9C6A5273EFF03003298E1 /* Color.swift in Sources */,
+				D6F9C6A2273DFD4B003298E1 /* ColorPickerCell.swift in Sources */,
 				D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */,
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,
 				D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */,

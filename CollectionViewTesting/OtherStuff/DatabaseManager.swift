@@ -27,12 +27,11 @@ final class DatabaseManager {
 		let dateformat = DateFormatter()
 		dateformat.dateStyle = .long
 		dateformat.timeStyle = .long
-		database.child("users").child("events").childByAutoId().setValue([
+		database.child("users").child(Auth.auth().currentUser!.uid).child("events").childByAutoId().setValue([
 			"name": event.nameOfEvent,
 			"date": dateformat.string(from: event.date),
 			"tagName": event.tagName,
 			"tagColor": event.tagColor,
-			"userID": event.userID
 		])
 		print("--newDateTwo: \(String(describing: event.date))--")
 		print("--selectedDate: \(String(describing: selectedDate))")
@@ -50,14 +49,4 @@ final class DatabaseManager {
 struct ProjdularUser : Equatable {
 	let email: String
 	let userID: String
-}
-
-///The definition of a ProdjularEvent.
-struct ProjdularEvent : Equatable {
-	var id: String
-	let nameOfEvent: String
-	let userID: String
-	var date: Date!
-	var tagName: String?
-	var tagColor: String?
 }
