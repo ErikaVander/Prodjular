@@ -107,13 +107,18 @@ extension CalendarViewController {
 				}
 			}
 			eventList = tempEvents
+			print("--Reloading tableView after observeEvents")
+			print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
 			self.tableView.reloadData()
 			self.collectionView.reloadData()
 			///Selecting the current date
 			let date = Date()
+			
+			print("--Date() = \(Date())")
+			print("--date = \(date)")
 			//let date = dateFromNumbers(date: "9 16, 2021")
 			
-			self.selectFirstDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
+			self.selectDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
 		})
 		
 	}
@@ -173,7 +178,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 		return 1
 	}
 	
-	///The number of items in each section is determined by the lengthe of nums[] 	which keeps track of the content that will be added to the collectionView
+	///The number of items in each section is determined by the lengthe of nums[] which keeps track of the content that will be added to the collectionView
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return num.count
 	}
@@ -192,67 +197,65 @@ extension CalendarViewController: UICollectionViewDataSource {
 		
 		if Int(num[indexPath.item]) != nil
 		{
-		let formatter = DateFormatter()
-		formatter.dateFormat = "yyyy-MMM"
-		let formatterTwo = DateFormatter()
-		formatterTwo.dateFormat = "yyyy-MMM-dd"
-		let firstPartOfDate = "\(String(describing: yearLabel.text!))-\(String(describing: monthLabel.text!))"
-		let dateString = "\(firstPartOfDate)-\(num[indexPath.item])"
-		let theDate = formatterTwo.date(from: dateString) ?? formatterTwo.date(from: "2020-August-21")!
-		
-		if indexPath.item <= 49 {
-			cellOne.cellDate = minusMonth(date: theDate)
-		} else if indexPath.item <= 98 {
-			cellOne.cellDate = theDate
-		} else {
-			cellOne.cellDate = plusmonth(date: theDate)
-		}
-		
-		cellOne.automaticallyUpdatesBackgroundConfiguration = true
-		cellOne.isUserInteractionEnabled = true
-		
-		let _: () = cellOne.selectedBackgroundView = {
-			let view = UIView()
-			view.layer.cornerRadius = 5
-			view.backgroundColor = UIColor.darkGray
+			let formatter = DateFormatter()
+			formatter.dateFormat = "yyyy-MMM"
+			let formatterTwo = DateFormatter()
+			formatterTwo.dateFormat = "yyyy-MMM-dd"
+			let firstPartOfDate = "\(String(describing: yearLabel.text!))-\(String(describing: monthLabel.text!))"
+			let dateString = "\(firstPartOfDate)-\(num[indexPath.item])"
+			let theDate = formatterTwo.date(from: dateString) ?? formatterTwo.date(from: "2020-August-21")!
 			
-			return view
-		}()
-		
-		if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
+			if indexPath.item <= 49 {
+				cellOne.cellDate = minusMonth(date: theDate)
+			} else if indexPath.item <= 98 {
+				cellOne.cellDate = theDate
+			} else {
+				cellOne.cellDate = plusmonth(date: theDate)
+			}
 			
-			for events in eventsForDate(parDate: theDate) {
+			cellOne.automaticallyUpdatesBackgroundConfiguration = true
+			cellOne.isUserInteractionEnabled = true
+			
+			let _: () = cellOne.selectedBackgroundView = {
+				let view = UIView()
+				view.layer.cornerRadius = 5
+				view.backgroundColor = UIColor.darkGray
 				
-				let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: Int(cellOne.StackViewForDotViews.frame.width)/eventsForDate(parDate: theDate).count, height: 4))
+				return view
+			}()
+			
+			if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
 				
-				let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 4, height: 4))
-				
-				cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
-				
-				cellOne.StackViewForDotViews.alignment = .fill
-				cellOne.StackViewForDotViews.distribution = .fillEqually
-				cellOne.StackViewForDotViews.spacing = 2
-				
-				theDotViewContainer.addSubview(dotView)
-				dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
-				
-				dotView.center = theDotViewContainer.center
-				dotView.layer.cornerRadius = 2
-				
-				if eventsForDate(parDate: theDate).count == 2 {
-					if(eventsForDate(parDate: theDate)[0] == events)
-					{
-						print("--FirstTime--")
-						dotView.center.x = theDotViewContainer.center.x+2.5
-					} else {
-						print("--SecondTime--")
-						dotView.center.x = theDotViewContainer.center.x-2.5
+				for events in eventsForDate(parDate: theDate) {
+					
+					let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: Int(cellOne.StackViewForDotViews.frame.width)/eventsForDate(parDate: theDate).count, height: 4))
+					
+					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 4, height: 4))
+					
+					cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
+					
+					cellOne.StackViewForDotViews.alignment = .fill
+					cellOne.StackViewForDotViews.distribution = .fillEqually
+					cellOne.StackViewForDotViews.spacing = 2
+					
+					theDotViewContainer.addSubview(dotView)
+					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
+					
+					dotView.center = theDotViewContainer.center
+					dotView.layer.cornerRadius = 2
+					
+					if eventsForDate(parDate: theDate).count == 2 {
+						if(eventsForDate(parDate: theDate)[0] == events)
+						{
+							dotView.center.x = theDotViewContainer.center.x+2.5
+						} else {
+							dotView.center.x = theDotViewContainer.center.x-2.5
+						}
 					}
 				}
 			}
-		}
-		
-		cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
+			
+			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
 		}
 		
 		cellOne.label.text = num[indexPath.item]
@@ -276,10 +279,12 @@ extension CalendarViewController: UICollectionViewDelegate {
 			
 			if calendar.component(.month, from: plusmonth(date: selectedDate)) == calendar.component(.month, from: Date()) {
 				
-				selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) + (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
+				selectDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) + (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
+				
 			} else {
 				
-				selectFirstDayOfMonth(theDateHorizontal: (weekDay(date: plusmonth(date: firstDayOfMonth(date: selectedDate)))), theDateVertical: 0)
+				selectDayOfMonth(theDateHorizontal: (weekDay(date: plusmonth(date: firstDayOfMonth(date: selectedDate)))), theDateVertical: 0)
+				
 			}
 			
 			selectedDate = plusmonth(date: selectedDate)
@@ -288,17 +293,20 @@ extension CalendarViewController: UICollectionViewDelegate {
 			fillMonth(parDate: selectedDate)
 			selectCell(indexPath: (collectionView.indexPathsForSelectedItems?.first)!)
 			collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
+			
+			print("                       --Swiped down--")
 		}
 		
 		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) != distanceFromCenter) {
 			
 			if calendar.component(.month, from: minusMonth(date: selectedDate)) == calendar.component(.month, from: Date()) {
 				
-				selectFirstDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) + (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
+				selectDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) + (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
 				
 			} else {
 				
-				selectFirstDayOfMonth(theDateHorizontal: (weekDay(date: minusMonth(date: firstDayOfMonth(date: selectedDate)))), theDateVertical: 0)
+				selectDayOfMonth(theDateHorizontal: (weekDay(date: minusMonth(date: firstDayOfMonth(date: selectedDate)))), theDateVertical: 0)
+				
 			}
 			
 			selectedDate = minusMonth(date: selectedDate)
@@ -307,6 +315,8 @@ extension CalendarViewController: UICollectionViewDelegate {
 			fillMonth(parDate: selectedDate)
 			selectCell(indexPath: (collectionView.indexPathsForSelectedItems?.first)!)
 			collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
+			
+			print("                       --Swiped up--")
 		}
 	}
 	
@@ -344,7 +354,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 	}
 	
 	///Selecting a specific day of the month using CGPoint. CGPoint is calculated using the collectionViewCell's width and height to determine the indexPath.
-	func selectFirstDayOfMonth(theDateHorizontal: Int, theDateVertical: Int) {
+	func selectDayOfMonth(theDateHorizontal: Int, theDateVertical: Int) {
 		
 		let indexPath = getIndexPathOfCollectionViewCGPoint(theDateHorizontal: theDateHorizontal, theDateVertical: theDateVertical)
 		
@@ -380,6 +390,7 @@ extension CalendarViewController: UITableViewDataSource {
 	///Determines the number of rows in each section of the tableView which is 	determined by the function eventsForDate which returns all the events that are associated with any givin date.
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if eventsForDate(parDate: selectedDate).isEmpty == false {
+			print("--events for date == false")
 			eventsForTableViewCell = eventsForDate(parDate: selectedDate)
 			return eventsForTableViewCell.count
 		} else {
@@ -394,12 +405,14 @@ extension CalendarViewController: UITableViewDataSource {
 		let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
 		
 		if eventsForTableViewCell.isEmpty == true && indexPath.item == 0 {
+			print("--eventsForTableViewCell.isEmpty = true")
 			
 			cellOne.EventLabel.textColor = UIColor.placeholderText
 			cellOne.EventLabel.text = "no events scheduled"
 			cellOne.TimeLabel.text = ""
 			
 		} else {
+			print("--eventsForTableViewCell.isEmpty = false")
 			
 			cellOne.EventLabel.textColor = UIColor.label
 			cellOne.EventLabel.text = eventsForTableViewCell[indexPath.item].nameOfEvent
