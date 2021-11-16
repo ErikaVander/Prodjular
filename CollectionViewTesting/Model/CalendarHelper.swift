@@ -134,3 +134,14 @@ func dateFromNumbersAndMonthLabel(date: String) -> Date {
 	
 	return returnDate!
 }
+
+func currentDateAndTime() -> Date {
+	let month = calendar.component(.month, from: Date())
+	let day = calendar.component(.day, from: Date())
+	let year = calendar.component(.year, from: Date())
+	
+	let hour = calendar.component(.hour, from: Date())
+	let minute = calendar.component(.minute, from: Date())
+	
+	return calendar.date(from: .init(timeZone: TimeZone(abbreviation: "UTC"), year: year, month: month, day: day, hour: hour, minute: minute))!
+}

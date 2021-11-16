@@ -10,8 +10,14 @@ import FirebaseDatabase
 import FirebaseAuth
 import UIKit
 
+protocol DatabaseManagerDelegate {
+	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManager, indexPath: IndexPath)
+}
+
 final class DatabaseManager {
 	static let shared = DatabaseManager()
+	
+	var delegate: DatabaseManagerDelegate?
 	
 	private let database = Database.database().reference()
 	
@@ -40,8 +46,22 @@ final class DatabaseManager {
 	}
 	
 	///Deletes event
-	public func deleteEvent(with event: ProjdularEvent) {
-		self.database.ref.child("events/\(String(describing: event.id))").removeValue()
+	public func deleteEvent(with event: ProjdularEvent, indexPath: IndexPath) {
+		/*self.database.ref.child("users/\(Auth.auth().currentUser!.uid)/events/\(String(describing: event.id))").removeValue() {_,_ in
+			print("--LogicForDeletingTableViewCell about to be called")
+			self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
+			print("--at the end")
+		}*/
+		self.database.ref.child("users").child(Auth.auth().currentUser!.uid).child("events").child(String(describing: event.id)).setValue(nil) {
+			(error: Error?, ref: DatabaseReference) in
+			if let error = error {
+				print("--Data could not be saved: \(error).")
+			} else {
+				self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
+				print("--Data saved successfully!")
+			}
+
+		}
 	}
 }
 
