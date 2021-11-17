@@ -303,13 +303,13 @@ extension CalendarViewController: UICollectionViewDelegate {
 		
 		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) == distanceFromCenter) {
 			
-			if calendar.component(.month, from: plusmonth(date: selectedDate)) == calendar.component(.month, from: currentDateAndTime()) {
-				selectDayOfMonth(theDateHorizontal: weekDay(date: currentDateAndTime()), theDateVertical: (calendar.component(.day, from: currentDateAndTime()) + (weekDay(date: firstDayOfMonth(date: currentDateAndTime())) + 1)) / 7)
-				//selectDayOfMonth(at: 7 + weekDay(date: firstDayOfMonth(date: currentDateAndTime()))+dayOfMonth(date: currentDateAndTime()))
+			if calendar.component(.month, from: plusmonth(date: selectedDate)) == calendar.component(.month, from: Date()) {
+				
+				selectDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) + (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
 				
 			} else {
+				
 				selectDayOfMonth(theDateHorizontal: (weekDay(date: plusmonth(date: firstDayOfMonth(date: selectedDate)))), theDateVertical: 0)
-				//selectDayOfMonth(at: 7 + weekDay(date: firstDayOfMonth(date: plusmonth(date: selectedDate))))
 				
 			}
 			
@@ -325,13 +325,13 @@ extension CalendarViewController: UICollectionViewDelegate {
 		
 		if (abs(distanceFromCenter) == collectionView.frame.size.height && abs(distanceFromCenter) != distanceFromCenter) {
 			
-			if calendar.component(.month, from: minusMonth(date: selectedDate)) == calendar.component(.month, from: currentDateAndTime()) {
-				selectDayOfMonth(theDateHorizontal: weekDay(date: currentDateAndTime()), theDateVertical: (calendar.component(.day, from: currentDateAndTime()) + (weekDay(date: firstDayOfMonth(date: currentDateAndTime())) + 1)) / 7)
-				//selectDayOfMonth(at: 7 + weekDay(date: firstDayOfMonth(date: currentDateAndTime()))+dayOfMonth(date: currentDateAndTime()))
+			if calendar.component(.month, from: minusMonth(date: selectedDate)) == calendar.component(.month, from: Date()) {
+				
+				selectDayOfMonth(theDateHorizontal: weekDay(date: Date()), theDateVertical: (calendar.component(.day, from: Date()) + (weekDay(date: firstDayOfMonth(date: Date())) + 1)) / 7)
 				
 			} else {
+				
 				selectDayOfMonth(theDateHorizontal: (weekDay(date: minusMonth(date: firstDayOfMonth(date: selectedDate)))), theDateVertical: 0)
-				//selectDayOfMonth(at: 7 + weekDay(date: firstDayOfMonth(date: minusMonth(date: selectedDate))))
 				
 			}
 			

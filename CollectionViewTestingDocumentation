@@ -35,8 +35,6 @@ Check out Semantic to change the order the information gets loaded onto the coll
 Plan for the future:
 	-Add each new event to the firebaseDatabase under the specified user.
 
-	-After scrolling is complete, change userSelectedDate to the first of that month, update the tableView.
-
-	-Keyboard closes when the user taps outside of the keyboard in both the EventViewController and the LogInViewController.
+	-Create another test project and create a collection view with sections and paging enabled.
 
 Important note:
