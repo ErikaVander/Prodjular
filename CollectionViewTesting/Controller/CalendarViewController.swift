@@ -121,13 +121,13 @@ extension CalendarViewController {
 			}
 			self.collectionView.reloadData()
 			///Selecting the current date
-			let date = selectedDate
+			//let date = selectedDate
 			
 			//print("--Date() = \(Date())")
 			//print("--date = \(date)")
 			//let date = dateFromNumbers(date: "9 16, 2021")
 			
-			self.selectDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
+			//self.selectDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
 			//self.selectDayOfMonth(at: 7 + weekDay(date: firstDayOfMonth(date: date))+dayOfMonth(date: date))
 		})
 		
@@ -199,21 +199,23 @@ extension CalendarViewController: UICollectionViewDataSource {
 		
 		cellOne.isUserInteractionEnabled = false
 		//cellOne.dotView.isHidden = true
-		
+		cellOne.currentDateIndicatorView.isHidden = true
 		for theView in cellOne.StackViewForDotViews.subviews {
 			theView.removeFromSuperview()
 			cellOne.StackViewForDotViews.removeArrangedSubview(theView)
 		}
-		cellOne.currentDateIndicatorView.isHidden = true
 		
-		if Int(num[indexPath.item]) != nil
-		{
-		cellOne.label.textColor = .white
-		
+		if Int(num[indexPath.item]) != nil {
+			cellOne.label.textColor = .white
+			cellOne.automaticallyUpdatesBackgroundConfiguration = true
+			cellOne.isUserInteractionEnabled = true
+			
 			let formatter = DateFormatter()
 			formatter.dateFormat = "yyyy-MMM"
+			
 			let formatterTwo = DateFormatter()
 			formatterTwo.dateFormat = "yyyy-MMM-dd"
+			
 			let firstPartOfDate = "\(String(describing: yearLabel.text!))-\(String(describing: monthLabel.text!))"
 			let dateString = "\(firstPartOfDate)-\(num[indexPath.item])"
 			
@@ -238,9 +240,6 @@ extension CalendarViewController: UICollectionViewDataSource {
 				cellOne.cellDate = plusmonth(date: theDate)
 			}
 			
-			cellOne.automaticallyUpdatesBackgroundConfiguration = true
-			cellOne.isUserInteractionEnabled = true
-			
 			let _: () = cellOne.selectedBackgroundView = {
 				let view = UIView()
 				view.layer.cornerRadius = 5
@@ -253,22 +252,20 @@ extension CalendarViewController: UICollectionViewDataSource {
 				
 				for events in eventsForDate(parDate: theDate) {
 					let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: Int(cellOne.StackViewForDotViews.frame.width)/eventsForDate(parDate: theDate).count, height: 4))
-					
 					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 7))
+					
 					dotView.layer.borderWidth = 2
 					dotView.layer.borderColor = UIColor.black.cgColor
-					
+					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
+					dotView.layer.cornerRadius = 3.5
+
 					cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
-					
 					cellOne.StackViewForDotViews.alignment = .fill
 					cellOne.StackViewForDotViews.distribution = .fillEqually
 					cellOne.StackViewForDotViews.spacing = 0
 					
 					theDotViewContainer.addSubview(dotView)
-					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
-					
 					dotView.center = theDotViewContainer.center
-					dotView.layer.cornerRadius = 3.5
 					
 					if eventsForDate(parDate: theDate).count == 2 {
 						if(eventsForDate(parDate: theDate)[0] == events)
@@ -280,13 +277,10 @@ extension CalendarViewController: UICollectionViewDataSource {
 					}
 				}
 			}
-			
 			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
 		}
 		
 		cellOne.label.text = num[indexPath.item]
-		
-		setCollectionViewLayout()
 		
 		return cellOne
 	}
@@ -294,8 +288,33 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 //MARK: ColectionViewDelegate
 extension CalendarViewController: UICollectionViewDelegate {
-	///Infinite scrolling enabler for month Calendar
+	func scroll() {
+		collectionView.scrollToItem(at: IndexPath(item: 50, section: 0), at: .top, animated: false)
+		collectionView.reloadData()
+	}
+	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		print("--indexPathForVisibleItems: \(collectionView.indexPathsForVisibleItems[0].item)")
+		if(collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
+			print("up")
+			selectedDate = minusMonth(date: selectedDate)
+			fillMonth(parDate: selectedDate)
+			scroll()
+			yearLabel.text = yearString(date: selectedDate)
+			monthLabel.text = monthString(date: selectedDate)
+			
+		} else if collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 105, section: 0){
+			print("down")
+			selectedDate = plusmonth(date: selectedDate)
+			fillMonth(parDate: selectedDate)
+			scroll()
+			yearLabel.text = yearString(date: selectedDate)
+			monthLabel.text = monthString(date: selectedDate)
+		}
+	}
+	
+	///Infinite scrolling enabler for month Calendar
+	/*func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		let currentOffset: CGPoint = collectionView.contentOffset
 		let contentHeight: CGFloat = collectionView.contentSize.height
 		let centerOffsetY: CGFloat = (contentHeight - collectionView.bounds.size.height)/2.0
@@ -364,7 +383,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 	
 	func getIndexPathsForVisibleItems(at: Int) -> IndexPath {
 		return collectionView.indexPathsForVisibleItems[at]
-	}
+	}*/
 	
 	///Setting up how each cell in the month Calendar will look
 	func setCollectionViewLayout() {
@@ -377,14 +396,17 @@ extension CalendarViewController: UICollectionViewDelegate {
 		flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		flowLayout.sectionInsetReference = .fromSafeArea
 		flowLayout.sectionInset = UIEdgeInsets(top: 0, left: relativeWidth, bottom: 0, right: relativeWidth)
-		
-		collectionView.layer.cornerRadius = 5
+		flowLayout.minimumLineSpacing = 0
+		flowLayout.minimumInteritemSpacing = 0
 		
 		collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
+		collectionView.layer.cornerRadius = 5
+		collectionView.isPagingEnabled = true
+
 	}
 	
 	///Selecting a specific day of the month using CGPoint. CGPoint is calculated using the collectionViewCell's width and height to determine the indexPath.
-	func selectDayOfMonth(theDateHorizontal: Int, theDateVertical: Int /*at: Int*/) {
+	/*func selectDayOfMonth(theDateHorizontal: Int, theDateVertical: Int /*at: Int*/) {
 		
 		let indexPath = getIndexPathOfCollectionViewCGPoint(theDateHorizontal: theDateHorizontal, theDateVertical: theDateVertical)
 		/*print("--indexPathsForVisibleItems.count: \(collectionView.indexPathsForVisibleItems.count)")
@@ -400,7 +422,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 		collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt((7 + weekDay(date: firstDayOfMonth(date: selectedDate))))))
 		
 		//print("--selectFirstDayOfMonth: \(selectedDate)--")
-	}
+	}*/
 
 	
 	///Updating userSelectedDate after a new cell is selected by the user
