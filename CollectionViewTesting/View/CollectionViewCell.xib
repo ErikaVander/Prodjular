@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,13 +26,17 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhJ-eL-cKt">
                         <rect key="frame" x="3" y="3" width="47" height="47"/>
                     </view>
-                    <stackView hidden="YES" opaque="NO" contentMode="scaleAspectFit" placeholderIntrinsicWidth="38" placeholderIntrinsicHeight="8" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="h8g-kf-JKy">
-                        <rect key="frame" x="7.5" y="34.5" width="38" height="7"/>
-                        <color key="backgroundColor" name="AccentColor"/>
-                    </stackView>
                     <view autoresizesSubviews="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1Y-16-b7x">
                         <rect key="frame" x="6" y="32.5" width="41" height="8"/>
+                        <subviews>
+                            <view autoresizesSubviews="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="41" placeholderIntrinsicHeight="8" id="Lsv-KI-mGc">
+                                <rect key="frame" x="0.0" y="0.0" width="41" height="8"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+                        </subviews>
                         <constraints>
+                            <constraint firstItem="Lsv-KI-mGc" firstAttribute="leading" secondItem="d1Y-16-b7x" secondAttribute="leading" id="Dqp-Ln-7lt"/>
+                            <constraint firstItem="Lsv-KI-mGc" firstAttribute="top" secondItem="d1Y-16-b7x" secondAttribute="top" id="TzC-wS-s16"/>
                             <constraint firstAttribute="height" constant="8" identifier="DotViewContainer.Height" id="ZfR-jV-VOg"/>
                         </constraints>
                     </view>
@@ -44,30 +47,21 @@
                     <constraint firstItem="dhJ-eL-cKt" firstAttribute="centerX" secondItem="oe9-7P-TU3" secondAttribute="centerX" identifier="CurrentDateIndicatorView.Center.x" id="8Vy-Qc-uvg"/>
                     <constraint firstItem="eEH-bX-dVK" firstAttribute="centerX" secondItem="oe9-7P-TU3" secondAttribute="centerX" identifier="Label.Center.X" id="Gz3-Dd-9A5"/>
                     <constraint firstItem="d1Y-16-b7x" firstAttribute="top" secondItem="eEH-bX-dVK" secondAttribute="bottom" constant="-1" identifier="DotViewContainer.Top" id="Hlm-Kr-jK6"/>
+                    <constraint firstItem="d1Y-16-b7x" firstAttribute="centerX" secondItem="oe9-7P-TU3" secondAttribute="centerX" id="IWN-54-gep"/>
                     <constraint firstItem="dhJ-eL-cKt" firstAttribute="width" secondItem="oe9-7P-TU3" secondAttribute="height" constant="-6" identifier="CurrentDateIndicatorView.Width" id="J8R-Me-tT5"/>
                     <constraint firstItem="d1Y-16-b7x" firstAttribute="leading" secondItem="oe9-7P-TU3" secondAttribute="leading" constant="6" identifier="DotViewContainer.leading" id="NH9-fG-7h3"/>
                     <constraint firstItem="dhJ-eL-cKt" firstAttribute="centerY" secondItem="oe9-7P-TU3" secondAttribute="centerY" identifier="CurrentDateIndicatorView.center.y" id="V3P-ag-JgF"/>
-                    <constraint firstItem="h8g-kf-JKy" firstAttribute="top" secondItem="eEH-bX-dVK" secondAttribute="bottom" constant="1" identifier="StackViewForDotView.top" id="ZwX-Pg-Rpd"/>
-                    <constraint firstItem="h8g-kf-JKy" firstAttribute="top" secondItem="eEH-bX-dVK" secondAttribute="bottom" constant="1" identifier="StackViewForDotViews.top" id="knu-LR-xBy"/>
-                    <constraint firstItem="d1Y-16-b7x" firstAttribute="centerX" secondItem="oe9-7P-TU3" secondAttribute="centerX" identifier="DotViewContainer.center.x" id="sqw-UM-nWW"/>
-                    <constraint firstItem="h8g-kf-JKy" firstAttribute="leading" secondItem="oe9-7P-TU3" secondAttribute="leading" constant="7.5" identifier="StackViewForDotViews.Leading" id="vad-8C-u7e"/>
-                    <constraint firstItem="h8g-kf-JKy" firstAttribute="bottom" secondItem="eEH-bX-dVK" secondAttribute="bottom" constant="8" identifier="StackViewForDotViews.Bottom" id="yCe-eI-TiB"/>
                 </constraints>
             </collectionViewCellContentView>
             <gestureRecognizers/>
             <size key="customSize" width="53" height="53"/>
             <connections>
-                <outlet property="StackViewForDotViews" destination="h8g-kf-JKy" id="PlL-6k-2PV"/>
                 <outlet property="currentDateIndicatorView" destination="dhJ-eL-cKt" id="oif-Nc-ZyV"/>
                 <outlet property="dotViewContainer" destination="d1Y-16-b7x" id="yLY-zk-dFl"/>
                 <outlet property="label" destination="eEH-bX-dVK" id="bpB-Fg-Psl"/>
+                <outlet property="theDotViewBackgroundView" destination="Lsv-KI-mGc" id="iEa-iK-LVW"/>
             </connections>
             <point key="canvasLocation" x="-83.333333333333343" y="44.53125"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-    </resources>
 </document>
