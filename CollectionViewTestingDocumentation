@@ -12,7 +12,7 @@ Progress:
 		Commit ID: b069c54e40f89632ca167bd725d3d6657521cdc2
 
 	}
-	Brocken Pagination bug {
+	Broken Pagination bug {
 		Problem Description/Commit Description:
 			repository is currently stuck at broken pagination scroll view for collectionView. It almost works but it doesn't it may be helpful for future reference.
 
@@ -36,5 +36,7 @@ Plan for the future:
 	-Add each new event to the firebaseDatabase under the specified user.
 
 	-Create another test project and create a collection view with sections and paging enabled.
+
+	Hello
 
 Important note:

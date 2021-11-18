@@ -39,8 +39,6 @@ final class DatabaseManager {
 			"tagName": event.tagName,
 			"tagColor": event.tagColor,
 		])
-		print("--newDateTwo: \(String(describing: event.date))--")
-		print("--selectedDate: \(String(describing: selectedDate))")
 		selectedDate = event.date
 		eventList.append(event)
 	}

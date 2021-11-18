@@ -120,15 +120,10 @@ extension CalendarViewController {
 				initialLoadingOfData = false
 			}
 			self.collectionView.reloadData()
-			///Selecting the current date
-			//let date = selectedDate
 			
-			//print("--Date() = \(Date())")
-			//print("--date = \(date)")
-			//let date = dateFromNumbers(date: "9 16, 2021")
+			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDate))+dayOfMonth(date: selectedDate)
 			
-			//self.selectDayOfMonth(theDateHorizontal: weekDay(date: date), theDateVertical: ((calendar.component(.day, from: date) + (weekDay(date: firstDayOfMonth(date: date)) + 1)) / 7))
-			//self.selectDayOfMonth(at: 7 + weekDay(date: firstDayOfMonth(date: date))+dayOfMonth(date: date))
+			self.collectionView.selectItem(at: IndexPath(item: (49+dateToSelectPlusSeven-1), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
 		})
 		
 	}
@@ -198,15 +193,13 @@ extension CalendarViewController: UICollectionViewDataSource {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		
 		cellOne.isUserInteractionEnabled = false
-		//cellOne.dotView.isHidden = true
 		cellOne.currentDateIndicatorView.isHidden = true
-		for theView in cellOne.StackViewForDotViews.subviews {
+		cellOne.label.textColor = .white
+		for theView in cellOne.dotViewContainer.subviews {
 			theView.removeFromSuperview()
-			cellOne.StackViewForDotViews.removeArrangedSubview(theView)
 		}
 		
 		if Int(num[indexPath.item]) != nil {
-			cellOne.label.textColor = .white
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
 			cellOne.isUserInteractionEnabled = true
 			
@@ -227,9 +220,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 				cellOne.cellDate = theDate
 				
 				if(formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())){
-					print("--\(formatterTwo.string(from: theDate))  \(formatterTwo.string(from: currentDateAndTime()))")
-					print("--indexPath: \(indexPath.item)")
-					cellOne.label.textColor = UIColor(named: "MyRed")
+					//cellOne.label.textColor = UIColor(named: "MyRed")
 					
 					cellOne.currentDateIndicatorView.layer.borderColor = UIColor.white.cgColor
 					cellOne.currentDateIndicatorView.layer.borderWidth = 2
@@ -251,30 +242,98 @@ extension CalendarViewController: UICollectionViewDataSource {
 			if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
 				
 				for events in eventsForDate(parDate: theDate) {
-					let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: Int(cellOne.StackViewForDotViews.frame.width)/eventsForDate(parDate: theDate).count, height: 4))
-					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 7, height: 7))
+					//let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: Int(cellOne.StackViewForDotViews.frame.width)/eventsForDate(parDate: theDate).count, height: 4))
 					
-					dotView.layer.borderWidth = 2
-					dotView.layer.borderColor = UIColor.black.cgColor
+					
+					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 4, height: 4))
+					//let theDotViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: dotView.frame.height+4, height: dotView.frame.height+4))
+					let theDotViewBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: dotView.frame.width+4, height: dotView.frame.height+4))
+					
 					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
-					dotView.layer.cornerRadius = 3.5
+					dotView.layer.cornerRadius = 2
+					
+				
 
-					cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
-					cellOne.StackViewForDotViews.alignment = .fill
-					cellOne.StackViewForDotViews.distribution = .fillEqually
-					cellOne.StackViewForDotViews.spacing = 0
+					//cellOne.StackViewForDotViews.addArrangedSubview(theDotViewContainer)
+					//cellOne.StackViewForDotViews.alignment = .fill
+					//cellOne.StackViewForDotViews.distribution = .fillProportionally
+					//cellOne.StackViewForDotViews.distribution = .fillProportionally
+					//cellOne.StackViewForDotViews.spacing = 0
 					
-					theDotViewContainer.addSubview(dotView)
-					dotView.center = theDotViewContainer.center
+					//theDotViewContainer.addSubview(theDotViewBackgroundView)
 					
-					if eventsForDate(parDate: theDate).count == 2 {
+					//cellOne.dotViewContainer.addSubview(theDotViewBackgroundView)
+					//cellOne.dotViewContainer.addSubview(dotView)
+					
+					//theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.leadingAnchor).isActive = true
+
+					//cellOne.dotViewContainer.backgroundColor = .blue
+					
+					cellOne.dotViewContainer.addSubview(theDotViewBackgroundView)
+					theDotViewBackgroundView.addSubview(dotView)
+					//cellOne.dotViewContainer.addSubview(dotView)
+					theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+					
+					theDotViewBackgroundView.backgroundColor = .black
+					theDotViewBackgroundView.layer.cornerRadius = 4
+					let widthConstraint: NSLayoutConstraint = theDotViewBackgroundView.widthAnchor.constraint(equalTo: dotView.widthAnchor, constant: 4)
+					widthConstraint.isActive = true
+					widthConstraint.identifier = "widthConstraint"
+					let heightConstraint: NSLayoutConstraint = theDotViewBackgroundView.heightAnchor.constraint(equalTo: dotView.heightAnchor, constant: 4)
+					heightConstraint.isActive = true
+					heightConstraint.identifier = "heightConstraint"
+
+					if cellOne.dotViewContainer.subviews.count == 1 {
+						print("--isEmpty")
+						print("--subviews.count: \(cellOne.dotViewContainer.subviews.count)")
+//						let finalConstraintX: NSLayoutConstraint = dotView.centerXAnchor.constraint(equalTo: cellOne.dotViewContainer.leadingAnchor, constant: 2)
+//						finalConstraintX.isActive = true
+//						finalConstraintX.identifier = "finalConstraintX"
+						
+						let firstConstraint: NSLayoutConstraint = theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.dotViewContainer.leadingAnchor)
+						firstConstraint.isActive = true
+						firstConstraint.identifier = "isEmptyConstraint"
+						
+						print("firstConstraint: \(firstConstraint)")
+					} else {
+						print("--isNotEmpty")
+						print("--subviews.count: \(cellOne.dotViewContainer.subviews.count)")
+						
+						let secondConstraint: NSLayoutConstraint = theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.dotViewContainer.leadingAnchor, constant: CGFloat((cellOne.dotViewContainer.subviews.count)-1)*(theDotViewBackgroundView.frame.width-2))
+						secondConstraint.isActive = true
+						secondConstraint.identifier = "isNotEmptyConstraint"
+						
+						
+
+//						let finalConstraintX: NSLayoutConstraint = dotView.centerXAnchor.constraint(equalTo: cellOne.dotViewContainer.leadingAnchor, constant: CGFloat((cellOne.dotViewContainer.subviews.count)-1)*theDotViewBackgroundView.frame.width+2)
+//						finalConstraintX.isActive = true
+//						finalConstraintX.identifier = "finalConstraintX"
+					}
+					
+					dotView.center.y = theDotViewBackgroundView.center.y
+					dotView.center.x = theDotViewBackgroundView.center.x
+					//cellOne.StackViewForDotViews.isHidden = true
+					
+					//theDotViewBackgroundView.center.y = cellOne.dotViewContainer.center.y
+					//dotView.center.x = theDotViewBackgroundView.center.x
+					//dotView.center.y = theDotViewBackgroundView.center.y
+					
+					/*for subviews in cellOne.StackViewForDotViews.subviews {
+						subviews.sizeToFit()
+						subviews.layoutIfNeeded()
+					}*/
+					
+					/*if eventsForDate(parDate: theDate).count == 2 {
+						let distanceFromCenter = 3
 						if(eventsForDate(parDate: theDate)[0] == events)
 						{
-							dotView.center.x = theDotViewContainer.center.x+2.5
+						dotView.center.x = theDotViewContainer.center.x+CGFloat(distanceFromCenter)
+						theDotViewBackgroundView.center.x = theDotViewContainer.center.x+CGFloat(distanceFromCenter)
 						} else {
-							dotView.center.x = theDotViewContainer.center.x-2.5
+							dotView.center.x = theDotViewContainer.center.x-CGFloat(distanceFromCenter)
+							theDotViewBackgroundView.center.x = theDotViewContainer.center.x-CGFloat(distanceFromCenter)
 						}
-					}
+					}*/
 				}
 			}
 			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
@@ -294,22 +353,21 @@ extension CalendarViewController: UICollectionViewDelegate {
 	}
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		print("--indexPathForVisibleItems: \(collectionView.indexPathsForVisibleItems[0].item)")
 		if(collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
-			print("up")
 			selectedDate = minusMonth(date: selectedDate)
 			fillMonth(parDate: selectedDate)
 			scroll()
 			yearLabel.text = yearString(date: selectedDate)
 			monthLabel.text = monthString(date: selectedDate)
+			selectCellAfterScroll()
 			
 		} else if collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 105, section: 0){
-			print("down")
 			selectedDate = plusmonth(date: selectedDate)
 			fillMonth(parDate: selectedDate)
 			scroll()
 			yearLabel.text = yearString(date: selectedDate)
 			monthLabel.text = monthString(date: selectedDate)
+			selectCellAfterScroll()
 		}
 	}
 	
@@ -425,10 +483,15 @@ extension CalendarViewController: UICollectionViewDelegate {
 	}*/
 
 	
-	///Updating userSelectedDate after a new cell is selected by the user
+	///Updating UI after user selects a new date
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		print("--indexPathsForVisibleItems.count: \(collectionView.indexPathsForVisibleItems.count)")
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		selectCell(indexPath: indexPath)
+		for subview in cell.StackViewForDotViews.arrangedSubviews {
+			for subviews in subview.subviews {
+				subviews.layer.borderColor = UIColor.darkGray.cgColor
+			}
+		}
 	}
 	
 	///Logic for updating userSelectedDate after a new cell is selected by user
@@ -442,6 +505,22 @@ extension CalendarViewController: UICollectionViewDelegate {
 			noEventsScheduledLabel.text = "no events scheduled"
 		}
 	}
+	
+	func selectCellAfterScroll() {
+		if firstDayOfMonth(date: selectedDate) == firstDayOfMonth(date: currentDateAndTime()) {
+			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: currentDateAndTime()))+dayOfMonth(date: currentDateAndTime())
+			
+			collectionView.selectItem(at: IndexPath(item: 49+dateToSelectPlusSeven-1, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
+			
+			selectCell(indexPath: (IndexPath(item: 49+dateToSelectPlusSeven-1, section: 0)))
+		} else {
+			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDate))
+			
+			collectionView.selectItem(at: IndexPath(item: (49+dateToSelectPlusSeven), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
+			
+			selectCell(indexPath: (collectionView.indexPathsForSelectedItems?.first)!)
+		}
+	}
 }
 
 //MARK: TableViewDataSource
@@ -452,7 +531,6 @@ extension CalendarViewController: UITableViewDataSource {
 		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
 		
 		if eventsForDate(parDate: selectedDate).isEmpty == false {
-			print("--events for date == false")
 			return eventsForTableViewCell.count
 		} else {
 			return 0
@@ -468,7 +546,6 @@ extension CalendarViewController: UITableViewDataSource {
 		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
 		
 		if tableView.numberOfRows(inSection: 0) == 0 {
-			print("--eventsForTableViewCell.isEmpty = true")
 			
 			noEventsScheduledLabel.textColor = UIColor.placeholderText
 			noEventsScheduledLabel.text = "no events scheduled"
@@ -478,7 +555,6 @@ extension CalendarViewController: UITableViewDataSource {
 			cellOne.TimeLabel.text = ""
 			
 		} else {
-			print("--eventsForTableViewCell.isEmpty = false")
 			
 			noEventsScheduledLabel.text = ""
 			
@@ -492,8 +568,6 @@ extension CalendarViewController: UITableViewDataSource {
 			cellOne.TimeLabel.text = temp.string(from: eventsForTableViewCell[indexPath.item].date)
 			
 		}
-		
-		print("HelloThisIsForPersonalAccessTokenStuff")
 		return cellOne
 	}
 }
@@ -526,5 +600,12 @@ extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegate {
 		if editingStyle == .delete {
 			DatabaseManager.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
 		}
+	}
+}
+
+extension NSLayoutConstraint {
+	override public var description: String {
+		let id = identifier ?? ""
+		return "--id: \(id), constant: \(constant)" //you may print whatever you want here
 	}
 }

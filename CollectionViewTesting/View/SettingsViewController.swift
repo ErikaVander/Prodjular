@@ -36,7 +36,5 @@ class SettingsViewController: UIViewController
 			
 			present(vc!, animated: true, completion: nil)
 		}
-		
-		print(">>>>>>>>>>>>>>>>>>YouAreHere")
 	}
 }

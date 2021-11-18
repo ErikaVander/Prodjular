@@ -33,22 +33,22 @@ extension LogInViewController {
 	///This is where the warning to the user when there is an error logging in should occurr
 	func login() {
 		guard let email = Email.text else {
-			print(">>>>>NoEmailProvided<<<<<")
+			print("--NoEmailProvided")
 			return
 		}
 		guard let password = Password.text else {
-			print(">>>>>NoPasswordProvided<<<<<")
+			print("--NoPasswordProvided")
 			return
 		}
 		
 		Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
 			guard error == nil else {
-				print(">>>>>Error logging in: \(error!.localizedDescription)<<<<<")
+				print("--Error logging in: \(error!.localizedDescription)")
 				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
 			isLoggedIn = true
-			print(">>>>>User has signed in: \(authResult?.email ?? "No user has signed in<<<<<") isLoggedIn: \(isLoggedIn)")
+			print("--User has signed in: \(authResult?.email ?? "No user has signed in") isLoggedIn: \(isLoggedIn)")
 			alertUser(view: self, title: "Success", content: "You are now logged in", dismissView: true)
 		}
 	}
@@ -65,7 +65,6 @@ extension LogInViewController: UITextFieldDelegate {
 		} else {
 			Password.resignFirstResponder()
 			login()
-			print(">>>>>KeyboardReturnButtonHit<<<<<")
 		}
 		return true
 	}

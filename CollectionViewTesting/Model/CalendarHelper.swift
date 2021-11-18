@@ -130,7 +130,6 @@ func dateFromNumbersAndMonthLabel(date: String) -> Date {
 	dateFormatter.dateFormat = "MMMM d, yyyy"
 	
 	let returnDate = dateFormatter.date(from: date)
-	print("--returnDate: \(String(describing: returnDate))--")
 	
 	return returnDate!
 }
