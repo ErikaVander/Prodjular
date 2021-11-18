@@ -16,10 +16,19 @@ class CollectionViewCell: UICollectionViewCell {
 	//@IBOutlet weak var dotView: UIView!
 	//@IBOutlet weak var DotViewContainer: UIView!
 	var cellDate: Date?
+	var arrayOfTheDotViewBackgroundViews = [UIView]()
 	
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+	
+	func changeBackgroundBlack() {
+		theDotViewBackgroundView.backgroundColor = .black
+	}
+	
+	func changeBackgroundDarkGrey() {
+		theDotViewBackgroundView.backgroundColor = .darkGray
+	}
 
 }
