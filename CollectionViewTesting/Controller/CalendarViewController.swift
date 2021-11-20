@@ -16,6 +16,7 @@ var selectedDate = currentDateAndTime()
 let dateFormatter = DateFormatter()
 var eventsForTableViewCell = [ProjdularEvent]()
 var initialLoadingOfData = true
+var previouslySelectedCellIndexPath: IndexPath?
 
 class CalendarViewController: UIViewController {
 	@IBOutlet weak var monthLabel: UILabel!
@@ -32,10 +33,9 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
 		
 		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-		
+
 		print("--currentDate = \(currentDateAndTime())")
 		Database.database().isPersistenceEnabled = true
-		print("--observing events from viewDidLoad")
 		observeEvents()
 		
 		///Checking to see if a user is signed in. If not, shows the sign-in screen
@@ -121,6 +121,7 @@ extension CalendarViewController {
 			}
 			
 			self.collectionView.reloadData()
+			previouslySelectedCellIndexPath = self.collectionView.indexPathsForVisibleItems.first
 			
 			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDate))+dayOfMonth(date: selectedDate)
 			
@@ -179,7 +180,6 @@ extension CalendarViewController: GADBannerViewDelegate {
 
 //MARK: CollectionViewDataSource
 extension CalendarViewController: UICollectionViewDataSource {
-	
 	///The number of sections in the month collectionView calendar
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
@@ -192,14 +192,14 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 	///Makes sure that only cells containing numbers can be selected by the user. Sets the default background view for selected cells. Sets each cells label to the elements within nums[] which keeps track of the content that will be added to the collectionView. Creates dotViews for cells that have events.
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		print("--cellForItemAtCalled \(indexPath.item)")
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		
 		cellOne.isUserInteractionEnabled = false
 		cellOne.currentDateIndicatorView.isHidden = true
 		cellOne.label.textColor = .white
-		for theView in cellOne.dotViewContainer.subviews {
-			theView.removeFromSuperview()
+		cellOne.theDotViewBackgroundView.isHidden = true
+		for subviews in cellOne.theDotViewBackgroundView.subviews {
+			subviews.removeFromSuperview()
 		}
 		
 		if Int(num[indexPath.item]) != nil {
@@ -234,56 +234,66 @@ extension CalendarViewController: UICollectionViewDataSource {
 			}
 			
 			if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
-				cellOne.dotViewContainer.addSubview(cellOne.theDotViewBackgroundView)
+				cellOne.theDotViewBackgroundView.isHidden = false
 				
 				for events in eventsForDate(parDate: theDate) {
+					let dotViewWidth: CGFloat = 4
+					let dotViewHeight: CGFloat = 4
 					
-					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: 4, height: 4))
+					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: dotViewWidth, height: dotViewHeight))
 					
 					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
-					dotView.layer.cornerRadius = 2
+					dotView.layer.cornerRadius = dotViewWidth/2
 
 					cellOne.theDotViewBackgroundView.addSubview(dotView)
 					
 					cellOne.theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 					dotView.translatesAutoresizingMaskIntoConstraints = false
 					
-					cellOne.changeBackgroundBlack()
-					
+					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) {
+						cellOne.changeBackgroundDarkGrey()
+						previouslySelectedCellIndexPath = indexPath
+					} else {
+						cellOne.changeBackgroundBlack()
+					}
 					cellOne.theDotViewBackgroundView.layer.cornerRadius = 4
 					
-					let width = dotView.widthAnchor.constraint(equalToConstant: 4)
-					width.isActive = true
-					width.identifier = "dotViewWidth"
+					let dotViewWidthConstraint = dotView.widthAnchor.constraint(equalToConstant: dotViewWidth)
+					dotViewWidthConstraint.isActive = true
+					dotViewWidthConstraint.identifier = "dotViewWidth"
 					dotView.heightAnchor.constraint(equalToConstant: 4).isActive = true
 					
-					let widthConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.widthAnchor.constraint(equalTo: dotView.widthAnchor, multiplier: CGFloat(eventsForDate(parDate: theDate).count), constant: CGFloat(2*(eventsForDate(parDate: theDate).count+1)))
-					widthConstraint.isActive = true
-					widthConstraint.identifier = "widthConstraint"
+					let theDotViewBackgroundViewWidthConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.widthAnchor.constraint(equalTo: dotView.widthAnchor, multiplier: CGFloat(eventsForDate(parDate: theDate).count), constant: (dotViewWidth/2)*CGFloat((eventsForDate(parDate: theDate).count+1)))
+					theDotViewBackgroundViewWidthConstraint.isActive = true
+					theDotViewBackgroundViewWidthConstraint.identifier = "theDotViewBackgroundView-Width-Constraint"
 					
-					let heightConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.heightAnchor.constraint(equalTo: dotView.heightAnchor, constant: 4)
-					heightConstraint.isActive = true
-					heightConstraint.identifier = "heightConstraint"
+					let theDotViewBackgroundViewHeightConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.heightAnchor.constraint(equalTo: dotView.heightAnchor, constant: dotViewHeight)
+					theDotViewBackgroundViewHeightConstraint.isActive = true
+					theDotViewBackgroundViewHeightConstraint.identifier = "theDotViewBackgroundView-Height-Constraint"
 
-					let firstConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.dotViewContainer.leadingAnchor)
-					firstConstraint.isActive = true
-					firstConstraint.identifier = "isEmptyConstraint"
+					let theDotViewBackgroundViewLeadingConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.leadingAnchor, constant: 6)
+					theDotViewBackgroundViewLeadingConstraint.isActive = true
+					theDotViewBackgroundViewLeadingConstraint.identifier = "isEmptyConstraint"
+					
+					let theDotViewBackgroundtopConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.bottomAnchor.constraint(equalTo: cellOne.label.bottomAnchor, constant: 7)
+					theDotViewBackgroundtopConstraint.isActive = true
+					theDotViewBackgroundtopConstraint.identifier = "theDotViewBackgroundTopConstraint"
 
 					if cellOne.theDotViewBackgroundView.subviews.count == 1 {
-						let firstDotViewConstraint: NSLayoutConstraint = dotView.leadingAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.leadingAnchor, constant: 2)
-						firstDotViewConstraint.isActive = true
-						firstDotViewConstraint.identifier = "firstDotViewContainer"
+						let dotViewLeadingConstraint: NSLayoutConstraint = dotView.leadingAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.leadingAnchor, constant: 2)
+						dotViewLeadingConstraint.isActive = true
+						dotViewLeadingConstraint.identifier = "firstDotViewContainer"
 						
 					} else {
-						let secondDotViewConstraint: NSLayoutConstraint = dotView.leadingAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.subviews[0].leadingAnchor, constant: CGFloat((cellOne.theDotViewBackgroundView.subviews.count)-1)*(dotView.frame.width+2))
-						secondDotViewConstraint.isActive = true
-						secondDotViewConstraint.identifier = "secondDotViewConstraint"
+						let dotViewLeadingConstraint: NSLayoutConstraint = dotView.leadingAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.subviews[0].leadingAnchor, constant: CGFloat((cellOne.theDotViewBackgroundView.subviews.count)-1)*(dotView.frame.width+2))
+						dotViewLeadingConstraint.isActive = true
+						dotViewLeadingConstraint.identifier = "secondDotViewConstraint"
 					}
 					
 					let dotViewYConstraint: NSLayoutConstraint = dotView.centerYAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.centerYAnchor)
 					dotViewYConstraint.isActive = true
 					dotViewYConstraint.identifier = "dotViewYConstraint"
-					}
+				}
 			}
 			let _: () = cellOne.selectedBackgroundView = {
 				let view = UIView()
@@ -304,11 +314,13 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 //MARK: ColectionViewDelegate
 extension CalendarViewController: UICollectionViewDelegate {
+	///The logit for enabling infinite scrolling.
 	func scroll() {
 		collectionView.scrollToItem(at: IndexPath(item: 50, section: 0), at: .top, animated: false)
 		collectionView.reloadData()
 	}
 	
+	///enabling infinite scroll by calling the scroll() function.
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		if(collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
 			selectedDate = minusMonth(date: selectedDate)
@@ -347,12 +359,18 @@ extension CalendarViewController: UICollectionViewDelegate {
 		collectionView.isPagingEnabled = true
 
 	}
-
-	///Updating UI after user selects a new date by changing theDotViewBackgroundView.backgroundColor to the color of the selected cell's backgroundColor.This method then updates the userSelectedDate by calling the selectCell method, which also updates the tableView.
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
-		cell.changeBackgroundDarkGrey()
-		selectCell(indexPath: indexPath)
+	
+	///Checks to see if the value contained in cellOne.label.text is an integer. If true it updates the previously selected cell and the newly selected cell so that theDotViewBackGrouldView of CollectionViewCell's background color is equal to the background of the cell.
+	func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+		if(Int(cellOne.label.text!) != nil) {
+			selectCell(indexPath: indexPath)
+			collectionView.reloadItems(at: [indexPath, previouslySelectedCellIndexPath!])
+			//collectionView.reloadItems(at: [previouslySelectedCellIndexPath!])
+			return true
+		} else {
+			return false
+		}
 	}
 	
 	///Logic for updating userSelectedDate after a new cell is selected by user. This method then reloads the tableView data if data exists, otherwise it informs the user that no events are scheduled for the newly selected date.
@@ -365,10 +383,6 @@ extension CalendarViewController: UICollectionViewDelegate {
 		if(tableView.numberOfRows(inSection: 0) == 0) {
 			noEventsScheduledLabel.text = "no events scheduled"
 		}
-		
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
-		print("--selectCell()")
-		cell.changeBackgroundDarkGrey()
 	}
 	
 	///selects the required cell. if the selectedDate is within the current month, the current date is selected using currentDateAndTime(). Otherwise the first day of the currently displayed month is selected. This method then calls selectCell() to update the selectedDate and reload the tableView data or show that there are no events scheduled on the newly selected date.
@@ -473,3 +487,4 @@ extension NSLayoutConstraint {
 		return "--id: \(id), constant: \(constant)" //you may print whatever you want here
 	}
 }
+

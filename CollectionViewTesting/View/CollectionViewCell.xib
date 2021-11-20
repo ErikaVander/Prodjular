@@ -35,6 +35,7 @@
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QeW-P9-obG">
                         <rect key="frame" x="6" y="22" width="41" height="8"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <accessibility key="accessibilityConfiguration" identifier="theDotViewBackgroundView"/>
                     </view>
                 </subviews>
                 <constraints>
