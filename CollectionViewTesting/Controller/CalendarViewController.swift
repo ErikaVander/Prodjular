@@ -237,7 +237,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 				cellOne.theDotViewBackgroundView.isHidden = false
 				
 				for events in eventsForDate(parDate: theDate) {
-					let dotViewWidth: CGFloat = 4
+					let dotViewWidth: CGFloat = 2
 					let dotViewHeight: CGFloat = 4
 					
 					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: dotViewWidth, height: dotViewHeight))
@@ -263,7 +263,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 					dotViewWidthConstraint.identifier = "dotViewWidth"
 					dotView.heightAnchor.constraint(equalToConstant: 4).isActive = true
 					
-					let theDotViewBackgroundViewWidthConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.widthAnchor.constraint(equalTo: dotView.widthAnchor, multiplier: CGFloat(eventsForDate(parDate: theDate).count), constant: (dotViewWidth/2)*CGFloat((eventsForDate(parDate: theDate).count+1)))
+					let theDotViewBackgroundViewWidthConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.widthAnchor.constraint(equalTo: dotView.widthAnchor, multiplier: CGFloat(eventsForDate(parDate: theDate).count), constant: 2*CGFloat((eventsForDate(parDate: theDate).count+1)))
 					theDotViewBackgroundViewWidthConstraint.isActive = true
 					theDotViewBackgroundViewWidthConstraint.identifier = "theDotViewBackgroundView-Width-Constraint"
 					
@@ -271,23 +271,24 @@ extension CalendarViewController: UICollectionViewDataSource {
 					theDotViewBackgroundViewHeightConstraint.isActive = true
 					theDotViewBackgroundViewHeightConstraint.identifier = "theDotViewBackgroundView-Height-Constraint"
 
-					let theDotViewBackgroundViewLeadingConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.leadingAnchor, constant: 6)
+					let theDotViewBackgroundViewLeadingConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.leadingAnchor.constraint(equalTo: cellOne.leadingAnchor, constant: 7)
 					theDotViewBackgroundViewLeadingConstraint.isActive = true
 					theDotViewBackgroundViewLeadingConstraint.identifier = "isEmptyConstraint"
 					
-					let theDotViewBackgroundtopConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.bottomAnchor.constraint(equalTo: cellOne.label.bottomAnchor, constant: 7)
-					theDotViewBackgroundtopConstraint.isActive = true
-					theDotViewBackgroundtopConstraint.identifier = "theDotViewBackgroundTopConstraint"
-
+					let theDotViewBackgroundBottomConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.bottomAnchor.constraint(equalTo: cellOne.label.bottomAnchor, constant: 7)
+					theDotViewBackgroundBottomConstraint.isActive = true
+					theDotViewBackgroundBottomConstraint.identifier = "theDotViewBackground-Bottom"
+					
+					//If Statement to determine the leading constraint of dotView.
 					if cellOne.theDotViewBackgroundView.subviews.count == 1 {
 						let dotViewLeadingConstraint: NSLayoutConstraint = dotView.leadingAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.leadingAnchor, constant: 2)
 						dotViewLeadingConstraint.isActive = true
-						dotViewLeadingConstraint.identifier = "firstDotViewContainer"
+						dotViewLeadingConstraint.identifier = "dotView-Leading"
 						
 					} else {
 						let dotViewLeadingConstraint: NSLayoutConstraint = dotView.leadingAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.subviews[0].leadingAnchor, constant: CGFloat((cellOne.theDotViewBackgroundView.subviews.count)-1)*(dotView.frame.width+2))
 						dotViewLeadingConstraint.isActive = true
-						dotViewLeadingConstraint.identifier = "secondDotViewConstraint"
+						dotViewLeadingConstraint.identifier = "dotView-Leading"
 					}
 					
 					let dotViewYConstraint: NSLayoutConstraint = dotView.centerYAnchor.constraint(equalTo: cellOne.theDotViewBackgroundView.centerYAnchor)
