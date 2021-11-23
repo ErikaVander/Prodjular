@@ -121,11 +121,12 @@ extension CalendarViewController {
 			}
 			
 			self.collectionView.reloadData()
-			previouslySelectedCellIndexPath = self.collectionView.indexPathsForVisibleItems.first
 			
 			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDate))+dayOfMonth(date: selectedDate)
 			
 			self.collectionView.selectItem(at: IndexPath(item: (49+dateToSelectPlusSeven-1), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
+			
+			previouslySelectedCellIndexPath = self.collectionView.indexPathsForSelectedItems?.first
 		})
 		
 	}
