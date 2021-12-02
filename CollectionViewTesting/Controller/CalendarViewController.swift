@@ -148,6 +148,23 @@ extension CalendarViewController {
 			}
 		})
 	}
+	func observeUserSettings() {
+		let settingsRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("userSettings")
+		
+		settingsRef.observe(.value, with: { snapshot in
+			for child in snapshot.children {
+				if let childSnapshot = child as? DataSnapshot,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let autoBreakLength = dict["autoBreakLength"] as? Float,
+				   let autoPrepLength = dict["autoPrepLength"] as? Float,
+				   let addNewDirection = dict["addNewDirection"] as? String,
+				   let autoWorkDays = dict["autoWorkDays"] as? [String]
+				{
+					currentUserSettings = SettingsHelper.init(autoBreakLength: autoBreakLength, autoPrepLength: autoPrepLength, addNewDirection: addNewDirection, autoWorkDays: autoWorkDays)
+				}
+			}
+		})
+	}
 }
 
 //MARK: Navigation

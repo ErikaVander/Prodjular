@@ -61,6 +61,16 @@ final class DatabaseManager {
 
 		}
 	}
+	
+	///updates user settings on firebase
+	public func updateUserSettings(settings: SettingsHelper) {
+		self.database.child("users").child(Auth.auth().currentUser!.uid).child("userSettings").setValue([
+			"autoBreakLength": settings.autoBreakLength,
+			"autoPrepLength": settings.autoPrepLength,
+			"addNewDirection": settings.addNewDirection,
+			"autoWorkDays": settings.autoWorkDays
+		])
+	}
 }
 
 ///The definition of a ProjdularUser.
