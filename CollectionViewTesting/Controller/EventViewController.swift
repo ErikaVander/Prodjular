@@ -46,6 +46,7 @@ class EventViewController: UIViewController
 		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, date: theNewDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name))
 		selectedColorFromColorsArray = ColorsArray[0]
 	}
+	
 	@IBAction func selectDefaultColor(_ sender: UIButton) {
 		selectedColorFromColorsArray = ColorsArray[0]
 		ColorPickerCollectionView.deselectItem(at: ColorPickerCollectionView.indexPathsForSelectedItems![0], animated: true)

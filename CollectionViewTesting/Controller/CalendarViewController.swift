@@ -26,11 +26,33 @@ class CalendarViewController: UIViewController {
 	@IBOutlet var stackViewHorizontalCenterConstraint: UIView!
 	@IBOutlet weak var bannerView: GADBannerView!
 	@IBOutlet weak var noEventsScheduledLabel: UILabel!
+	@IBOutlet weak var addButton: UIButton!
 	
 	var ref: DatabaseReference!
-    
+	
+	var menuItems: [UIAction] {
+		return [
+			UIAction(title: "add Event", image: nil, handler: { (action) in
+				self.showEventViewController()
+			}),
+			UIAction(title: "add Project", image: nil, handler: { (action) in
+				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
+			}),
+			UIAction(title: "add Prep to existing Project", image: nil, handler: { (action) in
+				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
+			})
+		]
+	}
+	var addMenu: UIMenu {
+		return UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItems)
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		//Configuring addButton so that it shows the UIMenu when clicked
+		addButton.menu = addMenu
+		addButton.showsMenuAsPrimaryAction = true
 		
 		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
 
@@ -182,6 +204,13 @@ extension CalendarViewController {
 	@IBAction func BackSegue(unwindSegue: UIStoryboardSegue) {
 		tableView.reloadData()
 	}
+	
+	func showEventViewController() {
+		let vc = storyboard?.instantiateViewController(identifier: "EventViewController")
+		
+		vc!.modalPresentationStyle = .fullScreen
+		
+		present(vc!, animated: true, completion: nil)	}
 }
 
 ///Maybe use this in the future to print out wether or not the bannerView wass successful in recieving ads.

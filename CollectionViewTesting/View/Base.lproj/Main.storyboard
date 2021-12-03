@@ -284,14 +284,28 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQH-Yi-O6j">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAB-qs-7qr">
                                                 <rect key="frame" x="100" y="0.0" width="195" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <state key="normal" image="calendar.badge.plus" catalog="system"/>
-                                                <connections>
-                                                    <segue destination="5zO-0X-mHj" kind="show" id="y8A-Sb-8pB"/>
-                                                </connections>
-                                            </button>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0m-PP-SbQ">
+                                                        <rect key="frame" x="171.00000000000003" y="5" width="24" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="nD4-bL-kp3"/>
+                                                            <constraint firstAttribute="width" constant="24" id="zcV-oN-gCn"/>
+                                                        </constraints>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" image="calendar.badge.plus" catalog="system"/>
+                                                        <connections>
+                                                            <action selector="addIsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="89N-D4-AFy"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="z0m-PP-SbQ" firstAttribute="centerY" secondItem="OAB-qs-7qr" secondAttribute="centerY" id="4Jz-3e-h4d"/>
+                                                    <constraint firstAttribute="trailing" secondItem="z0m-PP-SbQ" secondAttribute="trailing" id="Owz-uo-HhE"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="always" dataMode="prototypes" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H7P-zP-LNK">
@@ -415,6 +429,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="iGH-Yz-1Mr"/>
                     <connections>
+                        <outlet property="addButton" destination="z0m-PP-SbQ" id="9ZJ-3q-Ido"/>
                         <outlet property="bannerView" destination="b4Y-HG-Uq9" id="Q8E-Gd-mdm"/>
                         <outlet property="collectionView" destination="H7P-zP-LNK" id="x9e-vQ-HRm"/>
                         <outlet property="monthLabel" destination="1kj-p1-7gV" id="4H7-dU-TRh"/>
@@ -424,6 +439,7 @@
                         <outlet property="yearLabel" destination="ioE-yX-3d7" id="7oP-6B-e6c"/>
                     </connections>
                 </viewController>
+                <command title="New Project" id="hCZ-sl-zuk"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="115.84821428571428"/>
@@ -431,9 +447,9 @@
         <!--Event View Controller-->
         <scene sceneID="9qa-Ok-w2E">
             <objects>
-                <viewController id="5zO-0X-mHj" customClass="EventViewController" customModule="CollectionViewTesting" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EventViewController" id="5zO-0X-mHj" customClass="EventViewController" customModule="CollectionViewTesting" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tm3-db-ZVC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of Event" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BbW-Iq-I0x">
@@ -445,7 +461,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ltg-1C-BCU">
-                                <rect key="frame" x="25" y="117" width="344.33333333333331" height="50"/>
+                                <rect key="frame" x="25" y="117" width="355" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21F-aR-M6Y">
                                         <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="50"/>
@@ -458,19 +474,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Tjr-1o-XVq">
-                                        <rect key="frame" x="83.666666666666657" y="0.0" width="81.666666666666657" height="50"/>
+                                        <rect key="frame" x="87.333333333333343" y="0.0" width="81.333333333333343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="81.5" id="CiJ-L8-Hn1"/>
                                         </constraints>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cjW-RM-HuV">
-                                        <rect key="frame" x="206.33333333333334" y="0.0" width="15.333333333333343" height="50"/>
+                                        <rect key="frame" x="213.33333333333334" y="0.0" width="15.333333333333343" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="AEt-wo-d26">
-                                        <rect key="frame" x="263" y="0.0" width="81.333333333333314" height="50"/>
+                                        <rect key="frame" x="273.33333333333331" y="0.0" width="81.666666666666686" height="50"/>
                                     </datePicker>
                                 </subviews>
                                 <constraints>
