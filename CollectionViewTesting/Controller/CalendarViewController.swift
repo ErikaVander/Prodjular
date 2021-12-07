@@ -525,6 +525,8 @@ extension CalendarViewController: UITableViewDataSource {
 			
 			cellOne.TimeLabel.text = ""
 			
+			cellOne.ViewInTableViewCell.backgroundColor = .clear
+			
 		} else {
 			
 			noEventsScheduledLabel.text = ""
@@ -537,6 +539,8 @@ extension CalendarViewController: UITableViewDataSource {
 			temp.dateStyle = .none
 			
 			cellOne.TimeLabel.text = temp.string(from: eventsForTableViewCell[indexPath.item].date)
+			
+			cellOne.ViewInTableViewCell.backgroundColor = UIColor(named: eventsForTableViewCell[indexPath.item].tagColor!)
 			
 		}
 		return cellOne
