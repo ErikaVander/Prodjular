@@ -8,12 +8,17 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-	
+
 	@IBOutlet weak var EventLabel: UILabel!
 	@IBOutlet weak var TimeLabel: UILabel!
 	@IBOutlet weak var ViewInTableViewCell: UIView!
+	@IBOutlet weak var discriptionLabel: UILabel!
+
+	@IBOutlet weak var majorHorizontalStackView: UIStackView!
+	@IBOutlet weak var verticalStackView: UIStackView!
+	@IBOutlet weak var horizontalStackView: UIStackView!
 	
-    override func awakeFromNib() {
+	override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }

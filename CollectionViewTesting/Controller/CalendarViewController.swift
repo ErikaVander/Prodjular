@@ -54,7 +54,9 @@ class CalendarViewController: UIViewController {
 		addButton.menu = addMenu
 		addButton.showsMenuAsPrimaryAction = true
 		
+		//Registering xib files
 		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+		tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableCell")
 
 		print("--currentDate = \(currentDateAndTime())")
 		Database.database().isPersistenceEnabled = true
@@ -99,6 +101,10 @@ class CalendarViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		tableView.estimatedRowHeight = 100
+		tableView.rowHeight = UITableView.automaticDimension
+		
 		tableView.reloadData()
 
 	}
@@ -515,6 +521,10 @@ extension CalendarViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		
 		let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
+		
+//		let majorStackViewConstraint: NSLayoutConstraint = cellOne.majorHorizontalStackView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: 0)
+//		majorStackViewConstraint.isActive = true
+//		majorStackViewConstraint.identifier = "majorStackViewConstraint-width"
 		
 		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
 		
