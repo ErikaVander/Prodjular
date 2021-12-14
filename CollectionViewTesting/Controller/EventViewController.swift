@@ -14,6 +14,21 @@ class EventViewController: UIViewController
 	@IBOutlet weak var NameOfEvent: UITextField!
 	@IBOutlet weak var DatePicker: UIDatePicker!
 	@IBOutlet weak var ColorPickerCollectionView: UICollectionView!
+	@IBOutlet weak var discriptionTextView: UITextView!
+	@IBOutlet var descriptionToolbar: UIToolbar!
+	
+	@IBAction func doneEditing(_ sender: UIBarButtonItem) {
+		discriptionTextView.resignFirstResponder()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		discriptionTextView.layer.cornerRadius = 5
+		discriptionTextView.backgroundColor = .secondarySystemBackground
+		discriptionTextView.textColor = .placeholderText
+		discriptionTextView.text = "Description"
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -23,6 +38,12 @@ class EventViewController: UIViewController
 		
 		ColorPickerCollectionView.delegate = self
 		ColorPickerCollectionView.dataSource = self
+		
+		discriptionTextView.delegate = self
+		discriptionTextView.returnKeyType = .default
+		
+		descriptionToolbar.frame.size.height = 30
+		discriptionTextView.inputAccessoryView = descriptionToolbar
 	}
 
 	///The event that occurs after the user creates an event. The new event is made into a Prodular Event and added to the database using the function newEvent defined in the file DatabaseManager.swift.
@@ -92,4 +113,25 @@ extension EventViewController: UICollectionViewDataSource {
 		selectedColorFromColorsArray = ColorsArray[indexPath.item+1]
 	}
 	
+}
+
+extension EventViewController: UITextViewDelegate {
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		discriptionTextView.text = ""
+	}
+	
+	func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+		if discriptionTextView.text == "" {
+			discriptionTextView.textColor = .placeholderText
+			discriptionTextView.text = "Description"
+		}
+		return true
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextView) -> Bool {
+		if textField == discriptionTextView {
+			discriptionTextView.resignFirstResponder()
+		}
+		return true
+	}
 }
