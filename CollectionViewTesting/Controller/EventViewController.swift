@@ -14,20 +14,20 @@ class EventViewController: UIViewController
 	@IBOutlet weak var NameOfEvent: UITextField!
 	@IBOutlet weak var DatePicker: UIDatePicker!
 	@IBOutlet weak var ColorPickerCollectionView: UICollectionView!
-	@IBOutlet weak var discriptionTextView: UITextView!
+	@IBOutlet weak var descriptionTextView: UITextView!
 	@IBOutlet var descriptionToolbar: UIToolbar!
 	
 	@IBAction func doneEditing(_ sender: UIBarButtonItem) {
-		discriptionTextView.resignFirstResponder()
+		descriptionTextView.resignFirstResponder()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		discriptionTextView.layer.cornerRadius = 5
-		discriptionTextView.backgroundColor = .secondarySystemBackground
-		discriptionTextView.textColor = .placeholderText
-		discriptionTextView.text = "Description"
+		descriptionTextView.layer.cornerRadius = 5
+		descriptionTextView.backgroundColor = .secondarySystemBackground
+		descriptionTextView.textColor = .placeholderText
+		descriptionTextView.text = "Description"
 	}
 	
 	override func viewDidLoad() {
@@ -39,11 +39,11 @@ class EventViewController: UIViewController
 		ColorPickerCollectionView.delegate = self
 		ColorPickerCollectionView.dataSource = self
 		
-		discriptionTextView.delegate = self
-		discriptionTextView.returnKeyType = .default
+		descriptionTextView.delegate = self
+		descriptionTextView.returnKeyType = .default
 		
 		descriptionToolbar.frame.size.height = 30
-		discriptionTextView.inputAccessoryView = descriptionToolbar
+		descriptionTextView.inputAccessoryView = descriptionToolbar
 	}
 
 	///The event that occurs after the user creates an event. The new event is made into a Prodular Event and added to the database using the function newEvent defined in the file DatabaseManager.swift.
@@ -64,7 +64,7 @@ class EventViewController: UIViewController
 		dateFormat.timeStyle = .full
 		dateFormat.dateStyle = .short
 		
-		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, date: theNewDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name))
+		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: theNewDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text))
 		selectedColorFromColorsArray = ColorsArray[0]
 	}
 	
@@ -117,20 +117,20 @@ extension EventViewController: UICollectionViewDataSource {
 
 extension EventViewController: UITextViewDelegate {
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		discriptionTextView.text = ""
+		descriptionTextView.text = ""
 	}
 	
 	func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-		if discriptionTextView.text == "" {
-			discriptionTextView.textColor = .placeholderText
-			discriptionTextView.text = "Description"
+		if descriptionTextView.text == "" {
+			descriptionTextView.textColor = .placeholderText
+			descriptionTextView.text = "Description"
 		}
 		return true
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextView) -> Bool {
-		if textField == discriptionTextView {
-			discriptionTextView.resignFirstResponder()
+		if textField == descriptionTextView {
+			descriptionTextView.resignFirstResponder()
 		}
 		return true
 	}

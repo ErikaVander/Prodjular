@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:22-12:22 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTp-LJ-at2">
-                        <rect key="frame" x="114" y="0.0" width="125" height="21"/>
+                        <rect key="frame" x="114" y="4" width="125" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="125" id="hg2-S2-6Re"/>
                         </constraints>
@@ -31,13 +31,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7u-mJ-H5V">
-                        <rect key="frame" x="6" y="0.0" width="108" height="21"/>
+                        <rect key="frame" x="6" y="4" width="108" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsD-Q2-6CT">
-                        <rect key="frame" x="6" y="21" width="233" height="133"/>
+                        <rect key="frame" x="6" y="25" width="233" height="121"/>
                         <string key="text">The Lord is my Shepard, I shall not want. He makes me lie down in green pastures, He leads me beside still waters, He restores my soul. Yea, tho I walk through the valley of the shadow of death I will fear no evil. For You are with me Your rod and Your staff they comfort me.</string>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
@@ -50,14 +50,14 @@
                     <constraint firstItem="T7u-mJ-H5V" firstAttribute="leading" secondItem="6gg-Rc-P0o" secondAttribute="trailing" constant="3" id="K3b-aM-Iun"/>
                     <constraint firstItem="6gg-Rc-P0o" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" constant="3" id="NbF-8R-epr"/>
                     <constraint firstAttribute="trailing" secondItem="KTp-LJ-at2" secondAttribute="trailing" id="Ncz-IV-mOx"/>
-                    <constraint firstItem="KTp-LJ-at2" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" id="OfX-hD-3NW"/>
+                    <constraint firstItem="KTp-LJ-at2" firstAttribute="top" secondItem="T7u-mJ-H5V" secondAttribute="top" id="OfX-hD-3NW"/>
                     <constraint firstItem="T7u-mJ-H5V" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" constant="6" id="YBX-ZX-cCy"/>
-                    <constraint firstAttribute="bottom" secondItem="tsD-Q2-6CT" secondAttribute="bottom" id="YGq-4N-Cg6"/>
+                    <constraint firstAttribute="bottom" secondItem="tsD-Q2-6CT" secondAttribute="bottom" constant="8" id="YGq-4N-Cg6"/>
                     <constraint firstItem="KTp-LJ-at2" firstAttribute="height" secondItem="T7u-mJ-H5V" secondAttribute="height" id="aBI-sB-llu"/>
                     <constraint firstItem="tsD-Q2-6CT" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" constant="6" id="bLP-Yc-P66"/>
                     <constraint firstAttribute="bottom" secondItem="6gg-Rc-P0o" secondAttribute="bottom" constant="3" id="bda-pe-ZVG"/>
                     <constraint firstItem="tsD-Q2-6CT" firstAttribute="top" secondItem="KTp-LJ-at2" secondAttribute="bottom" id="kOn-d4-uu0"/>
-                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" id="meC-Ru-dA1"/>
+                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" constant="4" id="meC-Ru-dA1"/>
                     <constraint firstItem="KTp-LJ-at2" firstAttribute="leading" secondItem="T7u-mJ-H5V" secondAttribute="trailing" id="tWj-tP-Jsf"/>
                 </constraints>
             </tableViewCellContentView>
@@ -65,7 +65,7 @@
                 <outlet property="EventLabel" destination="T7u-mJ-H5V" id="uVn-yt-wtF"/>
                 <outlet property="TimeLabel" destination="KTp-LJ-at2" id="qwl-zU-F0e"/>
                 <outlet property="ViewInTableViewCell" destination="6gg-Rc-P0o" id="XZT-mJ-G2A"/>
-                <outlet property="discriptionLabel" destination="tsD-Q2-6CT" id="ah8-VY-LoG"/>
+                <outlet property="descriptionLabel" destination="tsD-Q2-6CT" id="ah8-VY-LoG"/>
             </connections>
             <point key="canvasLocation" x="-464.49275362318843" y="-126.5625"/>
         </tableViewCell>

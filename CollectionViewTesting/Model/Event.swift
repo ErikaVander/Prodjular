@@ -14,9 +14,11 @@ var eventList = [ProjdularEvent]()
 struct ProjdularEvent : Equatable {
 	var id: String
 	let nameOfEvent: String
-	var date: Date!
+	var startDate: Date!
+	var endDate: Date!
 	var tagName: String?
 	var tagColor: String?
+	var description: String?
 }
 
 ///Adds an event to daysEvents which is an array of ProjdularEvents
@@ -25,7 +27,7 @@ func eventsForDate(parDate: Date) -> [ProjdularEvent] {
 	var daysEvents = [ProjdularEvent]()
 	for event in eventList
 	{
-		let eventDate = calendar.dateComponents([.day, .month, .year], from: event.date)
+		let eventDate = calendar.dateComponents([.day, .month, .year], from: event.startDate)
 		let parDateC = calendar.dateComponents([.day, .month, .year], from: parDate)
 		if(eventDate == parDateC)
 		{

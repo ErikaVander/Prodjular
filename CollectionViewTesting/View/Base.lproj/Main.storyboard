@@ -434,7 +434,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ltg-1C-BCU">
-                                <rect key="frame" x="25" y="117" width="452" height="50"/>
+                                <rect key="frame" x="25" y="117" width="455" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21F-aR-M6Y">
                                         <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="50"/>
@@ -447,19 +447,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Tjr-1o-XVq">
-                                        <rect key="frame" x="119.66666666666666" y="0.0" width="81.333333333333343" height="50"/>
+                                        <rect key="frame" x="120.66666666666666" y="0.0" width="81.333333333333343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="81.5" id="CiJ-L8-Hn1"/>
                                         </constraints>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cjW-RM-HuV">
-                                        <rect key="frame" x="278" y="0.0" width="15.333333333333314" height="50"/>
+                                        <rect key="frame" x="280" y="0.0" width="15.333333333333314" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="AEt-wo-d26">
-                                        <rect key="frame" x="370.33333333333331" y="0.0" width="81.666666666666686" height="50"/>
+                                        <rect key="frame" x="373.33333333333331" y="0.0" width="81.666666666666686" height="50"/>
                                     </datePicker>
                                 </subviews>
                                 <constraints>
@@ -533,8 +533,8 @@
                         <outlet property="ColorPickerCollectionView" destination="vEx-YC-Tfo" id="ztV-MF-ggc"/>
                         <outlet property="DatePicker" destination="AEt-wo-d26" id="o2d-0Y-1kr"/>
                         <outlet property="NameOfEvent" destination="BbW-Iq-I0x" id="295-87-iHI"/>
+                        <outlet property="descriptionTextView" destination="ITb-mg-Rci" id="ph8-Mo-tjD"/>
                         <outlet property="descriptionToolbar" destination="j8l-8l-zUa" id="OsE-9h-21h"/>
-                        <outlet property="discriptionTextView" destination="ITb-mg-Rci" id="ph8-Mo-tjD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JA7-3W-U7x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

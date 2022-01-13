@@ -1,235 +1,11 @@
 //
-//  ViewController.swift
+//  CalendarViewController_CollectionView.swift
 //  CollectionViewTesting
 //
-//  Created by Vanderhoff on 2/9/21.
+//  Created by Vanderhoff on 1/12/22.
 //
 
 import UIKit
-import GoogleMobileAds
-import Firebase
-import FirebaseDatabase
-import FirebaseCore
-
-var isLoggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
-var selectedDate = currentDateAndTime()
-let dateFormatter = DateFormatter()
-var eventsForTableViewCell = [ProjdularEvent]()
-var initialLoadingOfData = true
-var previouslySelectedCellIndexPath: IndexPath?
-
-class CalendarViewController: UIViewController {
-	@IBOutlet weak var monthLabel: UILabel!
-	@IBOutlet weak var yearLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
-	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet var stackViewHorizontalCenterConstraint: UIView!
-	@IBOutlet weak var bannerView: GADBannerView!
-	@IBOutlet weak var noEventsScheduledLabel: UILabel!
-	@IBOutlet weak var addButton: UIButton!
-	
-	var ref: DatabaseReference!
-	
-	var menuItems: [UIAction] {
-		return [
-			UIAction(title: "add Event", image: nil, handler: { (action) in
-				self.showEventViewController()
-			}),
-			UIAction(title: "add Project", image: nil, handler: { (action) in
-				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
-			}),
-			UIAction(title: "add Prep to existing Project", image: nil, handler: { (action) in
-				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
-			})
-		]
-	}
-	var addMenu: UIMenu {
-		return UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItems)
-	}
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		
-		//Configuring addButton so that it shows the UIMenu when clicked
-		addButton.menu = addMenu
-		addButton.showsMenuAsPrimaryAction = true
-		
-		//Registering xib files
-		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-		tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableCell")
-
-		print("--currentDate = \(currentDateAndTime())")
-		Database.database().isPersistenceEnabled = true
-		observeEvents()
-		
-		///Checking to see if a user is signed in. If not, shows the sign-in screen
-		FirebaseAuth.Auth.auth().addStateDidChangeListener{ auth, user in
-			if user != nil && user?.isEmailVerified == true {
-				print("-- User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
-				isLoggedIn = true
-				
-			} else {
-				self.showLogIn()
-				print("-- No user is signed in. --")
-			}
-		}
-		
-		DatabaseManager.shared.delegate = self
-		
-		///bannerAd view setup
-		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-		//bannerView.adUnitID = "ca-app-pub-6071058575504654/8848691990"
-		bannerView.rootViewController = self
-		bannerView.load(GADRequest())
-		bannerView.delegate = self
-        
-		///Setting up the collectionView delegate and datasource
-        collectionView.delegate = self
-        collectionView.dataSource = self
-		
-		///Setting up the tableView delegate and datasource
-		tableView.delegate = self
-		tableView.dataSource = self
-		
-		///Setting the month and year label
-		monthLabel.text = monthString(date: selectedDate)
-		yearLabel.text = yearString(date: selectedDate)
-		
-        setCollectionViewLayout()
-		fillMonth(parDate: selectedDate)
-    }
-	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		
-		tableView.estimatedRowHeight = 100
-		tableView.rowHeight = UITableView.automaticDimension
-		
-		tableView.reloadData()
-
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-	}
-}
-
-//MARK: FirebaseRealtimeDatabase
-extension CalendarViewController {
-	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
-	func observeEvents() {
-		let eventRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("events")
-		
-		eventRef.observe(.value, with: { snapshot in
-			
-			var tempEvents = [ProjdularEvent]()
-			
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let id = childSnapshot.key as? String,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let date = dict["date"] as? String,
-				   let nameOfEvent = dict["name"] as? String,
-				   let tagName = dict["tagName"] as? String,
-				   let tagColor = dict["tagColor"] as? String
-				{
-					//let dateFormatter = DateFormatter()
-					dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
-					
-					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, date: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor)
-					
-					tempEvents.append(event)
-				}
-			}
-			eventList = tempEvents
-			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
-			if(initialLoadingOfData == true) {
-				self.tableView.reloadData()
-				initialLoadingOfData = false
-			}
-			
-			self.collectionView.reloadData()
-			
-			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDate))+dayOfMonth(date: selectedDate)
-			
-			self.collectionView.selectItem(at: IndexPath(item: (49+dateToSelectPlusSeven-1), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
-			
-			previouslySelectedCellIndexPath = self.collectionView.indexPathsForSelectedItems?.first
-		})
-		
-	}
-	///Get all colors made by the user and stored on firebase by the current user.
-	func observeColors() {
-		let eventRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("colors")
-		
-		eventRef.observe(.value, with: { snapshot in
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let name = dict["name"] as? String,
-				   let redValue = dict["redValue"] as? Float,
-				   let blueValue = dict["blueValue"] as? Float,
-				   let greenValue = dict["greenValue"] as? Float
-				{
-					ColorsArray.append(Colors(name: name, redValue: redValue, blueValue: blueValue, greenValue: greenValue))
-				}
-			}
-		})
-	}
-	func observeUserSettings() {
-		let settingsRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("userSettings")
-		
-		settingsRef.observe(.value, with: { snapshot in
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let autoBreakLength = dict["autoBreakLength"] as? Float,
-				   let autoPrepLength = dict["autoPrepLength"] as? Float,
-				   let addNewDirection = dict["addNewDirection"] as? String,
-				   let autoWorkDays = dict["autoWorkDays"] as? [String]
-				{
-					currentUserSettings = SettingsHelper.init(autoBreakLength: autoBreakLength, autoPrepLength: autoPrepLength, addNewDirection: addNewDirection, autoWorkDays: autoWorkDays)
-				}
-			}
-		})
-	}
-}
-
-//MARK: Navigation
-extension CalendarViewController {
-	///Logic to show the login page.
-	func showLogIn() {
-		let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
-		
-		vc!.modalPresentationStyle = .fullScreen
-		
-		present(vc!, animated: true, completion: nil)
-	}
-	
-	///BackSegue after creating a new event
-	@IBAction func BackSegue(unwindSegue: UIStoryboardSegue) {
-		tableView.reloadData()
-	}
-	
-	func showEventViewController() {
-		let vc = storyboard?.instantiateViewController(identifier: "EventViewController")
-		
-		vc!.modalPresentationStyle = .fullScreen
-		
-		present(vc!, animated: true, completion: nil)	}
-}
-
-///Maybe use this in the future to print out wether or not the bannerView wass successful in recieving ads.
-extension CalendarViewController: GADBannerViewDelegate {
-	
-	/*func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-		print("recieved ad")
-	}
-	private func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequest) {
-		print(error)
-	}*/
-}
-
 
 //MARK: CollectionViewDataSource
 extension CalendarViewController: UICollectionViewDataSource {
@@ -242,7 +18,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return num.count
 	}
-
+	
 	///Makes sure that only cells containing numbers can be selected by the user. Sets the default background view for selected cells. Sets each cells label to the elements within nums[] which keeps track of the content that will be added to the collectionView. Creates dotViews for cells that have events.
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
@@ -297,7 +73,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 					
 					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
 					dotView.layer.cornerRadius = dotViewWidth/3
-
+					
 					cellOne.theDotViewBackgroundView.addSubview(dotView)
 					
 					cellOne.theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -456,7 +232,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 		collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
 		collectionView.layer.cornerRadius = 5
 		collectionView.isPagingEnabled = true
-
+		
 	}
 	
 	///Checks to see if the value contained in cellOne.label.text is an integer. If true it updates the previously selected cell and the newly selected cell so that theDotViewBackGrouldView of CollectionViewCell's background color is equal to the background of the cell.
@@ -476,7 +252,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 	func selectCell(indexPath: IndexPath) {
 		if Int(num[indexPath.item]) != nil
 		{
-			selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
+		selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
 		}
 		tableView.reloadData()
 		if(tableView.numberOfRows(inSection: 0) == 0) {
@@ -501,97 +277,3 @@ extension CalendarViewController: UICollectionViewDelegate {
 		}
 	}
 }
-
-//MARK: TableViewDataSource
-
-extension CalendarViewController: UITableViewDataSource {
-	///Determines the number of rows in each section of the tableView which is 	determined by the function eventsForDate which returns all the events that are associated with any givin date.
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
-		
-		if eventsForDate(parDate: selectedDate).isEmpty == false {
-			return eventsForTableViewCell.count
-		} else {
-			return 0
-		}
-		
-	}
-	
-	///Sets each row in the tableView after each reload of data.
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		
-		let cellOne = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewCell
-		
-//		let majorStackViewConstraint: NSLayoutConstraint = cellOne.majorHorizontalStackView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: 0)
-//		majorStackViewConstraint.isActive = true
-//		majorStackViewConstraint.identifier = "majorStackViewConstraint-width"
-		
-		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
-		
-		if tableView.numberOfRows(inSection: 0) == 0 {
-			
-			noEventsScheduledLabel.textColor = UIColor.placeholderText
-			noEventsScheduledLabel.text = "no events scheduled"
-			
-			cellOne.TimeLabel.text = ""
-			
-			cellOne.ViewInTableViewCell.backgroundColor = .clear
-			
-		} else {
-			
-			noEventsScheduledLabel.text = ""
-			
-			cellOne.EventLabel.textColor = UIColor.label
-			cellOne.EventLabel.text = eventsForTableViewCell[indexPath.item].nameOfEvent
-			
-			let temp = DateFormatter()
-			temp.timeStyle = .short
-			temp.dateStyle = .none
-			
-			cellOne.TimeLabel.text = temp.string(from: eventsForTableViewCell[indexPath.item].date)
-			
-			cellOne.ViewInTableViewCell.backgroundColor = UIColor(named: eventsForTableViewCell[indexPath.item].tagColor!)
-			
-		}
-		return cellOne
-	}
-}
-
-//MARK: TableViewDelegate
-
-extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegate {
-	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManager, indexPath: IndexPath) {
-		DispatchQueue.main.async {
-			
-			eventsForTableViewCell.remove(at: indexPath.row)
-			self.tableView.deleteRows(at: [indexPath], with: .fade)
-			
-			if(self.tableView.numberOfRows(inSection: 0) == 0) {
-				self.noEventsScheduledLabel.text = "no events scheduled"
-			}
-		}
-		
-	}
-	
-	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		if eventsForTableViewCell.isEmpty == true && indexPath.item == 0 {
-			return false
-		} else {
-			return true
-		}
-	}
-	
-	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == .delete {
-			DatabaseManager.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
-		}
-	}
-}
-
-extension NSLayoutConstraint {
-	override public var description: String {
-		let id = identifier ?? ""
-		return "--id: \(id), constant: \(constant)" //you may print whatever you want here
-	}
-}
-
