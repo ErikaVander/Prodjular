@@ -60,14 +60,14 @@ class CalendarViewController: UIViewController {
 
 		print("--currentDate = \(currentDateAndTime())")
 		Database.database().isPersistenceEnabled = true
-		observeEvents()
+		
 		
 		///Checking to see if a user is signed in. If not, shows the sign-in screen
 		FirebaseAuth.Auth.auth().addStateDidChangeListener{ auth, user in
 			if user != nil && user?.isEmailVerified == true {
 				print("-- User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
 				isLoggedIn = true
-				
+				self.observeEvents()
 			} else {
 				self.showLogIn()
 				print("-- No user is signed in. --")

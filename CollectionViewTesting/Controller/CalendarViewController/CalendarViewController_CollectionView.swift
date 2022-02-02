@@ -123,7 +123,6 @@ extension CalendarViewController: UICollectionViewDataSource {
 					let dotViewWidthConstraint = dotView.widthAnchor.constraint(equalToConstant: dotViewWidth)
 					dotViewWidthConstraint.isActive = true
 					dotViewWidthConstraint.identifier = "dotView-Width-Constraint"
-					dotView.heightAnchor.constraint(equalToConstant: 4).isActive = true
 					
 					let dotViewHeightConstaint = dotView.heightAnchor.constraint(equalToConstant: dotViewHeight)
 					dotViewHeightConstaint.isActive = true
