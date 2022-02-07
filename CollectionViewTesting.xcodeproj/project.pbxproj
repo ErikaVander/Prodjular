@@ -17,13 +17,13 @@
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
 		D6301151267AA10800128ADA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6301150267AA10800128ADA /* Event.swift */; };
 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
-		D6BE7AAF26A642E300498ECB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AAE26A642E300498ECB /* SettingsViewController.swift */; };
 		D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB026A6479000498ECB /* LogInViewController.swift */; };
 		D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */; };
 		D6BE7AB526C1981400498ECB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6BE7AB426C1981400498ECB /* GoogleService-Info.plist */; };
 		D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB626C6D95200498ECB /* alertUser.swift */; };
 		D6BE7AB926C6DCE700498ECB /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB826C6DCE700498ECB /* DatabaseManager.swift */; };
 		D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D23CFD2756C95C00B0F210 /* SettingsHelper.swift */; };
+		D6D46E4927AB4B620080B179 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D46E4827AB4B620080B179 /* SettingsViewController.swift */; };
 		D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DAA77626951D55005B7D6B /* SignUpViewController.swift */; };
 		D6DB6643278F96970087550C /* CalendarViewController_Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DB6642278F96970087550C /* CalendarViewController_Navigation.swift */; };
 		D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DB6644278F96D40087550C /* CalendarViewController_Database.swift */; };
@@ -55,13 +55,13 @@
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
-		D6BE7AAE26A642E300498ECB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB026A6479000498ECB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB426C1981400498ECB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D6BE7AB626C6D95200498ECB /* alertUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertUser.swift; sourceTree = "<group>"; };
 		D6BE7AB826C6DCE700498ECB /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		D6D23CFD2756C95C00B0F210 /* SettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelper.swift; sourceTree = "<group>"; };
+		D6D46E4827AB4B620080B179 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "../../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/SettingsViewController.swift"; sourceTree = "<group>"; };
 		D6DAA77626951D55005B7D6B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D6DB6642278F96970087550C /* CalendarViewController_Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController_Navigation.swift; sourceTree = "<group>"; };
 		D6DB6644278F96D40087550C /* CalendarViewController_Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController_Database.swift; sourceTree = "<group>"; };
@@ -144,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
-				D6BE7AAE26A642E300498ECB /* SettingsViewController.swift */,
 				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
 				D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */,
 				D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */,
@@ -166,6 +165,7 @@
 				D6DAA77626951D55005B7D6B /* SignUpViewController.swift */,
 				D6BE7AB026A6479000498ECB /* LogInViewController.swift */,
 				D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */,
+				D6D46E4827AB4B620080B179 /* SettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -340,7 +340,6 @@
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
 				D6BE7AB926C6DCE700498ECB /* DatabaseManager.swift in Sources */,
-				D6BE7AAF26A642E300498ECB /* SettingsViewController.swift in Sources */,
 				D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */,
 				D61F04C225D3891D00A2BC05 /* CalendarViewController.swift in Sources */,
 				D6DB6647278F970C0087550C /* CalendarViewController_ads.swift in Sources */,
@@ -348,6 +347,7 @@
 				D61F04BE25D3891D00A2BC05 /* AppDelegate.swift in Sources */,
 				D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */,
 				D61F04C025D3891D00A2BC05 /* SceneDelegate.swift in Sources */,
+				D6D46E4927AB4B620080B179 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

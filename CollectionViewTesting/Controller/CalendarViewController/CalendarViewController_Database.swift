@@ -24,7 +24,8 @@ extension CalendarViewController {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
 				   let dict = childSnapshot.value as? [String: Any],
-				   let date = dict["date"] as? String,
+				   let startDate = dict["startDate"] as? String,
+				   let endDate = dict["endDate"] as? String,
 				   let nameOfEvent = dict["name"] as? String,
 				   let tagName = dict["tagName"] as? String,
 				   let tagColor = dict["tagColor"] as? String,
@@ -33,7 +34,7 @@ extension CalendarViewController {
 				//let dateFormatter = DateFormatter()
 				dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
 				
-				let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: date), tagName: tagName, tagColor: tagColor, description: description)
+				let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagName: tagName, tagColor: tagColor, description: description)
 				
 				tempEvents.append(event)
 				}

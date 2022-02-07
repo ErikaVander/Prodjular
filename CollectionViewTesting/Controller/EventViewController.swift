@@ -12,7 +12,8 @@ class EventViewController: UIViewController
 {
 	
 	@IBOutlet weak var NameOfEvent: UITextField!
-	@IBOutlet weak var DatePicker: UIDatePicker!
+	@IBOutlet weak var EndDatePicker: UIDatePicker!
+	@IBOutlet weak var StartDatePicker: UIDatePicker!
 	@IBOutlet weak var ColorPickerCollectionView: UICollectionView!
 	@IBOutlet weak var descriptionTextView: UITextView!
 	@IBOutlet var descriptionToolbar: UIToolbar!
@@ -52,19 +53,24 @@ class EventViewController: UIViewController
 		let day = calendar.component(.day, from: selectedDate)
 		let year = calendar.component(.year, from: selectedDate)
 		
-		let hour = calendar.component(.hour, from: DatePicker.date)
-		let minute = calendar.component(.minute, from: DatePicker.date)
+		let startHour = calendar.component(.hour, from: StartDatePicker.date)
+		let startMinute = calendar.component(.minute, from: StartDatePicker.date)
+		
+		let endHour = calendar.component(.hour, from: EndDatePicker.date)
+		let endMinute = calendar.component(.minute, from: EndDatePicker.date)
 		//let second = calendar.component(.second, from: DatePicker.date)
 		
-		let component = DateComponents( year: year, month: month, day: day, hour: hour, minute: minute, second: 0)
+		let startDateComponent = DateComponents( year: year, month: month, day: day, hour: startHour, minute: startMinute, second: 0)
+		let endDateComponent = DateComponents( year: year, month: month, day: day, hour: endHour, minute: endMinute, second: 0)
 		
-		let theNewDate = calendar.date(from: component)
+		let startDate = calendar.date(from: startDateComponent)
+		let endDate = calendar.date(from: endDateComponent)
 		
 		let dateFormat = DateFormatter()
 		dateFormat.timeStyle = .full
 		dateFormat.dateStyle = .short
 		
-		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: theNewDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text))
+		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text))
 		selectedColorFromColorsArray = ColorsArray[0]
 	}
 	

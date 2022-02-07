@@ -35,7 +35,8 @@ final class DatabaseManager {
 		dateformat.timeStyle = .long
 		database.child("users").child(Auth.auth().currentUser!.uid).child("events").childByAutoId().setValue([
 			"name": event.nameOfEvent,
-			"date": dateformat.string(from: event.startDate),
+			"startDate": dateformat.string(from: event.startDate),
+			"endDate": dateformat.string(from: event.endDate),
 			"tagName": event.tagName,
 			"tagColor": event.tagColor,
 			"description": event.description
