@@ -48,7 +48,7 @@ extension LogInViewController {
 				return
 			}
 			isLoggedIn = true
-			print("--User has signed in: \(authResult?.email ?? "No user has signed in") isLoggedIn: \(isLoggedIn)")
+			print("--User has signed in: \(authResult?.user.email ?? "No user has signed in") isLoggedIn: \(isLoggedIn)")
 			alertUser(view: self, title: "Success", content: "You are now logged in", dismissView: true)
 		}
 	}

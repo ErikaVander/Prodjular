@@ -52,7 +52,7 @@ extension SignUpViewController {
 				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
-			let user: String = result.email!
+			let user: String = result.user.email!
 			print("Created User: \(user), Logged in: \(isLoggedIn)")
 			//self.dismiss(animated: true, completion: nil)
 			alertUser(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
