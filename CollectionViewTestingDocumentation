@@ -2,50 +2,19 @@ Bug Description:
 
 Personal Access Token for GitHub: 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
 
-Progress:
-	Weekday of first day of month bug {
-		Problem Description/Commit Description:
-			Each month was getting the weekday for the first day of the month from the previous month's first day of the month.
-
-		Date Solved: 6/16/21
-
-		Commit ID: b069c54e40f89632ca167bd725d3d6657521cdc2
-
-	}
-	Broken Pagination bug {
-		Problem Description/Commit Description:
-			repository is currently stuck at broken pagination scroll view for collectionView. It almost works but it doesn't it may be helpful for future reference.
-
-		Date Solved: 6/29/21
-
-		CommitID: efd4845c37d0f6f2bebe7ef2ad0c17919ebe9a79
-	}
-	Only displaying userSelectedDate events in tableView {
-		Description of progress made:	
-			for commit e23e3ba: I also made it so that the tableView only loads events for userSelectedDate instead of events for all dates.
-
-		Date Solved: 5/29/12
-
-		CommitID: 85decb8b12362e584f05ea917dfd8702281e1c54 (Maybe incorrect identifier)
-	}
-}
-
 Check out Semantic to change the order the information gets loaded onto the collection view.
 
 Plan for the future:
-	-Add each new event to the firebaseDatabase under the specified user.
+	
+	-When the addNewEvent button is pressed, there are three options: {new Event, new Project, Project Prep}
 
-	-Create another test project and create a collection view with sections and paging enabled.
-
-	Hello
+	
 
 Important note:
+	research hashMaps
 
-Angela's WhatsApp #: +1 (321) 392-5747
 
-or use this link
-https://wa.me/message/XFKR7K2ASRJNF1
-
-thebizdrinc@gmail.com
+Design Idea:
+	hierarchical 
 
 

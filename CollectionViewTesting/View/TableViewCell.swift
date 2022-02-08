@@ -8,11 +8,13 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-	
+
 	@IBOutlet weak var EventLabel: UILabel!
 	@IBOutlet weak var TimeLabel: UILabel!
-
-    override func awakeFromNib() {
+	@IBOutlet weak var ViewInTableViewCell: UIView!
+	@IBOutlet weak var descriptionLabel: UILabel!
+	
+	override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }

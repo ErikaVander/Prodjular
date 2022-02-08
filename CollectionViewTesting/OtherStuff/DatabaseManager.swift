@@ -35,11 +35,13 @@ final class DatabaseManager {
 		dateformat.timeStyle = .long
 		database.child("users").child(Auth.auth().currentUser!.uid).child("events").childByAutoId().setValue([
 			"name": event.nameOfEvent,
-			"date": dateformat.string(from: event.date),
+			"startDate": dateformat.string(from: event.startDate),
+			"endDate": dateformat.string(from: event.endDate),
 			"tagName": event.tagName,
 			"tagColor": event.tagColor,
+			"description": event.description
 		])
-		selectedDate = event.date
+		selectedDate = event.startDate
 		eventList.append(event)
 	}
 	
@@ -60,6 +62,16 @@ final class DatabaseManager {
 			}
 
 		}
+	}
+	
+	///updates user settings on firebase
+	public func updateUserSettings(settings: SettingsHelper) {
+		self.database.child("users").child(Auth.auth().currentUser!.uid).child("userSettings").setValue([
+			"autoBreakLength": settings.autoBreakLength,
+			"autoPrepLength": settings.autoPrepLength,
+			"addNewDirection": settings.addNewDirection,
+			"autoWorkDays": settings.autoWorkDays
+		])
 	}
 }
 
