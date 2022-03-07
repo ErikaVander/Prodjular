@@ -16,10 +16,10 @@ import FirebaseAnalytics
 import Firebase
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 	override init() {
 		super.init()
-		FirebaseApp.configure()
+		
 	}
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -27,15 +27,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 		GADMobileAds.sharedInstance().start(completionHandler: nil)
 		
 		Messaging.messaging().delegate = self
-		UNUserNotificationCenter.current().delegate = self
 		
-		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, _ in
-			guard success else {
-				return
-			}
-			print("Success in APNS registry")
+		if #available(iOS 10.0, *) {
+			let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+			UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+			
+			UNUserNotificationCenter.current().requestAuthorization(
+				options: authOptions,
+				completionHandler: { _, _ in}
+			)
+		} else {
+			let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+			application.registerUserNotificationSettings(settings)
 		}
+		
 		application.registerForRemoteNotifications()
+		FirebaseApp.configure()
+
+		Messaging.messaging().token { token, error in
+			if let error = error {
+				print("--Error fetching FCM registration token: \(error)--")
+			} else if let token = token {
+				print("--FCM registration token: \(token)--")
+			}
+		}
 
         return true
     }
@@ -55,12 +70,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
 	
 	func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-		messaging.token { token, _ in
-			guard let token = token else {
-				return
-			}
-			print("Token: \(token)")
-		}
+		print("--Firebase registration token: \(String(describing: fcmToken))--")
+		
+		let dataDict: [String: String] = ["token": fcmToken ?? ""]
+		NotificationCenter.default.post(
+			name: Notification.Name("FCMToken"),
+			object: nil,
+			userInfo: dataDict
+		)
 	}
 }
 
+extension AppDelegate : UNUserNotificationCenterDelegate {
+	
+	// Receive displayed notifications for iOS 10 devices.
+	func userNotificationCenter(_ center: UNUserNotificationCenter,
+								willPresent notification: UNNotification,
+								withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+		let userInfo = notification.request.content.userInfo
+		
+		// Print full message.
+		print(userInfo)
+		
+		// Change this to your preferred presentation option
+		completionHandler([[.alert, .sound]])
+	}
+	
+	func userNotificationCenter(_ center: UNUserNotificationCenter,
+								didReceive response: UNNotificationResponse,
+								withCompletionHandler completionHandler: @escaping () -> Void) {
+		let userInfo = response.notification.request.content.userInfo
+		
+		// Print full message.
+		print(userInfo)
+		
+		completionHandler()
+	}
+}

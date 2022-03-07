@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,6 +54,7 @@
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollectionViewTesting.entitlements; sourceTree = "<group>"; };
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		D6BE7AB026A6479000498ECB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoViewController.swift; sourceTree = "<group>"; };
@@ -96,7 +97,6 @@
 				E009FDDBA0AC66E7598C676C /* Pods-CollectionViewTesting.debug.xcconfig */,
 				AF5C2DF6FC4035CF95C0C17F /* Pods-CollectionViewTesting.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -129,12 +129,13 @@
 		D61F04BC25D3891D00A2BC05 /* CollectionViewTesting */ = {
 			isa = PBXGroup;
 			children = (
+				D61F04CB25D3891D00A2BC05 /* Info.plist */,
+				D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */,
+				D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */,
 				D69CDA4525E075D0001F03AF /* OtherStuff */,
 				D69CDA4425E07595001F03AF /* Model */,
 				D69CDA4325E07584001F03AF /* Controller */,
 				D69CDA4125E0755A001F03AF /* View */,
-				D61F04CB25D3891D00A2BC05 /* Info.plist */,
-				D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */,
 			);
 			path = CollectionViewTesting;
 			sourceTree = "<group>";
@@ -492,6 +493,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CollectionViewTesting/CollectionViewTesting.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VCD8J5RPNC;
 				INFOPLIST_FILE = CollectionViewTesting/Info.plist;
@@ -513,6 +515,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CollectionViewTesting/CollectionViewTesting.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VCD8J5RPNC;
 				INFOPLIST_FILE = CollectionViewTesting/Info.plist;
