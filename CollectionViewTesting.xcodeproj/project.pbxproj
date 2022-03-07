@@ -129,13 +129,13 @@
 		D61F04BC25D3891D00A2BC05 /* CollectionViewTesting */ = {
 			isa = PBXGroup;
 			children = (
-				D61F04CB25D3891D00A2BC05 /* Info.plist */,
-				D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */,
 				D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */,
 				D69CDA4525E075D0001F03AF /* OtherStuff */,
 				D69CDA4425E07595001F03AF /* Model */,
 				D69CDA4325E07584001F03AF /* Controller */,
 				D69CDA4125E0755A001F03AF /* View */,
+				D61F04CB25D3891D00A2BC05 /* Info.plist */,
+				D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */,
 			);
 			path = CollectionViewTesting;
 			sourceTree = "<group>";
