@@ -17,11 +17,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcO-BN-Y6E" customClass="ViewForAccurateCalc">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcO-BN-Y6E">
                         <rect key="frame" x="28" y="0.0" width="282" height="521"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" maximumZoomScale="2" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OmD-6c-Jna" customClass="EventDurationTableView">
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" maximumZoomScale="2" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OmD-6c-Jna">
                         <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
@@ -42,6 +42,10 @@
                 <constraint firstItem="QcO-BN-Y6E" firstAttribute="leading" secondItem="OmD-6c-Jna" secondAttribute="leading" constant="28" id="idL-mY-UEy"/>
             </constraints>
             <size key="customSize" width="379" height="655"/>
+            <connections>
+                <outlet property="eventDurationTableView" destination="OmD-6c-Jna" id="8br-Dg-qdU"/>
+                <outlet property="viewForAccurateCalc" destination="QcO-BN-Y6E" id="VCZ-bi-9xL"/>
+            </connections>
             <point key="canvasLocation" x="180.91603053435114" y="139.08450704225353"/>
         </collectionViewCell>
     </objects>

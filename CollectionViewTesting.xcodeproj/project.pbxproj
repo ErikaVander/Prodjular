@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B169CD9E7F22BB246494F9AA /* Pods_CollectionViewTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02730E0F1CB86F7D5E5E70C0 /* Pods_CollectionViewTesting.framework */; };
-		D615A0462B6B2506006C0822 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D615A0442B6B2506006C0822 /* TableViewController.swift */; };
+		D615A0462B6B2506006C0822 /* eventDurationTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D615A0442B6B2506006C0822 /* eventDurationTableView.swift */; };
 		D615A0472B6B2506006C0822 /* TableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D615A0452B6B2506006C0822 /* TableViewController.xib */; };
 		D615A04E2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */; };
 		D615A04F2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */; };
@@ -54,7 +54,7 @@
 /* Begin PBXFileReference section */
 		02730E0F1CB86F7D5E5E70C0 /* Pods_CollectionViewTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollectionViewTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF5C2DF6FC4035CF95C0C17F /* Pods-CollectionViewTesting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.release.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.release.xcconfig"; sourceTree = "<group>"; };
-		D615A0442B6B2506006C0822 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		D615A0442B6B2506006C0822 /* eventDurationTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eventDurationTableView.swift; sourceTree = "<group>"; };
 		D615A0452B6B2506006C0822 /* TableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewController.xib; sourceTree = "<group>"; };
 		D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellForEventDuration.swift; sourceTree = "<group>"; };
 		D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCellForEventDuration.xib; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 				D6E35C062852428C00D8B327 /* EventDurationTableViewCell.xib */,
 				D61C37302B2BC10D00AB705A /* EventDurationCollectionViewCell.swift */,
 				D61C37312B2BC10D00AB705A /* EventDurationCollectionViewCell.xib */,
-				D615A0442B6B2506006C0822 /* TableViewController.swift */,
+				D615A0442B6B2506006C0822 /* eventDurationTableView.swift */,
 				D615A0452B6B2506006C0822 /* TableViewController.xib */,
 				D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */,
 				D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */,
@@ -377,7 +377,7 @@
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,
 				D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */,
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
-				D615A0462B6B2506006C0822 /* TableViewController.swift in Sources */,
+				D615A0462B6B2506006C0822 /* eventDurationTableView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
 				D6BE7AB926C6DCE700498ECB /* DatabaseManager.swift in Sources */,
 				D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */,

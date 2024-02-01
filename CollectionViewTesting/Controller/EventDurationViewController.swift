@@ -8,7 +8,9 @@
 import UIKit
 
 class EventDurationViewController: UIViewController {
-	let tvc = TableViewController()
+	
+	
+	@IBOutlet weak var EventDurationTableViewContainerCollectionView: UICollectionView!
 	
 	@IBOutlet weak var mondayLabel: UILabel!
 	@IBOutlet weak var tuesdayLabel: UILabel!
@@ -18,20 +20,15 @@ class EventDurationViewController: UIViewController {
 	@IBOutlet weak var saturdayLabel: UILabel!
 	@IBOutlet weak var sundayLabel: UILabel!
 	
-	@IBOutlet weak var viewForAccurateCalc: UIView!
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		print("Hello")
-		viewForAccurateCalc.addSubview(tvc.TableViewController)
-		print("Hello2")
 	}
 	
 }
 
 extension EventDurationViewController {
 	func constrainWeekdayLabels(utv: UITableView) {
-		sundayLabel.trailingAnchor.constraint(equalTo: tvc.TableViewController.trailingAnchor, constant: 23).isActive = true
+		sundayLabel.trailingAnchor.constraint(equalTo: EventDurationTableViewContainerCollectionView.trailingAnchor, constant: 23).isActive = true
 	}
 }
 
