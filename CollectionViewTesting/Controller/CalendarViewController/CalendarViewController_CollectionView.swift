@@ -188,7 +188,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 //MARK: ColectionViewDelegate
 extension CalendarViewController: UICollectionViewDelegate {
-	///The logit for enabling infinite scrolling.
+	///The logic for enabling infinite scrolling.
 	func scroll() {
 		collectionView.scrollToItem(at: IndexPath(item: 50, section: 0), at: .top, animated: false)
 		collectionView.reloadData()
