@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TableViewController: UIViewController {
+class eventDurationTableView: UIViewController {
         
 	@IBOutlet weak var TableViewController: UITableView!
 	
@@ -114,7 +114,7 @@ class TableViewController: UIViewController {
 	}
 }
 
-extension TableViewController: UITableViewDelegate, UITableViewDataSource {
+extension eventDurationTableView: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = tableView.dequeueReusableCell(withIdentifier: "eventDurationTableViewCell", for: indexPath) as! EventDurationTableViewCell
 		
@@ -155,7 +155,7 @@ extension TableViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 }
 
-extension TableViewController : UIGestureRecognizerDelegate {
+extension eventDurationTableView : UIGestureRecognizerDelegate {
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		return true
 	}
