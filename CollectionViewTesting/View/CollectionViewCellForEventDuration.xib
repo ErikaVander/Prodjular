@@ -4,40 +4,45 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CollectionViewCellForEventDuration" customModule="CollectionViewTesting" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="327" height="517"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gTV-IL-0wX" customClass="CollectionViewCellForEventDuration" customModule="CollectionViewTesting" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="327" height="517"/>
+                <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QcO-BN-Y6E">
-                        <rect key="frame" x="22" y="0.0" width="282" height="521"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" maximumZoomScale="2" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OmD-6c-Jna">
-                                <rect key="frame" x="-37" y="0.0" width="356" height="521"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="356" id="fjS-zW-gSE"/>
-                                </constraints>
-                            </tableView>
-                        </subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcO-BN-Y6E" customClass="ViewForAccurateCalc">
+                        <rect key="frame" x="28" y="0.0" width="282" height="521"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" maximumZoomScale="2" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OmD-6c-Jna" customClass="EventDurationTableView">
+                        <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="356" id="fjS-zW-gSE"/>
+                        </constraints>
+                    </tableView>
                 </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="327" height="517"/>
-            <point key="canvasLocation" x="179.38931297709922" y="184.1549295774648"/>
+            <constraints>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="1z0-VG-lmT"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="trailing" secondItem="OmD-6c-Jna" secondAttribute="trailing" constant="-46" id="402-8J-pnB"/>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6ZB-H4-3S7"/>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" id="9Lt-Rs-WLv"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="top" secondItem="OmD-6c-Jna" secondAttribute="top" id="KJ4-Xk-1dM"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" id="SYN-bj-oPs"/>
+                <constraint firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" id="hZX-Mr-7bU"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="leading" secondItem="OmD-6c-Jna" secondAttribute="leading" constant="28" id="idL-mY-UEy"/>
+            </constraints>
+            <size key="customSize" width="379" height="655"/>
+            <point key="canvasLocation" x="180.91603053435114" y="139.08450704225353"/>
         </collectionViewCell>
     </objects>
     <resources>
