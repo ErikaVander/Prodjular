@@ -25,7 +25,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 		
 		cellOne.isUserInteractionEnabled = false
 		cellOne.currentDateIndicatorView.isHidden = true
-		cellOne.label.textColor = .white
+		cellOne.label.textColor = .label
 		cellOne.theDotViewBackgroundView.isHidden = true
 		for subviews in cellOne.theDotViewBackgroundView.subviews {
 			subviews.removeFromSuperview()
@@ -172,7 +172,11 @@ extension CalendarViewController: UICollectionViewDataSource {
 			let _: () = cellOne.selectedBackgroundView = {
 				let view = UIView()
 				view.layer.cornerRadius = 5
-				view.backgroundColor = UIColor.darkGray
+				if self.traitCollection.userInterfaceStyle == .dark {
+					view.backgroundColor = UIColor.darkGray
+				} else {
+					view.backgroundColor = UIColor.lightGray
+				}
 				
 				return view
 			}()

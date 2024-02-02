@@ -38,9 +38,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcS-ng-6qe">
-                                <rect key="frame" x="25" y="38" width="113" height="30"/>
-                                <state key="normal" title="Back to Settings"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcS-ng-6qe">
+                                <rect key="frame" x="25" y="38" width="12.666666666666664" height="22"/>
+                                <state key="normal" image="chevron.backward" catalog="system"/>
                                 <connections>
                                     <action selector="backToSettings:" destination="xLk-Mg-Kyr" eventType="touchUpInside" id="lug-6j-JC0"/>
                                 </connections>
@@ -565,6 +565,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="W4F-Zp-zWj">
+                                <rect key="frame" x="200" y="357" width="12.666666666666657" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="chevron.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backToSettings:" destination="xLk-Mg-Kyr" eventType="touchUpInside" id="HGK-s3-WfE"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7jy-Pd-NBc">
                                 <rect key="frame" x="73" y="84.666666666666671" width="11" height="14.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -635,6 +643,13 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zVL-p0-X0G">
+                                <rect key="frame" x="25" y="45" width="12.666666666666657" height="22"/>
+                                <state key="normal" image="chevron.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="back:" destination="J2y-mf-fKc" eventType="touchUpInside" id="Gf7-wD-Ggp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Out-Hq-Czd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -648,9 +663,11 @@
                             <constraint firstItem="eGd-IZ-Mzt" firstAttribute="top" secondItem="O5n-q2-RbW" secondAttribute="top" id="IE7-QN-hoQ"/>
                             <constraint firstItem="Out-Hq-Czd" firstAttribute="bottom" secondItem="zkI-dn-uyg" secondAttribute="bottom" constant="70" id="Qrd-DC-xFk"/>
                             <constraint firstItem="Dby-4M-QrQ" firstAttribute="top" secondItem="kta-9Z-qaw" secondAttribute="top" id="RoS-Wq-lka"/>
+                            <constraint firstItem="zVL-p0-X0G" firstAttribute="top" secondItem="Out-Hq-Czd" secondAttribute="top" constant="25" id="S5y-1H-twM"/>
                             <constraint firstItem="kta-9Z-qaw" firstAttribute="top" secondItem="46k-n0-2vN" secondAttribute="top" id="SGu-Vd-CMC"/>
                             <constraint firstItem="gzC-Vt-1BS" firstAttribute="centerX" secondItem="7jy-Pd-NBc" secondAttribute="centerX" constant="46" id="Xae-pK-kir"/>
                             <constraint firstItem="pEJ-dY-Hqw" firstAttribute="top" secondItem="7jy-Pd-NBc" secondAttribute="bottom" constant="-2" id="Z7z-vd-Y5F"/>
+                            <constraint firstItem="zVL-p0-X0G" firstAttribute="leading" secondItem="Out-Hq-Czd" secondAttribute="leading" constant="25" id="aMf-F2-6Gi"/>
                             <constraint firstItem="zkI-dn-uyg" firstAttribute="top" secondItem="pEJ-dY-Hqw" secondAttribute="bottom" constant="10" id="cCQ-sx-Rfl"/>
                             <constraint firstItem="zkI-dn-uyg" firstAttribute="centerX" secondItem="Out-Hq-Czd" secondAttribute="centerX" id="cQH-on-b0A"/>
                             <constraint firstItem="7jy-Pd-NBc" firstAttribute="top" secondItem="gzC-Vt-1BS" secondAttribute="top" id="gKw-eO-jv8"/>
@@ -681,6 +698,7 @@
     </scenes>
     <resources>
         <image name="calendar.badge.plus" catalog="system" width="128" height="109"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="placeholderTextColor">

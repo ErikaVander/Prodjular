@@ -68,3 +68,11 @@ extension EventDurationViewController : UICollectionViewDelegateFlowLayout {
 extension EventDurationViewController : UICollectionViewDelegate {
 	
 }
+
+//MARK: - Navigation
+extension EventDurationViewController {
+	///Goes back to the settings page
+	@IBAction func back(_ sender: Any) {
+		self.dismiss(animated: true, completion: nil)
+	}
+}
