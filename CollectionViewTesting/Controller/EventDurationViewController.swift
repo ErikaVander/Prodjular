@@ -47,17 +47,26 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 		return true
 	}
 	
+	///This function will scroll to the center cell (cell 1) when called.
 	func scroll() {
 		EventDurationTableViewContainerCollectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
 		print("Scrolling")
 	}
 	
+	///Logic for allowing infinite scrolling.
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		print(EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems[0])
-		if(EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
+		//Variables that contain the mid x and mid y coordinates of EventDurationTableViewContainerCollectionView
+		let midX = EventDurationTableViewContainerCollectionView.frame.midX
+		let midY = EventDurationTableViewContainerCollectionView.frame.midY
+		
+		//This variable makes it so that infinite scroll actually works. It keeps track of which cell is actually touching the midpoint in EventDurationTableViewContainerCollectionView
+		let midIndexPath = EventDurationTableViewContainerCollectionView.indexPathForItem(at: CGPoint(x: midX, y: midY))
+		
+		//If the cell that is touching the midpoint is 0 or 2, call scroll() to change it to 1 allowing for infinite scrolling.
+		if(midIndexPath == IndexPath.init(item: 0, section: 0)) {
 			//minus a week on selected date
 			scroll()
-		} else if (EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 2, section: 0)) {
+		} else if (midIndexPath == IndexPath.init(item: 2, section: 0)) {
 			//plus a week on selected date
 			scroll()
 		}
