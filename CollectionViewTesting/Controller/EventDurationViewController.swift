@@ -29,6 +29,8 @@ class EventDurationViewController: UIViewController {
 		
 		EventDurationTableViewContainerCollectionView.delegate = self
 		EventDurationTableViewContainerCollectionView.dataSource = self
+		
+		scroll()
 	}
 }
 
@@ -43,6 +45,22 @@ extension EventDurationViewController {
 extension EventDurationViewController : UIGestureRecognizerDelegate {
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		return true
+	}
+	
+	func scroll() {
+		EventDurationTableViewContainerCollectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
+		print("Scrolling")
+	}
+	
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		print(EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems[0])
+		if(EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
+			//minus a week on selected date
+			scroll()
+		} else if (EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 2, section: 0)) {
+			//plus a week on selected date
+			scroll()
+		}
 	}
 }
 
