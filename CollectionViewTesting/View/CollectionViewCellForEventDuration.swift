@@ -23,7 +23,7 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		print("Loaded")
+		
 		eventDurationTableView.register(UINib(nibName: "EventDurationTableViewCell", bundle: nil), forCellReuseIdentifier: "eventDurationTableViewCell")
 		
 		eventDurationTableView.dataSource = self
@@ -110,6 +110,7 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 			}
 		}
 	}
+	
 }
 
 extension CollectionViewCellForEventDuration: UITableViewDelegate, UITableViewDataSource {
@@ -151,6 +152,12 @@ extension CollectionViewCellForEventDuration: UITableViewDelegate, UITableViewDa
 		}
 		return false
 	}
+	
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		scrollPosition = eventDurationTableView.contentOffset
+		print(scrollPosition.y)
+	}
+	
 }
 
 extension CollectionViewCellForEventDuration : UIGestureRecognizerDelegate {

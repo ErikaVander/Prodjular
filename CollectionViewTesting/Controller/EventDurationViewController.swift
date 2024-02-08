@@ -22,6 +22,8 @@ class EventDurationViewController: UIViewController {
 	@IBOutlet weak var saturdayLabel: UILabel!
 	@IBOutlet weak var sundayLabel: UILabel!
 	
+	public var positionOfCellOneScroll = CGPoint(x: 0.0, y: 0.0)
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -50,7 +52,6 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 	///This function will scroll to the center cell (cell 1) when called.
 	func scroll() {
 		EventDurationTableViewContainerCollectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
-		print("Scrolling")
 	}
 	
 	///Logic for allowing infinite scrolling.
@@ -70,6 +71,28 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 			//plus a week on selected date
 			scroll()
 		}
+	}
+	
+	///This function will make the scroll position in the vertical direction the same for all table views within the collection view.
+	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		print("This is when this happens")
+		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = scrollPosition.y
+		print((cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		print("Here is the other content offset: ", (cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
+		showHeightOfCell()
+	}
+	
+	func showHeightOfCell() {
+		let cellZero = EventDurationTableViewContainerCollectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: IndexPath(item: 0, section: 0)) as! CollectionViewCellForEventDuration
+		let cellOne = EventDurationTableViewContainerCollectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: IndexPath(item: 1, section: 0)) as! CollectionViewCellForEventDuration
+		let cellTwo = EventDurationTableViewContainerCollectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: IndexPath(item: 2, section: 0)) as! CollectionViewCellForEventDuration
+		
+		print(cellZero.layer.position.y)
+		print(cellOne.layer.position.y)
+		print(cellTwo.layer.position.y)
 	}
 }
 
