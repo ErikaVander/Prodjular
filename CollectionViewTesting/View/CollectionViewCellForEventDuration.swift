@@ -24,10 +24,16 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
+		print("awakeFromNib")
+		
 		eventDurationTableView.register(UINib(nibName: "EventDurationTableViewCell", bundle: nil), forCellReuseIdentifier: "eventDurationTableViewCell")
 		
 		eventDurationTableView.dataSource = self
 		eventDurationTableView.delegate = self
+		
+		eventDurationTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .middle, animated: false)
+		eventDurationTableView.scrollToRow(at: IndexPath(item: 2, section: 0), at: .middle, animated: false)
+		eventDurationTableView.scrollToRow(at: IndexPath(item: 1, section: 0), at: .middle, animated: false)
 		
 		//giving value to customGesture after intialization at the tap of file
 		//Calling method handleTap after tap is recognized
@@ -155,7 +161,14 @@ extension CollectionViewCellForEventDuration: UITableViewDelegate, UITableViewDa
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		scrollPosition = eventDurationTableView.contentOffset
+//		if(scrollPosition.y.truncatingRemainder(dividingBy: eventDurationTableView.frame.height+1) != 0) {
+//			eventDurationTableView.scrollToNearestSelectedRow(at: .top, animated: true)
+//		}
 		print(scrollPosition.y)
+	}
+	
+	func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+		
 	}
 	
 }

@@ -14,6 +14,7 @@ class EventDurationViewController: UIViewController {
 	
 	@IBOutlet weak var dayOfTheWeekCollectionView: UICollectionView!
 	
+	@IBOutlet weak var monthLabel: UILabel!
 	@IBOutlet weak var mondayLabel: UILabel!
 	@IBOutlet weak var tuesdayLabel: UILabel!
 	@IBOutlet weak var wednesdayLabel: UILabel!
@@ -76,13 +77,14 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 	///This function will make the scroll position in the vertical direction the same for all table views within the collection view.
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		print("This is when this happens")
+		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = -5
 		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = scrollPosition.y
 		print((cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		print("Here is the other content offset: ", (cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
-		showHeightOfCell()
+		print("Here is the didEndDisplaying content offset: ", (cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
+		//showHeightOfCell()
 	}
 	
 	func showHeightOfCell() {
