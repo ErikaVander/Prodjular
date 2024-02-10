@@ -9,6 +9,7 @@ import UIKit
 
 class CollectionViewCellForEventDuration: UICollectionViewCell {
 
+	@IBOutlet weak var dayOfTheWeekCollectionView: UICollectionView!
 	@IBOutlet weak var viewForAccurateCalc: UIView!
 	@IBOutlet weak var eventDurationTableView: UITableView!
 	
@@ -16,6 +17,8 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 	let hourSegmentSegmentorDistribution = 46
 	let hourLabelTrailingConstraint = 15
 	let eventDurationTableViewCellHeight = 45
+	
+	var classIndex = 0
 	
 	
 	
@@ -28,8 +31,13 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 		
 		eventDurationTableView.register(UINib(nibName: "EventDurationTableViewCell", bundle: nil), forCellReuseIdentifier: "eventDurationTableViewCell")
 		
+		dayOfTheWeekCollectionView.register(UINib(nibName: "weekNumberForEventDuration", bundle: nil), forCellWithReuseIdentifier: "weekNumberForEventDuration")
+		
 		eventDurationTableView.dataSource = self
 		eventDurationTableView.delegate = self
+		
+		dayOfTheWeekCollectionView.delegate = self
+		dayOfTheWeekCollectionView.dataSource = self
 		
 		eventDurationTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .middle, animated: false)
 		eventDurationTableView.scrollToRow(at: IndexPath(item: 2, section: 0), at: .middle, animated: false)
@@ -43,6 +51,8 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 		//Adding GestureRecognizer to table view after setting customGesture.delegate = self
 		eventDurationTableView.addGestureRecognizer(customGesture)
 		eventDurationTableView.setZoomScale(2, animated: true)
+		
+		fillWeek(parDate: selectedDate)
 	}
 	
 	//The method called when customGestureRecognizer enters .possible or .began (don't know which)
@@ -176,5 +186,44 @@ extension CollectionViewCellForEventDuration: UITableViewDelegate, UITableViewDa
 extension CollectionViewCellForEventDuration : UIGestureRecognizerDelegate {
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		return true
+	}
+}
+
+extension CollectionViewCellForEventDuration : UICollectionViewDelegate {
+	
+}
+
+extension CollectionViewCellForEventDuration : UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return 7
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		
+		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "weekNumberForEventDuration", for: indexPath) as! weekNumberForEventDuration
+		
+		if(classIndex == 1) {
+			cellOne.label.text = numWeek[indexPath.item + 7]
+		} else if (classIndex == 0) {
+			cellOne.label.text = numWeek[indexPath.item]
+		} else {
+			cellOne.label.text = numWeek[indexPath.item + 14]
+		}
+		
+		return cellOne
+		
+	}
+	
+	
+}
+
+extension CollectionViewCellForEventDuration : UICollectionViewDelegateFlowLayout {
+	///setting the width and height of the EventDurationCollectionView
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		//let widthValue = collectionView.frame.width/7
+		
+		//print("WidthValue = ", widthValue)
+		
+		return CGSize(width: 46.8, height: dayOfTheWeekCollectionView.frame.height)
 	}
 }

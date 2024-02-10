@@ -7,7 +7,8 @@
 
 import Foundation
 
-var num: [String] = []
+var numMonth: [String] = []
+var numWeek: [String] = []
 
 let calendar = Calendar.current
 
@@ -17,10 +18,28 @@ func plusmonth(date: Date) -> Date
     return calendar.date(byAdding: .month, value: 1, to: date)!
 }
 
+///Finds the date one week away from the given date
+func plusWeek(date: Date) -> Date
+{
+	return calendar.date(byAdding: .weekOfYear, value: 1, to: date)!
+}
+
+///Finds the date one day after the given date
+func plusDay(date: Date) -> Date
+{
+	return calendar.date(byAdding: .day, value: 1, to: date)!
+}
+
 ///Finds the date one month before the given date
 func minusMonth(date: Date) -> Date
 {
     return calendar.date(byAdding: .month, value: -1, to: date)!
+}
+
+///Finds the date one week before the given date
+func minusWeek(date: Date) -> Date
+{
+	return calendar.date(byAdding: .weekOfMonth, value: -1, to: date)!
 }
 
 ///Returns the number of days in the month of the date given
@@ -71,10 +90,19 @@ func firstDayOfMonth(date: Date) -> Date
 	}
 }
 
-///Filling the array nums[] 
-func fillMonth(parDate: Date)
+func firstDayOfWeek(date: Date) -> Date
 {
-	num.removeAll()
+	if calendar.component(.weekday, from: date) != 1 {
+		let firstDay: Date = calendar.nextDate(after: date, matching: DateComponents(weekday: 1), matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .backward)!
+		return firstDay
+	} else {
+		return date
+	}
+}
+
+///Filling the array numsMonth[]
+func fillMonth(parDate: Date) {
+	numMonth.removeAll()
 	var x: Int = 0
 	var startDate = minusMonth(date: parDate)
 	while x < 3 {
@@ -83,13 +111,13 @@ func fillMonth(parDate: Date)
 		let firstDayMonth = firstDayOfMonth(date: startDate)
 		let startingSpaces = weekDay(date: firstDayMonth)
 		
-		num.append("SU")
-		num.append("MO")
-		num.append("TU")
-		num.append("WE")
-		num.append("TH")
-		num.append("FR")
-		num.append("SA")
+		numMonth.append("SU")
+		numMonth.append("MO")
+		numMonth.append("TU")
+		numMonth.append("WE")
+		numMonth.append("TH")
+		numMonth.append("FR")
+		numMonth.append("SA")
 		
 		var count: Int = 1
 		
@@ -97,11 +125,11 @@ func fillMonth(parDate: Date)
 		{
 			if (count <= startingSpaces || count - startingSpaces > daysInMonth)
 			{
-				num.append("")
+				numMonth.append("")
 			}
 			else
 			{
-				num.append(String(count - startingSpaces))
+				numMonth.append(String(count - startingSpaces))
 			}
 			count += 1
 		}
@@ -110,6 +138,23 @@ func fillMonth(parDate: Date)
 	}
 	
 	print("done with fillMonth")
+}
+
+///Filling the array numWeek[]
+func fillWeek(parDate: Date) {
+	numWeek.removeAll()
+
+	let startDate = minusWeek(date: parDate)
+	let firstDayWeek = firstDayOfWeek(date: startDate)
+	
+	var date: Date = firstDayWeek
+	var count = 0
+	while (count <= 20)
+	{
+		numWeek.append(String(dayOfMonth(date: date)))
+		date = plusDay(date: date)
+		count += 1
+	}
 }
 
 ///Enter a date in the format "M d, yyyy" or "1 21, 2001" to get a date in return

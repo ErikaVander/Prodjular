@@ -1,5 +1,5 @@
 //
-//  EventDurationCollectionViewCell.swift
+//  weekNumberForEventDuration.swift
 //  CollectionViewTesting
 //
 //  Created by Vanderhoff on 12/14/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EventDurationCollectionViewCell: UICollectionViewCell {
+class weekNumberForEventDuration: UICollectionViewCell {
 	@IBOutlet weak var selectedBackground: UIView!
 	@IBOutlet weak var label: UILabel!
 	var cellDate: Date?

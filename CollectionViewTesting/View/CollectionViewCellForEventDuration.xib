@@ -18,11 +18,26 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcO-BN-Y6E">
-                        <rect key="frame" x="28" y="0.0" width="282" height="521"/>
+                        <rect key="frame" x="28" y="38" width="282" height="483"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="QHC-ea-uSp">
+                        <rect key="frame" x="28" y="0.0" width="328" height="38"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" id="1pp-Vy-VW7"/>
+                            <constraint firstAttribute="width" constant="328" id="vIs-qZ-gyR"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Agk-sF-MWo">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                    </collectionView>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" maximumZoomScale="2" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OmD-6c-Jna">
-                        <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
+                        <rect key="frame" x="0.0" y="38" width="356" height="483"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -34,19 +49,21 @@
             <constraints>
                 <constraint firstItem="OmD-6c-Jna" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="1z0-VG-lmT"/>
                 <constraint firstItem="QcO-BN-Y6E" firstAttribute="trailing" secondItem="OmD-6c-Jna" secondAttribute="trailing" constant="-46" id="402-8J-pnB"/>
-                <constraint firstItem="OmD-6c-Jna" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6ZB-H4-3S7"/>
-                <constraint firstItem="OmD-6c-Jna" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" id="9Lt-Rs-WLv"/>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" constant="-38" id="9Lt-Rs-WLv"/>
+                <constraint firstAttribute="trailing" secondItem="QHC-ea-uSp" secondAttribute="trailing" id="Isg-qt-R3t"/>
                 <constraint firstItem="QcO-BN-Y6E" firstAttribute="top" secondItem="OmD-6c-Jna" secondAttribute="top" id="KJ4-Xk-1dM"/>
                 <constraint firstItem="QcO-BN-Y6E" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" id="SYN-bj-oPs"/>
                 <constraint firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" id="hZX-Mr-7bU"/>
                 <constraint firstItem="QcO-BN-Y6E" firstAttribute="leading" secondItem="OmD-6c-Jna" secondAttribute="leading" constant="28" id="idL-mY-UEy"/>
+                <constraint firstItem="QHC-ea-uSp" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="top" id="khP-Of-AAH"/>
             </constraints>
             <size key="customSize" width="379" height="655"/>
             <connections>
+                <outlet property="dayOfTheWeekCollectionView" destination="QHC-ea-uSp" id="Qlf-as-mEb"/>
                 <outlet property="eventDurationTableView" destination="OmD-6c-Jna" id="8br-Dg-qdU"/>
                 <outlet property="viewForAccurateCalc" destination="QcO-BN-Y6E" id="VCZ-bi-9xL"/>
             </connections>
-            <point key="canvasLocation" x="180.91603053435114" y="139.08450704225353"/>
+            <point key="canvasLocation" x="180.15267175572518" y="139.08450704225353"/>
         </collectionViewCell>
     </objects>
     <resources>

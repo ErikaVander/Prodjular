@@ -16,8 +16,8 @@ extension CalendarViewController: UICollectionViewDataSource {
 	
 	///The number of items in each section is determined by the lengthe of nums[] which keeps track of the content that will be added to the collectionView
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		print("num.count = ", num.count)
-		return num.count
+		print("num.count = ", numMonth.count)
+		return numMonth.count
 	}
 	
 	///Makes sure that only cells containing numbers can be selected by the user. Sets the default background view for selected cells. Sets each cells label to the elements within nums[] which keeps track of the content that will be added to the collectionView. Creates dotViews for cells that have events.
@@ -32,7 +32,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 			subviews.removeFromSuperview()
 		}
 		
-		if Int(num[indexPath.item]) != nil {
+		if Int(numMonth[indexPath.item]) != nil {
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
 			cellOne.isUserInteractionEnabled = true
 			
@@ -43,7 +43,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 			formatterTwo.dateFormat = "yyyy-MMM-dd"
 			
 			let firstPartOfDate = "\(String(describing: yearLabel.text!))-\(String(describing: monthLabel.text!))"
-			let dateString = "\(firstPartOfDate)-\(num[indexPath.item])"
+			let dateString = "\(firstPartOfDate)-\(numMonth[indexPath.item])"
 			
 			let theDate = formatterTwo.date(from: dateString) ?? formatterTwo.date(from: "2020-August-21")!
 			
@@ -185,7 +185,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
 		}
 		
-		cellOne.label.text = num[indexPath.item]
+		cellOne.label.text = numMonth[indexPath.item]
 		
 		return cellOne
 	}
@@ -254,9 +254,9 @@ extension CalendarViewController: UICollectionViewDelegate {
 	
 	///Logic for updating userSelectedDate after a new cell is selected by user. This method then reloads the tableView data if data exists, otherwise it informs the user that no events are scheduled for the newly selected date.
 	func selectCell(indexPath: IndexPath) {
-		if Int(num[indexPath.item]) != nil
+		if Int(numMonth[indexPath.item]) != nil
 		{
-		selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
+		selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(numMonth[indexPath.item]), \(yearString(date: selectedDate))")
 		}
 		tableView.reloadData()
 		if(tableView.numberOfRows(inSection: 0) == 0) {

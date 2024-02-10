@@ -12,8 +12,6 @@ class EventDurationViewController: UIViewController {
 	
 	@IBOutlet weak var EventDurationTableViewContainerCollectionView: UICollectionView!
 	
-	@IBOutlet weak var dayOfTheWeekCollectionView: UICollectionView!
-	
 	@IBOutlet weak var monthLabel: UILabel!
 	@IBOutlet weak var mondayLabel: UILabel!
 	@IBOutlet weak var tuesdayLabel: UILabel!
@@ -33,7 +31,9 @@ class EventDurationViewController: UIViewController {
 		EventDurationTableViewContainerCollectionView.delegate = self
 		EventDurationTableViewContainerCollectionView.dataSource = self
 		
+		print("scrollFirst")
 		scroll()
+		print("scrollFirst")
 	}
 }
 
@@ -107,8 +107,9 @@ extension EventDurationViewController : UICollectionViewDataSource {
 	
 	///Creating the cells of the EventDurationCollectionView using the reusable cell defined in CollectionViewCellForEventDuration
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: indexPath) as! CollectionViewCellForEventDuration
 		
-		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: indexPath)
+		cellOne.classIndex = indexPath.item
 		
 		cellOne.isUserInteractionEnabled = true
 		return cellOne

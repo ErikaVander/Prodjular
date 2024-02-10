@@ -5,13 +5,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="weekNumberForEventDuration" id="gTV-IL-0wX" customClass="EventDurationCollectionViewCell" customModule="CollectionViewTesting" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="weekNumberForEventDuration" id="gTV-IL-0wX" customClass="weekNumberForEventDuration" customModule="CollectionViewTesting" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -22,13 +21,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtA-Ir-cOq">
-                                <rect key="frame" x="17.333333333333332" y="5.3333333333333321" width="15.333333333333332" height="39.666666666666671"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                <rect key="frame" x="21" y="15.666666666666666" width="8" height="18.666666666666679"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="jtA-Ir-cOq" firstAttribute="centerX" secondItem="5Qm-Ec-9Ke" secondAttribute="centerX" id="5xs-8l-aKv"/>
                             <constraint firstItem="jtA-Ir-cOq" firstAttribute="centerY" secondItem="5Qm-Ec-9Ke" secondAttribute="centerY" id="b67-EB-nbl"/>
@@ -50,9 +48,4 @@
             <point key="canvasLocation" x="10.687022900763358" y="20.422535211267608"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
