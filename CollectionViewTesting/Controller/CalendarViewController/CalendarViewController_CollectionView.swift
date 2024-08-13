@@ -16,7 +16,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 	
 	///The number of items in each section is determined by the lengthe of nums[] which keeps track of the content that will be added to the collectionView
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		print("num.count = ", numMonth.count)
+		//print("num.count = ", numMonth.count)
 		return numMonth.count
 	}
 	

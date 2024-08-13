@@ -100,6 +100,16 @@ func firstDayOfWeek(date: Date) -> Date
 	}
 }
 
+func lastDayOfWeek(date: Date) -> Date
+{
+	if calendar.component(.weekday, from: date) != 7 {
+		let lastDay: Date = calendar.nextDate(after: date, matching: DateComponents(weekday: 7), matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .forward)!
+		return lastDay
+	} else {
+		return date
+	}
+}
+
 ///Filling the array numsMonth[]
 func fillMonth(parDate: Date) {
 	numMonth.removeAll()
@@ -143,6 +153,8 @@ func fillMonth(parDate: Date) {
 ///Filling the array numWeek[]
 func fillWeek(parDate: Date) {
 	numWeek.removeAll()
+	
+	print("Just filled Week")
 
 	let startDate = minusWeek(date: parDate)
 	let firstDayWeek = firstDayOfWeek(date: startDate)

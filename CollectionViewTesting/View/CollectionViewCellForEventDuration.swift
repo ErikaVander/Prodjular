@@ -27,7 +27,7 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		print("awakeFromNib")
+		print("_-----------Reloaded---------------_")
 		
 		eventDurationTableView.register(UINib(nibName: "EventDurationTableViewCell", bundle: nil), forCellReuseIdentifier: "eventDurationTableViewCell")
 		
@@ -51,8 +51,6 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 		//Adding GestureRecognizer to table view after setting customGesture.delegate = self
 		eventDurationTableView.addGestureRecognizer(customGesture)
 		eventDurationTableView.setZoomScale(2, animated: true)
-		
-		fillWeek(parDate: selectedDate)
 	}
 	
 	//The method called when customGestureRecognizer enters .possible or .began (don't know which)
@@ -200,15 +198,23 @@ extension CollectionViewCellForEventDuration : UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		
+		
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "weekNumberForEventDuration", for: indexPath) as! weekNumberForEventDuration
 		
+//		print("classIndex:", classIndex)
+		
 		if(classIndex == 1) {
+//			print("numWeek for index = 1", numWeek[indexPath.item + 7])
 			cellOne.label.text = numWeek[indexPath.item + 7]
 		} else if (classIndex == 0) {
+//			print("numWeek for index = 0", numWeek[indexPath.item])
 			cellOne.label.text = numWeek[indexPath.item]
 		} else {
+//			print("numWeek for index = else", numWeek[indexPath.item + 14])
 			cellOne.label.text = numWeek[indexPath.item + 14]
 		}
+		
+		//selectedDate = firstDayOfWeek(date: selectedDate)
 		
 		return cellOne
 		

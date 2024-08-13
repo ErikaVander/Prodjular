@@ -31,9 +31,19 @@ class EventDurationViewController: UIViewController {
 		EventDurationTableViewContainerCollectionView.delegate = self
 		EventDurationTableViewContainerCollectionView.dataSource = self
 		
-		print("scrollFirst")
+		fillWeek(parDate: selectedDate)
+		
+		//Change month string to match current viewed month
+		monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
+		//If the month changes in the middle of the week, add the other month to the string also
+		if(monthString(date: firstDayOfWeek(date: selectedDate)) != monthString(date: lastDayOfWeek(date: selectedDate))) {
+			monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDate))
+		}
+	}
+	
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
 		scroll()
-		print("scrollFirst")
 	}
 }
 
@@ -53,48 +63,60 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 	///This function will scroll to the center cell (cell 1) when called.
 	func scroll() {
 		EventDurationTableViewContainerCollectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
+		print("Just scrolled")
 	}
 	
 	///Logic for allowing infinite scrolling.
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		//Variables that contain the mid x and mid y coordinates of EventDurationTableViewContainerCollectionView
-		let midX = EventDurationTableViewContainerCollectionView.frame.midX
-		let midY = EventDurationTableViewContainerCollectionView.frame.midY
-		
 		//This variable makes it so that infinite scroll actually works. It keeps track of which cell is actually touching the midpoint in EventDurationTableViewContainerCollectionView
-		let midIndexPath = EventDurationTableViewContainerCollectionView.indexPathForItem(at: CGPoint(x: midX, y: midY))
+//		let midIndexPath = EventDurationTableViewContainerCollectionView.indexPathForItem(at: CGPoint(x: midX, y: midY))
+		let midIndexPath2 = EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems
 		
-		//If the cell that is touching the midpoint is 0 or 2, call scroll() to change it to 1 allowing for infinite scrolling.
-		if(midIndexPath == IndexPath.init(item: 0, section: 0)) {
-			//minus a week on selected date
-			scroll()
-		} else if (midIndexPath == IndexPath.init(item: 2, section: 0)) {
+		print(midIndexPath2)
+		let midIndexPath = midIndexPath2.last
+		//If the index that is at the end of the array midIndexPath2 is [0, 2], then it will scroll to the right, otherwise it will scroll to the left.
+		if(midIndexPath == IndexPath.init(item: 2, section: 0)) {
 			//plus a week on selected date
+			selectedDate = plusWeek(date: selectedDate)
+			fillWeek(parDate: selectedDate)
+			print(numWeek)
+			reloadData()
+			print("After plus selected Date is now: ", selectedDate)
+			//Change month string to match current viewed month
+			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
+			//If the month changes in the middle of the week, add the other month to the string also
+			if(monthString(date: firstDayOfWeek(date: selectedDate)) != monthString(date: lastDayOfWeek(date: selectedDate))) {
+				monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDate))
+			}
+			scroll()
+		} else if (midIndexPath == IndexPath.init(item: 0, section: 0)) {
+			//minus a week on selected date
+			selectedDate = minusWeek(date: selectedDate)
+			fillWeek(parDate: selectedDate)
+			print(numWeek)
+			reloadData()
+			print("After minus selected Date is now: ", selectedDate)
+			//Change month string to match current viewed month
+			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
+			//If the month changes in the middle of the week, add the other month to the string also
+			if(monthString(date: firstDayOfWeek(date: selectedDate)) != monthString(date: lastDayOfWeek(date: selectedDate))) {
+				monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDate))
+			}
 			scroll()
 		}
 	}
 	
 	///This function will make the scroll position in the vertical direction the same for all table views within the collection view.
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		print("This is when this happens")
+		//print("This is when this happens")
 		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = -5
 		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = scrollPosition.y
-		print((cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
+		//print((cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		print("Here is the didEndDisplaying content offset: ", (cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)
-		//showHeightOfCell()
-	}
-	
-	func showHeightOfCell() {
-		let cellZero = EventDurationTableViewContainerCollectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: IndexPath(item: 0, section: 0)) as! CollectionViewCellForEventDuration
-		let cellOne = EventDurationTableViewContainerCollectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: IndexPath(item: 1, section: 0)) as! CollectionViewCellForEventDuration
-		let cellTwo = EventDurationTableViewContainerCollectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: IndexPath(item: 2, section: 0)) as! CollectionViewCellForEventDuration
-		
-		print(cellZero.layer.position.y)
-		print(cellOne.layer.position.y)
-		print(cellTwo.layer.position.y)
+	///Reloading data of EventDurationTableViewContainerCollectionView after scrolling.
+	func reloadData() {
+		EventDurationTableViewContainerCollectionView.reloadData()
 	}
 }
 
@@ -105,15 +127,19 @@ extension EventDurationViewController : UICollectionViewDataSource {
 		return 3
 	}
 	
-	///Creating the cells of the EventDurationCollectionView using the reusable cell defined in CollectionViewCellForEventDuration
+	///Creating the cells of the EventDurationCollectionView using the reusable cell defined in CollectionViewCellForEventDuration. Also reloading data after scrolling.
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cellForEventDuration", for: indexPath) as! CollectionViewCellForEventDuration
 		
 		cellOne.classIndex = indexPath.item
+		//Reload the dayOfTheWeekCollectionView, after putting updated dates in numWeek array, after scrolling. This allows infinite scroll to work
+		cellOne.dayOfTheWeekCollectionView.reloadData()
 		
+		//allow the user to scroll.
 		cellOne.isUserInteractionEnabled = true
 		return cellOne
 	}
+	
 	
 }
 
