@@ -243,7 +243,9 @@ extension CalendarViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		if(Int(cellOne.label.text!) != nil) {
+			previouslySelectedCellIndexPath = collectionView.indexPathsForSelectedItems?.first!
 			selectCell(indexPath: indexPath)
+			//updates previouslySelectedCell and newely selected cell by calling reloadItems
 			collectionView.reloadItems(at: [indexPath, previouslySelectedCellIndexPath!])
 			//collectionView.reloadItems(at: [previouslySelectedCellIndexPath!])
 			return true
@@ -256,7 +258,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 	func selectCell(indexPath: IndexPath) {
 		if Int(numMonth[indexPath.item]) != nil
 		{
-		selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(numMonth[indexPath.item]), \(yearString(date: selectedDate))")
+			selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(numMonth[indexPath.item]), \(yearString(date: selectedDate))")
 		}
 		tableView.reloadData()
 		if(tableView.numberOfRows(inSection: 0) == 0) {
