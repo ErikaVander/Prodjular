@@ -97,6 +97,7 @@ class CalendarViewController: UIViewController {
 		
         setCollectionViewLayout()
 		fillMonth(parDate: selectedDate)
+		selectCellAfterScroll()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
