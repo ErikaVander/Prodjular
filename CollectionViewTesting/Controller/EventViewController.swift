@@ -97,7 +97,7 @@ extension EventViewController: UICollectionViewDataSource {
 		let cell = ColorPickerCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorPickerReusableCell", for: indexPath) as! ColorPickerCell
 		
 		cell.ColorContainerView.backgroundColor = UIColor(named: ColorsArray[indexPath.item+1].name)
-		cell.ColorContainerView.layer.cornerRadius = cell.ColorContainerView.frame.height/5
+		cell.ColorContainerView.layer.cornerRadius = cell.ColorContainerView.frame.height/4
 		
 		cell.automaticallyUpdatesBackgroundConfiguration = true
 		ColorPickerCollectionView.allowsMultipleSelection = false
@@ -105,7 +105,7 @@ extension EventViewController: UICollectionViewDataSource {
 		let _: () = cell.selectedBackgroundView = {
 			let view = UIView()
 			view.layer.cornerRadius = 5
-			view.backgroundColor = .white
+			view.backgroundColor = .label
 			
 			return view
 		}()

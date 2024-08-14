@@ -25,11 +25,15 @@ class CollectionViewCell: UICollectionViewCell {
     }
 	
 	func changeBackgroundBlack() {
-		theDotViewBackgroundView.backgroundColor = .black
+		theDotViewBackgroundView.backgroundColor = .systemBackground
 	}
 	
 	func changeBackgroundDarkGrey() {
-		theDotViewBackgroundView.backgroundColor = .darkGray
+		if self.traitCollection.userInterfaceStyle == .dark {
+			theDotViewBackgroundView.backgroundColor = UIColor.darkGray
+		} else {
+			theDotViewBackgroundView.backgroundColor = UIColor.lightGray
+		}
 	}
 
 }

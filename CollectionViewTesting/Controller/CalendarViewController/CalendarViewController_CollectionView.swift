@@ -72,6 +72,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 					
 					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: dotViewWidth, height: dotViewHeight))
 					
+					//Set the dotview color to the user selected color
 					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
 					dotView.layer.cornerRadius = dotViewWidth/3
 					
@@ -170,6 +171,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 					}
 				}
 			}
+			//if cell is selected, change the background color of cellOne.selectedBackgroundView to darkGray or lightGray depending on light or dark mode
 			let _: () = cellOne.selectedBackgroundView = {
 				let view = UIView()
 				view.layer.cornerRadius = 5
