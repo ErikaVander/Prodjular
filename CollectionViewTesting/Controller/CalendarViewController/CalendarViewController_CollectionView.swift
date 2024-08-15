@@ -91,13 +91,14 @@ extension CalendarViewController: UICollectionViewDataSource {
 					cellOne.theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 					dotView.translatesAutoresizingMaskIntoConstraints = false
 					
-					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) {
-						cellOne.changeBackgroundDarkGrey()
-						//I don't think I need this line of code but I don't know
-						//previouslySelectedCellIndexPath = indexPath
-					} else {
-						cellOne.changeBackgroundBlack()
-					}
+					///Was supposed to change the background based on whether or not the cell is selected. However it looks better if the background for theDotViewBackground view is transparent so I commented out the code.
+//					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) {
+//						cellOne.changeBackgroundDarkGrey()
+//						//I don't think I need this line of code but I don't know
+//						//previouslySelectedCellIndexPath = indexPath
+//					} else {
+//						cellOne.changeBackgroundBlack()
+//					}
 					cellOne.theDotViewBackgroundView.layer.cornerRadius = 4
 					
 					//If statement for setting up theDotViewBackgroundView
@@ -253,35 +254,35 @@ extension CalendarViewController: UICollectionViewDelegate {
 		
 	}
 	
-	///Checks to see if the value contained in cellOne.label.text is an integer. If true it updates the previously selected cell and the newly selected cell so that theDotViewBackGrouldView of CollectionViewCell's background color is equal to the background of the cell.
+	///Checks to see if the value contained in cellOne.label.text is an integer. If true it updates the previously selected cell and the newly selected cell so that theDotViewBackGrouldView of CollectionViewCell's background color is equal to the background of the cell. It does these things by calling cellForItemAt above
 	func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		
 		if(Int(cellOne.label.text!) != nil) {
-			
 			previouslySelectedCellIndexPath = collectionView.indexPathsForSelectedItems?.first!
 			selectCell(indexPath: indexPath)
 			//updates previouslySelectedCell and newely selected cell by calling reloadItems
 			collectionView.reloadItems(at: [indexPath, previouslySelectedCellIndexPath!])
 			//collectionView.reloadItems(at: [previouslySelectedCellIndexPath!])
 			return true
-		} else {
 			
+		} else {
 			return false
+			
 		}
 	}
 	
 	///Logic for updating userSelectedDate after a new cell is selected by user. This method then reloads the tableView data if data exists, otherwise it informs the user that no events are scheduled for the newly selected date.
 	func selectCell(indexPath: IndexPath) {
 		if Int(numMonth[indexPath.item]) != nil {
-			
 			selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(numMonth[indexPath.item]), \(yearString(date: selectedDate))")
+			
 		}
 		
 		tableView.reloadData()
 		if(tableView.numberOfRows(inSection: 0) == 0) {
-			
 			noEventsScheduledLabel.text = "no events scheduled"
+			
 		}
 	}
 	
