@@ -91,14 +91,15 @@ extension CalendarViewController: UICollectionViewDataSource {
 					cellOne.theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 					dotView.translatesAutoresizingMaskIntoConstraints = false
 					
-					///Was supposed to change the background based on whether or not the cell is selected. However it looks better if the background for theDotViewBackground view is transparent so I commented out the code.
-//					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) {
-//						cellOne.changeBackgroundDarkGrey()
-//						//I don't think I need this line of code but I don't know
-//						//previouslySelectedCellIndexPath = indexPath
-//					} else {
-//						cellOne.changeBackgroundBlack()
-//					}
+					///Changes the background based on whether or not the cell is selected, and whether or not it is the current date. If it isn't the current date, theDotViewBackgroundView will not have a background, if it is the current date, theDotViewBackgroundView will have background so that it is not hidden from the currentDateIndicator.
+					if (formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) && formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())) {
+						cellOne.changeBackgroundDarkGrey()
+					} else if formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime()) {
+						cellOne.changeBackgroundBlack()
+					} else {
+						cellOne.changeBackgroundTransparent()
+					}
+					
 					cellOne.theDotViewBackgroundView.layer.cornerRadius = 4
 					
 					//If statement for setting up theDotViewBackgroundView

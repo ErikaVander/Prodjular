@@ -16,4 +16,11 @@ class SettingsViewController: UIViewController {
 		
 		present(vc!, animated: true, completion: nil)
 	}
+	@IBAction func YourFriends(_ sender: Any) {
+		let vc = storyboard?.instantiateViewController(identifier: "YourFriendsViewController")
+		
+		vc!.modalPresentationStyle = .fullScreen
+		
+		present(vc!, animated: true, completion: nil)
+	}
 }

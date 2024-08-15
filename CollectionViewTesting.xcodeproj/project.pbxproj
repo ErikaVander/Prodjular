@@ -48,6 +48,7 @@
 		D6F9C6A2273DFD4B003298E1 /* ColorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */; };
 		D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */; };
 		D6F9C6A5273EFF03003298E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C6A4273EFF03003298E1 /* Color.swift */; };
+		D6FC107C2C6EAA6100BD4D00 /* YourFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerCell.swift; sourceTree = "<group>"; };
 		D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerCell.xib; sourceTree = "<group>"; };
 		D6F9C6A4273EFF03003298E1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourFriendsViewController.swift; sourceTree = "<group>"; };
 		E009FDDBA0AC66E7598C676C /* Pods-CollectionViewTesting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.debug.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 				D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */,
 				D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */,
 				D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */,
+				D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6F9C69E273DB712003298E1 /* TableViewCell.swift in Sources */,
+				D6FC107C2C6EAA6100BD4D00 /* YourFriendsViewController.swift in Sources */,
 				D6301151267AA10800128ADA /* Event.swift in Sources */,
 				D668826D2B6E156B00DE1726 /* EventDurationHelper.swift in Sources */,
 				D6E35C0D285242AD00D8B327 /* EventDurationViewController.swift in Sources */,

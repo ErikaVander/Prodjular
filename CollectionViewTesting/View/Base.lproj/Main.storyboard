@@ -77,6 +77,46 @@
             </objects>
             <point key="canvasLocation" x="-2542.0289855072465" y="-384.375"/>
         </scene>
+        <!--Your Friends View Controller-->
+        <scene sceneID="453-iy-bWM">
+            <objects>
+                <viewController storyboardIdentifier="YourFriendsViewController" id="g7h-UU-KuW" customClass="YourFriendsViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="o7I-0G-Mar">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1I6-zV-NAD">
+                                <rect key="frame" x="25" y="38" width="12.666666666666664" height="22"/>
+                                <state key="normal" image="chevron.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backToSettings:" destination="g7h-UU-KuW" eventType="touchUpInside" id="M0O-0Z-4r2"/>
+                                    <action selector="backToSettings:" destination="xLk-Mg-Kyr" eventType="touchUpInside" id="QNr-eR-9C3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mrA-Cu-pZV">
+                                <rect key="frame" x="369" y="39" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="fdt-Wh-bVt"/>
+                                    <constraint firstAttribute="height" constant="20" id="ic6-Ws-oO5"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YGw-yq-9HJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1I6-zV-NAD" firstAttribute="leading" secondItem="YGw-yq-9HJ" secondAttribute="leading" constant="25" id="1wK-oU-Cu8"/>
+                            <constraint firstItem="1I6-zV-NAD" firstAttribute="top" secondItem="YGw-yq-9HJ" secondAttribute="top" constant="18" id="DYf-Ou-FNf"/>
+                            <constraint firstItem="mrA-Cu-pZV" firstAttribute="centerY" secondItem="1I6-zV-NAD" secondAttribute="centerY" id="fOL-I0-Eft"/>
+                            <constraint firstItem="YGw-yq-9HJ" firstAttribute="trailing" secondItem="mrA-Cu-pZV" secondAttribute="trailing" constant="25" id="fgA-lA-lp9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lgr-Dg-BEw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2544.9275362318845" y="339.94565217391306"/>
+        </scene>
         <!--Log In View Controller-->
         <scene sceneID="Q9K-bR-vFi">
             <objects>
@@ -240,14 +280,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ogn-Rf-ZXo">
+                                <rect key="frame" x="56" y="186" width="101" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="qmV-0T-1Xe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Your Friends"/>
+                                <connections>
+                                    <action selector="YourFriends:" destination="7Wv-L3-eco" eventType="touchUpInside" id="pQu-G4-gkU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5Vp-wW-J5X"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Ogn-Rf-ZXo" firstAttribute="leading" secondItem="5Vp-wW-J5X" secondAttribute="leading" constant="56" id="DIj-MM-Xt0"/>
                             <constraint firstItem="K86-gS-tQr" firstAttribute="leading" secondItem="5Vp-wW-J5X" secondAttribute="leading" constant="56" id="RsX-fa-cbc"/>
                             <constraint firstItem="E6D-uS-RAK" firstAttribute="leading" secondItem="K86-gS-tQr" secondAttribute="leading" id="TcJ-Uy-foT"/>
                             <constraint firstItem="K86-gS-tQr" firstAttribute="top" secondItem="5Vp-wW-J5X" secondAttribute="top" constant="79" id="aKM-SQ-4Wm"/>
                             <constraint firstItem="E6D-uS-RAK" firstAttribute="top" secondItem="K86-gS-tQr" secondAttribute="bottom" constant="8" symbolic="YES" id="uLt-zd-ojE"/>
+                            <constraint firstItem="Ogn-Rf-ZXo" firstAttribute="top" secondItem="E6D-uS-RAK" secondAttribute="bottom" id="vll-Ho-Wvl"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -683,6 +736,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="placeholderTextColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
