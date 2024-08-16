@@ -10,14 +10,14 @@ import FirebaseDatabase
 import FirebaseAuth
 import UIKit
 
-protocol DatabaseManagerDelegate {
-	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManager, indexPath: IndexPath)
+protocol DatabaseManagerDelegateForCollectionViewController {
+	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManagerForCollectionViewController, indexPath: IndexPath)
 }
 
-final class DatabaseManager {
-	static let shared = DatabaseManager()
+final class DatabaseManagerForCollectionViewController {
+	static let shared = DatabaseManagerForCollectionViewController()
 	
-	var delegate: DatabaseManagerDelegate?
+	var delegate: DatabaseManagerDelegateForCollectionViewController?
 	
 	private let database = Database.database().reference()
 	
@@ -73,10 +73,4 @@ final class DatabaseManager {
 			"autoWorkDays": settings.autoWorkDays
 		])
 	}
-}
-
-///The definition of a ProjdularUser.
-struct ProjdularUser : Equatable {
-	let email: String
-	let userID: String
 }

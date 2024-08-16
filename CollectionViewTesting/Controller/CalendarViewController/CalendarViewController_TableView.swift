@@ -64,8 +64,9 @@ extension CalendarViewController: UITableViewDataSource {
 }
 
 //MARK: TableViewDelegate
-extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegate {
-	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManager, indexPath: IndexPath) {
+extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegateForCollectionViewController {
+	
+	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManagerForCollectionViewController, indexPath: IndexPath) {
 		DispatchQueue.main.async {
 			
 			eventsForTableViewCell.remove(at: indexPath.row)
@@ -88,7 +89,7 @@ extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegate {
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			DatabaseManager.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
+			DatabaseManagerForCollectionViewController.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
 		}
 	}
 }

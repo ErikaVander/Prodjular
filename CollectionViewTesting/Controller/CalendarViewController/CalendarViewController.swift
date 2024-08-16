@@ -74,7 +74,7 @@ class CalendarViewController: UIViewController {
 			}
 		}
 		
-		DatabaseManager.shared.delegate = self
+		DatabaseManagerForCollectionViewController.shared.delegate = self
 		
 		///bannerAd view setup
 		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"

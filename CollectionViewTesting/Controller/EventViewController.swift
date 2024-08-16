@@ -70,7 +70,7 @@ class EventViewController: UIViewController
 		dateFormat.timeStyle = .full
 		dateFormat.dateStyle = .short
 		
-		DatabaseManager.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text))
+		DatabaseManagerForCollectionViewController.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text))
 		selectedColorFromColorsArray = ColorsArray[0]
 	}
 	

@@ -79,7 +79,7 @@ extension SignUpViewController {
 			if Auth.auth().currentUser?.isEmailVerified == true {
 				isLoggedIn = true
 				
-				DatabaseManager.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid))
+				DatabaseManagerForCollectionViewController.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid))
 				
 				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 			} else {

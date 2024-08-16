@@ -11,6 +11,9 @@ import FirebaseAuth
 
 class AccountInfoViewController: UIViewController {
 	
+	@IBOutlet weak var headerContainerView: UIView!
+	@IBOutlet weak var backButton: UIButton!
+	@IBOutlet weak var pageTitle: UILabel!
 	@IBOutlet weak var UserPhoto: UIImageView!
 	@IBOutlet weak var UserEmail: UILabel!
 	
@@ -21,6 +24,17 @@ class AccountInfoViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(true)
 		setUserEmail()
+		setHeaderContainerViewLook()
+	}
+	
+	func setHeaderContainerViewLook() {
+		headerContainerView.layer.shadowOffset = .zero
+		headerContainerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 25, width: headerContainerView.frame.width, height: headerContainerView.frame.height/2)).cgPath
+		headerContainerView.layer.shadowOpacity = 0.5
+		headerContainerView.layer.shadowRadius = 3
+		
+		headerContainerView.layer.shouldRasterize = true
+		headerContainerView.layer.rasterizationScale = UIScreen.main.scale
 	}
 }
 
