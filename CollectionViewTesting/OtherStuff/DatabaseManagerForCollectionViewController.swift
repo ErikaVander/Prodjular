@@ -24,9 +24,9 @@ final class DatabaseManagerForCollectionViewController {
 	///Writes the new user into the firebase database.
 	public func insertUser(with user: ProjdularUser) {
 		print("--tryingto create a new user: ", user.userID)
-		database.child("userList").setValue([
+		database.child("userList").child(Auth.auth().currentUser!.uid).setValue([
 			"email": user.email,
-			"userID": Auth.auth().currentUser!.uid
+			//"userID": Auth.auth().currentUser!.uid
 		])
 	}
 	
