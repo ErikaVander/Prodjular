@@ -63,7 +63,6 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 	///This function will scroll to the center cell (cell 1) when called.
 	func scroll() {
 		EventDurationTableViewContainerCollectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
-		print("Just scrolled")
 	}
 	
 	///Logic for allowing infinite scrolling.
@@ -81,7 +80,6 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 			fillWeek(parDate: selectedDate)
 			print(numWeek)
 			reloadData()
-			print("After plus selected Date is now: ", selectedDate)
 			//Change month string to match current viewed month
 			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
 			//If the month changes in the middle of the week, add the other month to the string also
@@ -95,7 +93,6 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 			fillWeek(parDate: selectedDate)
 			print(numWeek)
 			reloadData()
-			print("After minus selected Date is now: ", selectedDate)
 			//Change month string to match current viewed month
 			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
 			//If the month changes in the middle of the week, add the other month to the string also
@@ -108,7 +105,6 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 	
 	///This function will make the scroll position in the vertical direction the same for all table views within the collection view.
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		//print("This is when this happens")
 		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = -5
 		(cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y = scrollPosition.y
 		//print((cell as! CollectionViewCellForEventDuration).eventDurationTableView.contentOffset.y)

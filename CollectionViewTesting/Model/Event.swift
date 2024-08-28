@@ -32,7 +32,7 @@ func eventsForDate(parDate: Date) -> [ProjdularEvent] {
 		if(eventDate == parDateC)
 		{
 			daysEvents.append(event)
-			//print("addedEvent")
+			//print("--addedEvent")
 		}
 	}
 	return daysEvents

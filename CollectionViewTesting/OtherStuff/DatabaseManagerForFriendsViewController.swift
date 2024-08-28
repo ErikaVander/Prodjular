@@ -21,17 +21,6 @@ final class DatabaseManagerForFriendsViewController {
 	
 	private let database = Database.database().reference()
 	
-	///Writes a new Friend into the firebase database.
-	public func newFriend(with friend: Friend) {
-		database.child("users").child(Auth.auth().currentUser!.uid).child("friends").childByAutoId().setValue([
-			"id": friend.id,
-			"name": friend.name,
-			"email": friend.email,
-			"tagName": friend.tagName
-		])
-		friendList.append(friend)
-	}
-	
 	///Deletes friend
 	public func deleteFriend(with friend: Friend, indexPath: IndexPath) {
 		/*self.database.ref.child("users/\(Auth.auth().currentUser!.uid)/events/\(String(describing: event.id))").removeValue() {_,_ in
@@ -44,6 +33,7 @@ final class DatabaseManagerForFriendsViewController {
 			if let error = error {
 				print("--Data could not be saved: \(error).")
 			} else {
+				//print("--Trying to print friendList", friendList)
 				self.delegate?.logicForDeletingFriendTableViewCell(self, indexPath: indexPath)
 				print("--Just triend to call the function")
 				print("--Data saved successfully!")

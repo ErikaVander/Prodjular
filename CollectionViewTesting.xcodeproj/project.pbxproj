@@ -31,6 +31,8 @@
 		D668826D2B6E156B00DE1726 /* EventDurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668826C2B6E156B00DE1726 /* EventDurationHelper.swift */; };
 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
 		D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */; };
+		D6B46CC92C70186E0050EDFB /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */; };
+		D6B46CCB2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */; };
 		D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB026A6479000498ECB /* LogInViewController.swift */; };
 		D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */; };
 		D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB626C6D95200498ECB /* alertUser.swift */; };
@@ -87,6 +89,8 @@
 		D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollectionViewTesting.entitlements; sourceTree = "<group>"; };
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForAddFriendViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB026A6479000498ECB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB626C6D95200498ECB /* alertUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertUser.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */,
 				D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */,
 				D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */,
+				D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				D6BE7AB826C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift */,
 				D6E35C0A285242A000D8B327 /* customGesture.swift */,
 				D645666D2C70034000A8AF7B /* DatabaseManagerForFriendsViewController.swift */,
+				D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */,
 			);
 			path = OtherStuff;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
 				D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */,
 				D61C37322B2BC10D00AB705A /* weekNumberForEventDuration.swift in Sources */,
+				D6B46CC92C70186E0050EDFB /* AddFriendViewController.swift in Sources */,
 				D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */,
 				D6F9C6A5273EFF03003298E1 /* Color.swift in Sources */,
 				D615A04E2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift in Sources */,
@@ -410,6 +417,7 @@
 				D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */,
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,
 				D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */,
+				D6B46CCB2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift in Sources */,
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
 				D6BE7AB926C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift in Sources */,

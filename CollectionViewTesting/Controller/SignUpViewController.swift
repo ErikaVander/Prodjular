@@ -48,16 +48,18 @@ extension SignUpViewController {
 		
 		FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
 			guard let result = authResult, error == nil else {
-				print("Error creating user: \(error!.localizedDescription)")
+				print("--Error creating user: \(error!.localizedDescription)")
 				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
 			let user: String = result.user.email!
-			print("Created User: \(user), Logged in: \(isLoggedIn)")
+			print("--Created User: \(user), Logged in: \(isLoggedIn)")
 			//self.dismiss(animated: true, completion: nil)
 			alertUser(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
 			self.sendVerificationEmail()
 		})
+		
+//		DatabaseManagerForCollectionViewController.shared.newUser(with: ProjdularUser(email: email, userID: password))
 	}
 	
 	func sendVerificationEmail() {

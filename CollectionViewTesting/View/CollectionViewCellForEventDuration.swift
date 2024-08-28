@@ -201,16 +201,16 @@ extension CollectionViewCellForEventDuration : UICollectionViewDataSource {
 		
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "weekNumberForEventDuration", for: indexPath) as! weekNumberForEventDuration
 		
-//		print("classIndex:", classIndex)
+//		print("--classIndex:", classIndex)
 		
 		if(classIndex == 1) {
-//			print("numWeek for index = 1", numWeek[indexPath.item + 7])
+//			print("ssnumWeek for index = 1", numWeek[indexPath.item + 7])
 			cellOne.label.text = numWeek[indexPath.item + 7]
 		} else if (classIndex == 0) {
-//			print("numWeek for index = 0", numWeek[indexPath.item])
+//			print("--numWeek for index = 0", numWeek[indexPath.item])
 			cellOne.label.text = numWeek[indexPath.item]
 		} else {
-//			print("numWeek for index = else", numWeek[indexPath.item + 14])
+//			print("--numWeek for index = else", numWeek[indexPath.item + 14])
 			cellOne.label.text = numWeek[indexPath.item + 14]
 		}
 		
@@ -228,7 +228,7 @@ extension CollectionViewCellForEventDuration : UICollectionViewDelegateFlowLayou
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		//let widthValue = collectionView.frame.width/7
 		
-		//print("WidthValue = ", widthValue)
+		//print("--WidthValue = ", widthValue)
 		
 		return CGSize(width: 46.8, height: dayOfTheWeekCollectionView.frame.height)
 	}

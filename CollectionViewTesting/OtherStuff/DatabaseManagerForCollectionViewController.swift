@@ -23,10 +23,20 @@ final class DatabaseManagerForCollectionViewController {
 	
 	///Writes the new user into the firebase database.
 	public func insertUser(with user: ProjdularUser) {
-		database.child("users").child(user.userID).setValue([
-			"email": user.email
+		print("--tryingto create a new user: ", user.userID)
+		database.child("userList").setValue([
+			"email": user.email,
+			"userID": Auth.auth().currentUser!.uid
 		])
 	}
+	
+//	public func newUser(with user: ProjdularUser) {
+//		database.child("userList").childByAutoId().setValue([
+//			"email": user.email,
+//			"userID": user.userID
+//		])
+//		print(user.email, user.userID)
+//	}
 	
 	///Writes the new event into the firebase database.
 	public func newEvent(with event: ProjdularEvent) {

@@ -11,7 +11,7 @@ import GoogleMobileAds
 extension CalendarViewController: GADBannerViewDelegate {
 	
 	/*func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-	 print("recieved ad")
+	 print("--recieved ad")
 	 }
 	 private func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequest) {
 	 print(error)

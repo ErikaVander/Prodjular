@@ -147,14 +147,14 @@ func fillMonth(parDate: Date) {
 		startDate = plusmonth(date: startDate)
 	}
 	
-	print("done with fillMonth")
+	print("--done with fillMonth")
 }
 
 ///Filling the array numWeek[]
 func fillWeek(parDate: Date) {
 	numWeek.removeAll()
 	
-	print("Just filled Week")
+	print("--Just filled Week")
 
 	let startDate = minusWeek(date: parDate)
 	let firstDayWeek = firstDayOfWeek(date: startDate)

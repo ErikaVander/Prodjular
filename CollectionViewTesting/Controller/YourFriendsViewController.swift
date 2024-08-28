@@ -9,6 +9,8 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
+var initialLoadingOfDataForFriendsTableView = true
+
 class YourFriendsViewController: UIViewController {
 	
 	@IBOutlet weak var headerContainerView: UIView!
@@ -17,15 +19,21 @@ class YourFriendsViewController: UIViewController {
 	@IBOutlet weak var backButton: NSLayoutConstraint!
 	
 	override func viewDidLoad() {
+		super.viewDidLoad()
+		
 		self.observeFriends()
-		addFriends.setTitle("", for: .normal)
+		
 		setHeaderContainerViewLook()
+		
+		addFriends.setTitle("", for: .normal)
 		
 		//Registering xib files
 		friendsTableView.register(UINib(nibName: "FriendsTableViewTableViewCell", bundle: nil), forCellReuseIdentifier: "friendsTableCell")
 		
 		friendsTableView.dataSource = self
 		friendsTableView.delegate = self
+		
+		DatabaseManagerForFriendsViewController.shared.delegate = self
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +42,7 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.estimatedRowHeight = 200
 		friendsTableView.rowHeight = UITableView.automaticDimension
 		
+		print("--printing friendList from viewWillAppear: ", friendList)
 		friendsTableView.reloadData()
 	}
 	
@@ -43,6 +52,7 @@ class YourFriendsViewController: UIViewController {
 	}
 	
 	func setHeaderContainerViewLook() {
+		print("--called this function")
 		headerContainerView.layer.shadowOffset = .zero
 		headerContainerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 25, width: headerContainerView.frame.width, height: headerContainerView.frame.height/2)).cgPath
 		headerContainerView.layer.shadowOpacity = 0.5
@@ -65,7 +75,6 @@ extension YourFriendsViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		print("hello")
 		let cellOne = friendsTableView.dequeueReusableCell(withIdentifier: "friendsTableCell", for: indexPath) as! FriendsTableViewTableViewCell
 		
 		if tableView.numberOfRows(inSection: 0) == 0 {
@@ -85,16 +94,16 @@ extension YourFriendsViewController: UITableViewDataSource {
 extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegateForFriendsViewController {
 	
 	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendsViewController, indexPath: IndexPath) {
-		print("Trying to print something")
 		DispatchQueue.main.async {
 			
-			print("Trying to print friendList", friendList)
-			friendList.remove(at: indexPath.row)
+			print("--Trying to print friendList", friendList)
+			//friendList.remove(at: indexPath.row)
 			self.friendsTableView.deleteRows(at: [indexPath], with: .fade)
 			
 			if(self.friendsTableView.numberOfRows(inSection: 0) == 0) {
 				//self.noEventsScheduledLabel.text = "no events scheduled"
 			}
+			print("--Trying to print friendList", friendList)
 		}
 	}
 	
@@ -118,7 +127,7 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 extension YourFriendsViewController {
 	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
 	func observeFriends() {
-		print("Here")
+		print("--Here at observeFriends")
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
 		
 		friendRef.observe(.value, with: { snapshot in
@@ -139,9 +148,9 @@ extension YourFriendsViewController {
 			}
 			friendList = tempFriends
 			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
-			if(initialLoadingOfData == true) {
+			if(initialLoadingOfDataForFriendsTableView == true) {
 				self.friendsTableView.reloadData()
-				initialLoadingOfData = false
+				initialLoadingOfDataForFriendsTableView = false
 			}
 		})
 		
