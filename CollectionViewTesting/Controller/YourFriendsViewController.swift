@@ -140,9 +140,10 @@ extension YourFriendsViewController {
 				   let dict = childSnapshot.value as? [String: Any],
 				   let userName = dict["userName"] as? String,
 				   let email = dict["email"] as? String,
-				   let tagName = dict["tagName"] as? String
+				   let tagName = dict["tagName"] as? String,
+				   let status = dict["status"] as? String
 				{
-					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName)
+					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
 					tempFriends.append(friend)
 				}
 			}

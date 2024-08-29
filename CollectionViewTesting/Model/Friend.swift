@@ -15,4 +15,5 @@ struct Friend : Equatable {
 	var userName: String
 	let email: String
 	var tagName: String?
+	var status: String
 }

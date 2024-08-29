@@ -16,11 +16,12 @@ final class DatabaseManagerForAddFriendsViewController {
 	private let database = Database.database().reference()
 	
 	///Writes a new Friend into the firebase database.
-	public func newFriend(with friend: Friend) {
-		database.child("users").child(Auth.auth().currentUser!.uid).child("friends").childByAutoId().setValue([
+	public func newFriend(with friend: Friend, location: String) {
+		database.child("users").child(location).child("friends").childByAutoId().setValue([
 			"userName": friend.userName,
 			"email": friend.email,
-			"tagName": friend.tagName
+			"tagName": friend.tagName,
+			"status": friend.status
 		])
 		friendList.append(friend)
 		print("--Trying to print friendList from the create function", friendList)
@@ -46,22 +47,25 @@ final class DatabaseManagerForAddFriendsViewController {
 				
 				for child in snapshot.children {
 					if let childSnapshot = child as? DataSnapshot,
+					   let id = childSnapshot.key as? String,
 					   let dict = childSnapshot.value as? [String: Any],
 					   let emailFound = dict["email"] as? String,
 					   let userName = dict["userName"] as? String
 					{
-					let friend = Friend(id: "", userName: userName, email: emailToFind, tagName: "")
-					print("--Found a user: ", friend)
-					if(childSnapshot.childrenCount > 0) {
-						//						completionSuccess(true)
-						found = "found"
-					} else {
-						//						completionSuccess(false)
-						found = "notFound"
-					}
-					self.newFriend(with: friend)
+						let friend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "pending")
+						print("--Found a user: ", friend)
+						if(childSnapshot.childrenCount > 0) {
+							//						completionSuccess(true)
+							found = "found"
+						} else {
+							//						completionSuccess(false)
+							found = "notFound"
+						}
+						self.newFriend(with: friend, location: Auth.auth().currentUser!.uid)
+						self.sendFriendRequest(emailToFind: currentUser.email, id: id)
 					}
 				}
+				print("--got to here")
 				completionSuccess(found)
 			})
 		}
@@ -83,5 +87,13 @@ final class DatabaseManagerForAddFriendsViewController {
 			}
 			completionSuccess(found)
 		})
+	}
+	
+	func acceptFriendRequest() {
+		
+	}
+	
+	func sendFriendRequest(emailToFind: String, id: String) {
+		//newFriend(with: Friend(id: currentUser.userID, userName: currentUser.userName, email: currentUser.email, tagName: "", status: "not approved"), location: id)
 	}
 }
