@@ -12,7 +12,7 @@ var friendList = [Friend]()
 ///The definition of a Friend.
 struct Friend : Equatable {
 	let id: String
-	var name: String
+	var userName: String
 	let email: String
 	var tagName: String?
 }

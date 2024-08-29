@@ -12,11 +12,13 @@ class SignUpViewController: UIViewController
 {
 	@IBOutlet weak var emailTextFieldSignUp: UITextField!
 	@IBOutlet weak var passwordTextfieldSignUp: UITextField!
+	@IBOutlet weak var userNameTextfieldSignUp: UITextField!
 	@IBOutlet weak var Verified: UIButton!
 	
 	override func viewDidLoad() {
 		emailTextFieldSignUp.delegate = self
 		passwordTextfieldSignUp.delegate = self
+		userNameTextfieldSignUp.delegate = self
 		
 		super .viewDidLoad()
 		setProfilePicImage()
@@ -39,8 +41,10 @@ extension SignUpViewController {
 		guard
 			let email = emailTextFieldSignUp.text,
 			let password = passwordTextfieldSignUp.text,
+			let userName = userNameTextfieldSignUp.text,
 			!password.isEmpty,
-			!email.isEmpty
+			!email.isEmpty,
+			!userName.isEmpty
 		else {
 			print("FailedLogin")
 			return
@@ -81,7 +85,7 @@ extension SignUpViewController {
 			if Auth.auth().currentUser?.isEmailVerified == true {
 				isLoggedIn = true
 				
-				DatabaseManagerForCollectionViewController.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid))
+				DatabaseManagerForCollectionViewController.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? ""))
 				
 				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 			} else {

@@ -80,7 +80,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 		if tableView.numberOfRows(inSection: 0) == 0 {
 			
 		} else {
-			cellOne.nameLabel.text = friendList[indexPath.item].name
+			cellOne.nameLabel.text = friendList[indexPath.item].userName
 			cellOne.emailLabel.text = friendList[indexPath.item].email
 			
 		}
@@ -138,11 +138,11 @@ extension YourFriendsViewController {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
 				   let dict = childSnapshot.value as? [String: Any],
-				   let name = dict["name"] as? String,
+				   let userName = dict["userName"] as? String,
 				   let email = dict["email"] as? String,
 				   let tagName = dict["tagName"] as? String
 				{
-					let friend = Friend(id: id, name: name, email: email, tagName: tagName)
+					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName)
 					tempFriends.append(friend)
 				}
 			}

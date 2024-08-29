@@ -18,8 +18,7 @@ final class DatabaseManagerForAddFriendsViewController {
 	///Writes a new Friend into the firebase database.
 	public func newFriend(with friend: Friend) {
 		database.child("users").child(Auth.auth().currentUser!.uid).child("friends").childByAutoId().setValue([
-			"id": friend.id,
-			"name": friend.name,
+			"userName": friend.userName,
 			"email": friend.email,
 			"tagName": friend.tagName
 		])
@@ -48,9 +47,10 @@ final class DatabaseManagerForAddFriendsViewController {
 				for child in snapshot.children {
 					if let childSnapshot = child as? DataSnapshot,
 					   let dict = childSnapshot.value as? [String: Any],
-					   let emailFound = dict.first?.value as? String
+					   let emailFound = dict["email"] as? String,
+					   let userName = dict["userName"] as? String
 					{
-					let friend = Friend(id: "", name: "", email: emailToFind, tagName: "")
+					let friend = Friend(id: "", userName: userName, email: emailToFind, tagName: "")
 					print("--Found a user: ", friend)
 					if(childSnapshot.childrenCount > 0) {
 						//						completionSuccess(true)

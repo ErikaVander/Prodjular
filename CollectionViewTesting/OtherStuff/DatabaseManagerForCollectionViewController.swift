@@ -26,6 +26,7 @@ final class DatabaseManagerForCollectionViewController {
 		print("--tryingto create a new user: ", user.userID)
 		database.child("userList").child(Auth.auth().currentUser!.uid).setValue([
 			"email": user.email,
+			"userName": user.userName
 			//"userID": Auth.auth().currentUser!.uid
 		])
 	}
