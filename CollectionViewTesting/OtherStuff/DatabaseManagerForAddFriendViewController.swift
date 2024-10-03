@@ -62,11 +62,13 @@ final class DatabaseManagerForAddFriendsViewController {
 							found = "notFound"
 						}
 						self.newFriend(with: friend, location: Auth.auth().currentUser!.uid)
-						self.sendFriendRequest(emailToFind: currentUser.email, id: id)
+						//self.sendFriendRequest(emailToFind: currentUser.email, id: id)
 					}
 				}
 				print("--got to here")
 				completionSuccess(found)
+			}, withCancel: {(err) in
+				print("--error: ", err)
 			})
 		}
 	}

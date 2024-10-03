@@ -80,8 +80,7 @@ extension SignUpViewController {
 //MARK: Navigation
 extension SignUpViewController {
 	@IBAction func verifyAndGoBack(_ sender: Any) {
-		Auth.auth().currentUser?.reload(completion:
-											{_ in
+		Auth.auth().currentUser?.reload(completion:	{_ in
 			if Auth.auth().currentUser?.isEmailVerified == true {
 				isLoggedIn = true
 				
