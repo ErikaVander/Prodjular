@@ -23,12 +23,37 @@ final class DatabaseManagerForCollectionViewController {
 	
 	///Writes the new user into the firebase database.
 	public func insertUser(with user: ProjdularUser) {
-		print("--tryingto create a new user: ", user.userID)
+		print("**tryingto create a new user: ", user.userID)
 		database.child("userList").child(Auth.auth().currentUser!.uid).setValue([
 			"email": user.email,
 			"userName": user.userName
 			//"userID": Auth.auth().currentUser!.uid
 		])
+	}
+	
+	func findUser(emailToFind: String, completionSuccess: @escaping (ProjdularUser) -> Void) {
+		var user = ProjdularUser(email: "", userID: "", userName: "")
+		let friendRef = Database.database().reference().child("userList")
+		
+		friendRef.queryOrdered(byChild: "email").observeSingleEvent(of: .value, with: { snapshot in
+			
+			for child in snapshot.children {
+				if let childSnapshot = child as? DataSnapshot,
+				   let id = childSnapshot.key as? String,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let emailFound = dict["email"] as? String,
+				   let userName = dict["userName"] as? String
+				{
+					if(emailToFind == emailFound) {
+						user = ProjdularUser(email: emailFound, userID: id, userName: userName)
+//						print("--user1: ", user)
+						completionSuccess(user)
+					}
+				}
+			}
+		}, withCancel: {(err) in
+			print("**error: ", err)
+		})
 	}
 	
 //	public func newUser(with user: ProjdularUser) {
@@ -66,10 +91,10 @@ final class DatabaseManagerForCollectionViewController {
 		self.database.ref.child("users").child(Auth.auth().currentUser!.uid).child("events").child(String(describing: event.id)).setValue(nil) {
 			(error: Error?, ref: DatabaseReference) in
 			if let error = error {
-				print("--Data could not be saved: \(error).")
+				print("**Data could not be saved: \(error).")
 			} else {
 				self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
-				print("--Data saved successfully!")
+				print("**Data saved successfully!")
 			}
 
 		}

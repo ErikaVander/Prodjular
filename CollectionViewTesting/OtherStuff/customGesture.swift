@@ -64,7 +64,7 @@ class CustomGestureRecognizer : UIGestureRecognizer {
 		
 		if(self.strokePhase == .longPress) {
 			if (newPoint.y < (initialTouchPoint.y + 0.5) && newPoint.y > (initialTouchPoint.y - 0.5)) {
-				print("--Changing to .longPress")
+//				print("--Changing to .longPress")
 				self.strokePhase = .longPressed
 			} else {
 				self.state = .failed
@@ -88,7 +88,6 @@ class CustomGestureRecognizer : UIGestureRecognizer {
 		if self.state == .changed &&
 			self.strokePhase == .downStroke {
 			self.state = .recognized
-			print("--Success")
 		} else {
 			self.state = .failed
 		}

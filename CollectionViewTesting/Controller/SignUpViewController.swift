@@ -52,12 +52,12 @@ extension SignUpViewController {
 		
 		FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
 			guard let result = authResult, error == nil else {
-				print("--Error creating user: \(error!.localizedDescription)")
+				print("**Error creating user: \(error!.localizedDescription)")
 				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
 			let user: String = result.user.email!
-			print("--Created User: \(user), Logged in: \(isLoggedIn)")
+			print("**Created User: \(user), Logged in: \(true)")
 			//self.dismiss(animated: true, completion: nil)
 			alertUser(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
 			self.sendVerificationEmail()
@@ -82,9 +82,10 @@ extension SignUpViewController {
 	@IBAction func verifyAndGoBack(_ sender: Any) {
 		Auth.auth().currentUser?.reload(completion:	{_ in
 			if Auth.auth().currentUser?.isEmailVerified == true {
-				isLoggedIn = true
+				//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
 				
 				DatabaseManagerForCollectionViewController.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? ""))
+				currentUser = ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "")
 				
 				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 			} else {

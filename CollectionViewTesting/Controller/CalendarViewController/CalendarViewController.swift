@@ -11,7 +11,6 @@ import Firebase
 import FirebaseDatabase
 import FirebaseCore
 
-var isLoggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
 var selectedDate = currentDateAndTime()
 let dateFormatter = DateFormatter()
 var eventsForTableViewCell = [ProjdularEvent]()
@@ -58,19 +57,23 @@ class CalendarViewController: UIViewController {
 		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
 		tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableCell")
 
-		print("--currentDate = \(currentDateAndTime())")
+//		print("--currentDate = \(currentDateAndTime())")
 		Database.database().isPersistenceEnabled = true
 		
 		
 		///Checking to see if a user is signed in. If not, shows the sign-in screen
 		FirebaseAuth.Auth.auth().addStateDidChangeListener{ auth, user in
-			if user != nil && user?.isEmailVerified == true {
-				print("-- User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
-				isLoggedIn = true
+			if(user != nil && user?.isEmailVerified == true) {
+				print("** User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
+				//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
+				DatabaseManagerForCollectionViewController.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
+//					print("--user2: ", user)
+					currentUser = user
+				}
 				self.observeEvents()
 			} else {
 				self.showLogIn()
-				print("-- No user is signed in. --")
+				print("** No user is signed in. ")
 			}
 		}
 		
@@ -98,6 +101,10 @@ class CalendarViewController: UIViewController {
         setCollectionViewLayout()
 		fillMonth(parDate: selectedDate)
 		selectCellAfterScroll()
+		
+		DatabaseManagerForAddFriendsViewController.shared.checkDuplicateFriend(emailToFind: "erikajvanderhoff@gmail.com", idToUse: "eI3cX84Nn1MJIvh82kmkHp49hrF2") { user in
+			print("--from viewDidLoad: ", user)
+		}
     }
 	
 	override func viewWillAppear(_ animated: Bool) {

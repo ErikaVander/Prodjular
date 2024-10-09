@@ -31,12 +31,12 @@ final class DatabaseManagerForFriendsViewController {
 		self.database.ref.child("users").child(Auth.auth().currentUser!.uid).child("friends").child(String(describing: friend.id)).setValue(nil) {
 			(error: Error?, ref: DatabaseReference) in
 			if let error = error {
-				print("--Data could not be saved: \(error).")
+				print("**Data could not be saved: \(error).")
 			} else {
 				//print("--Trying to print friendList", friendList)
 				self.delegate?.logicForDeletingFriendTableViewCell(self, indexPath: indexPath)
-				print("--Just triend to call the function")
-				print("--Data saved successfully!")
+//				print("--Just triend to call the function")
+				print("**Data saved successfully!")
 			}
 			
 		}

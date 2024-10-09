@@ -6,6 +6,7 @@
 //
 
 import UIKit
+var currentUser: ProjdularUser?
 
 ///The definition of a ProjdularUser.
 struct ProjdularUser : Equatable {

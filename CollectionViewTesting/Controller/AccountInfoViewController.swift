@@ -52,7 +52,8 @@ extension AccountInfoViewController {
 		do {
 			try Auth.auth().signOut()
 			alertUserOfError(title: "Success", content: "You are now logged out", goAway: true)
-			isLoggedIn = false
+			//UDM.shared.defaults.setValue(false, forKey: "isLoggedIn")
+			currentUser = nil
 		} catch let error as NSError {
 			alertUserOfError(title: "Error", content: error.localizedDescription, goAway: false)
 		}

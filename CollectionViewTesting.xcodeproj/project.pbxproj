@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B169CD9E7F22BB246494F9AA /* Pods_CollectionViewTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02730E0F1CB86F7D5E5E70C0 /* Pods_CollectionViewTesting.framework */; };
+		D61221632CB5E3720050B22C /* DatabaseManagerForSignUpandLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61221622CB5E3600050B22C /* DatabaseManagerForSignUpandLogin.swift */; };
+		D61221652CB5E9AA0050B22C /* UDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61221642CB5E9A60050B22C /* UDM.swift */; };
 		D615A04E2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */; };
 		D615A04F2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */; };
 		D61C37322B2BC10D00AB705A /* weekNumberForEventDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C37302B2BC10D00AB705A /* weekNumberForEventDuration.swift */; };
@@ -63,6 +65,8 @@
 /* Begin PBXFileReference section */
 		02730E0F1CB86F7D5E5E70C0 /* Pods_CollectionViewTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollectionViewTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF5C2DF6FC4035CF95C0C17F /* Pods-CollectionViewTesting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.release.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.release.xcconfig"; sourceTree = "<group>"; };
+		D61221622CB5E3600050B22C /* DatabaseManagerForSignUpandLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForSignUpandLogin.swift; sourceTree = "<group>"; };
+		D61221642CB5E9A60050B22C /* UDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDM.swift; sourceTree = "<group>"; };
 		D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellForEventDuration.swift; sourceTree = "<group>"; };
 		D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCellForEventDuration.xib; sourceTree = "<group>"; };
 		D61C37302B2BC10D00AB705A /* weekNumberForEventDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weekNumberForEventDuration.swift; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 		D69CDA4425E07595001F03AF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D61221642CB5E9A60050B22C /* UDM.swift */,
 				D673DA0425D486AA009C56EF /* CalendarHelper.swift */,
 				D6301150267AA10800128ADA /* Event.swift */,
 				D6BE7AB626C6D95200498ECB /* alertUser.swift */,
@@ -249,6 +254,7 @@
 		D69CDA4525E075D0001F03AF /* OtherStuff */ = {
 			isa = PBXGroup;
 			children = (
+				D61221622CB5E3600050B22C /* DatabaseManagerForSignUpandLogin.swift */,
 				D61F04BD25D3891D00A2BC05 /* AppDelegate.swift */,
 				D61F04BF25D3891D00A2BC05 /* SceneDelegate.swift */,
 				D61F04C625D3891D00A2BC05 /* Assets.xcassets */,
@@ -429,8 +435,10 @@
 				D61F04C225D3891D00A2BC05 /* CalendarViewController.swift in Sources */,
 				D6DB6647278F970C0087550C /* CalendarViewController_ads.swift in Sources */,
 				D630114E267A978C00128ADA /* EventViewController.swift in Sources */,
+				D61221632CB5E3720050B22C /* DatabaseManagerForSignUpandLogin.swift in Sources */,
 				D61F04BE25D3891D00A2BC05 /* AppDelegate.swift in Sources */,
 				D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */,
+				D61221652CB5E9AA0050B22C /* UDM.swift in Sources */,
 				D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */,
 				D61F04C025D3891D00A2BC05 /* SceneDelegate.swift in Sources */,
 				D6E35C092852428D00D8B327 /* EventDurationTableViewCell.swift in Sources */,

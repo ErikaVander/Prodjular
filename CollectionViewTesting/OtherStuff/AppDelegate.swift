@@ -46,9 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
 		Messaging.messaging().token { token, error in
 			if let error = error {
-				print("--Error fetching FCM registration token: \(error)--")
+				print("**Error fetching FCM registration token: \(error)")
 			} else if let token = token {
-				print("--FCM registration token: \(token)--")
+				print("**FCM registration token: \(token)")
 			}
 		}
 
@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     }
 	
 	func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-		print("--Firebase registration token: \(String(describing: fcmToken))--")
+		print("**Firebase registration token: \(String(describing: fcmToken))")
 		
 		let dataDict: [String: String] = ["token": fcmToken ?? ""]
 		NotificationCenter.default.post(

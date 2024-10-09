@@ -37,7 +37,6 @@ extension CalendarViewController {
 					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagName: tagName, tagColor: tagColor, description: description)
 					
 					tempEvents.append(event)
-					print("--observing events")
 				}
 			}
 			eventList = tempEvents

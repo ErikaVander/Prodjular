@@ -23,8 +23,20 @@ final class DatabaseManagerForAddFriendsViewController {
 			"tagName": friend.tagName,
 			"status": friend.status
 		])
-		friendList.append(friend)
-		print("--Trying to print friendList from the create function", friendList)
+		//friendList.append(friend)
+//		print("--Trying to print friendList from the create function", friendList)
+	}
+	
+	///Updates friends in firebase database.
+	public func updateFriend(with friend: Friend, user: String, location: String) {
+		let data = [
+			"userName": friend.userName,
+			"email": friend.email,
+			"tagName": friend.tagName,
+			"status": friend.status,
+		]
+		database.child("users").child(user).child("friends").child(location).updateChildValues(data)
+		
 	}
 	
 	func findUser(emailToFind: String, completionSuccess: @escaping (String) -> Void) {
@@ -33,16 +45,15 @@ final class DatabaseManagerForAddFriendsViewController {
 			return
 		}
 		
-		print("--Here at observeFriends")
-		checkDuplicateFriend(emailToFind: emailToFind) {double in
-			if(double == "found" ) {
+		checkDuplicateFriend(emailToFind: emailToFind, idToUse: Auth.auth().currentUser!.uid) {double in
+			if(double == "found") {
 				completionSuccess("double")
 				return
 			}
 			
 			let friendRef = Database.database().reference().child("userList")
 			
-			friendRef.queryOrdered(byChild: "email").queryEqual(toValue: emailToFind).observeSingleEvent(of: .value, with: { snapshot in
+			friendRef.queryOrdered(byChild: "email").observeSingleEvent(of: .value, with: { snapshot in
 				var found = "notFound"
 				
 				for child in snapshot.children {
@@ -52,8 +63,26 @@ final class DatabaseManagerForAddFriendsViewController {
 					   let emailFound = dict["email"] as? String,
 					   let userName = dict["userName"] as? String
 					{
-						let friend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "pending")
-						print("--Found a user: ", friend)
+					if(emailFound == emailToFind) {
+						if(double != "found" && double != "notFound") {
+							let friend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "accepted")
+							let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted")
+							self.updateFriend(with: friend, user: Auth.auth().currentUser!.uid, location: double)
+							print("emailToFind: ", Auth.auth().currentUser!.email!)
+							
+							print("-----id: ", id)
+							self.checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: id) { idFound in
+								self.updateFriend(with: myself, user: id, location: idFound)
+								print("--was able to get to here")
+							}
+//							print("--Found a user: ", friend)
+						} else {
+							let myfriend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "sent")
+							let friend = Friend(id: currentUser!.userID, userName: currentUser!.userName, email: currentUser!.email, tagName: "", status: "recieved")
+//							print("--Found a user: ", friend)
+							self.newFriend(with: myfriend, location: Auth.auth().currentUser!.uid)
+							self.newFriend(with: friend, location: id)
+						}
 						if(childSnapshot.childrenCount > 0) {
 							//						completionSuccess(true)
 							found = "found"
@@ -61,11 +90,10 @@ final class DatabaseManagerForAddFriendsViewController {
 							//						completionSuccess(false)
 							found = "notFound"
 						}
-						self.newFriend(with: friend, location: Auth.auth().currentUser!.uid)
+					}
 						//self.sendFriendRequest(emailToFind: currentUser.email, id: id)
 					}
 				}
-				print("--got to here")
 				completionSuccess(found)
 			}, withCancel: {(err) in
 				print("--error: ", err)
@@ -73,22 +101,37 @@ final class DatabaseManagerForAddFriendsViewController {
 		}
 	}
 	
-	func checkDuplicateFriend(emailToFind: String, completionSuccess: @escaping (String) -> Void) {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
-		friendRef.queryOrdered(byChild: "email").queryEqual(toValue: emailToFind).observeSingleEvent(of: .value, with: { snapshot in
+	func checkDuplicateFriend(emailToFind: String, idToUse: String, completionSuccess: @escaping (String) -> Void) {
+		let friendRef = Database.database().reference().child("users").child(idToUse).child("friends")
+		friendRef.queryOrdered(byChild: "email").observeSingleEvent(of: .value, with: { snapshot in
 			var found = "notFound"
 			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot
+				if let childSnapshot = child as? DataSnapshot,
+				   let id = childSnapshot.key as? String,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let status = dict["status"] as? String,
+				   let email = dict["email"] as? String
 				{
-					if(childSnapshot.childrenCount > 0) {
-						found = "found"
-					} else {
-						found = "notFound"
+					print("--found: ", found, " ", id, " ", status)
+					if(emailToFind == email) {
+						if(childSnapshot.childrenCount > 0) {
+							if(status == "recieved" || status == "sent"){
+								found = id
+							} else {
+								found = "found"
+							}
+						} else {
+							found = "notFound"
+						}
+						print("--found: ", found)
+						completionSuccess(found)
+						return
 					}
 				}
 			}
-			completionSuccess(found)
 		})
+		print("--nothingFound: ", emailToFind, " ", idToUse)
+		
 	}
 	
 	func acceptFriendRequest() {

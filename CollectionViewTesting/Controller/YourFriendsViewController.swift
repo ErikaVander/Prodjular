@@ -42,7 +42,9 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.estimatedRowHeight = 200
 		friendsTableView.rowHeight = UITableView.automaticDimension
 		
-		print("--printing friendList from viewWillAppear: ", friendList)
+//		print("--printing friendList from viewWillAppear: ", friendList)
+//		print("--printing friendReqRecieved from viewWillAppear: ", friendReqRecieved)
+//		print("--printing friendReqSent from viewWillAppear: ", friendReqSent)
 		friendsTableView.reloadData()
 	}
 	
@@ -52,7 +54,6 @@ class YourFriendsViewController: UIViewController {
 	}
 	
 	func setHeaderContainerViewLook() {
-		print("--called this function")
 		headerContainerView.layer.shadowOffset = .zero
 		headerContainerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 25, width: headerContainerView.frame.width, height: headerContainerView.frame.height/2)).cgPath
 		headerContainerView.layer.shadowOpacity = 0.5
@@ -65,23 +66,59 @@ class YourFriendsViewController: UIViewController {
 
 //MARK: TableViewDataSource
 extension YourFriendsViewController: UITableViewDataSource {
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		
-		if friendList.isEmpty == false {
-			return friendList.count
+		if(section == 0) {
+			if friendReqSent.isEmpty == false {
+				return friendReqSent.count
+			} else {
+				return 0
+			}
+		} else if(section == 1) {
+			if friendReqRecieved.isEmpty == false {
+				return friendReqRecieved.count
+			} else {
+				return 0
+			}
 		} else {
-			return 0
+			if friendList.isEmpty == false {
+				return friendList.count
+			} else {
+				return 0
+			}
 		}
+	}
+	
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		if(section == 0){
+			return "Friend Requests Sent"
+		} else if (section == 1){
+			return "Friend Requests Recieved"
+		} else {
+			return "Friends"
+		}
+	}
+	
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 3
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = friendsTableView.dequeueReusableCell(withIdentifier: "friendsTableCell", for: indexPath) as! FriendsTableViewTableViewCell
-		
-		if tableView.numberOfRows(inSection: 0) == 0 {
-			
+		print("--index path section: ", indexPath.section)
+		if (tableView.numberOfRows(inSection: 0) == 0 && tableView.numberOfRows(inSection: 1) == 0 && tableView.numberOfRows(inSection: 2) == 0) {
 		} else {
-			cellOne.nameLabel.text = friendList[indexPath.item].userName
-			cellOne.emailLabel.text = friendList[indexPath.item].email
+			if(indexPath.section == 0)
+			{
+				cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
+				cellOne.emailLabel.text = friendReqSent[indexPath.item].email
+			} else if(indexPath.section == 1) {
+				cellOne.nameLabel.text = friendReqRecieved[indexPath.item - friendReqSent.count].userName
+				cellOne.emailLabel.text = friendReqRecieved[indexPath.item - friendReqSent.count].email
+			} else {
+				cellOne.nameLabel.text = friendList[indexPath.item - friendReqRecieved.count - friendReqSent.count].userName
+				cellOne.emailLabel.text = friendList[indexPath.item - friendReqRecieved.count - friendReqSent.count].email
+			}
 			
 		}
 		return cellOne
@@ -96,14 +133,12 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendsViewController, indexPath: IndexPath) {
 		DispatchQueue.main.async {
 			
-			print("--Trying to print friendList", friendList)
 			//friendList.remove(at: indexPath.row)
 			self.friendsTableView.deleteRows(at: [indexPath], with: .fade)
 			
 			if(self.friendsTableView.numberOfRows(inSection: 0) == 0) {
 				//self.noEventsScheduledLabel.text = "no events scheduled"
 			}
-			print("--Trying to print friendList", friendList)
 		}
 	}
 	
@@ -127,12 +162,13 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 extension YourFriendsViewController {
 	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
 	func observeFriends() {
-		print("--Here at observeFriends")
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
 		
 		friendRef.observe(.value, with: { snapshot in
 			
-			var tempFriends = [Friend]()
+			var tempFriendList = [Friend]()
+			var tempFriendReqSent = [Friend]()
+			var tempFriendReqRecieved = [Friend]()
 			
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
@@ -144,10 +180,21 @@ extension YourFriendsViewController {
 				   let status = dict["status"] as? String
 				{
 					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
-					tempFriends.append(friend)
+					print("--friend got from database: ", friend)
+					if(status == "accepted") {
+						tempFriendList.append(friend)
+					} else if(status == "sent") {
+						tempFriendReqSent.append(friend)
+					} else if(status == "recieved") {
+						tempFriendReqRecieved.append(friend)
+					}
 				}
 			}
-			friendList = tempFriends
+			
+			friendList = tempFriendList
+			friendReqRecieved = tempFriendReqRecieved
+			friendReqSent = tempFriendReqSent
+			
 			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
 			if(initialLoadingOfDataForFriendsTableView == true) {
 				self.friendsTableView.reloadData()
