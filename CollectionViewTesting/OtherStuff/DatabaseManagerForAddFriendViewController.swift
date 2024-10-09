@@ -78,7 +78,7 @@ final class DatabaseManagerForAddFriendsViewController {
 //							print("--Found a user: ", friend)
 						} else {
 							let myfriend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "sent")
-							let friend = Friend(id: currentUser!.userID, userName: currentUser!.userName, email: currentUser!.email, tagName: "", status: "recieved")
+							let friend = Friend(id: currentUser!.userID, userName: currentUser!.userName, email: currentUser!.email, tagName: "", status: "received")
 //							print("--Found a user: ", friend)
 							self.newFriend(with: myfriend, location: Auth.auth().currentUser!.uid)
 							self.newFriend(with: friend, location: id)
@@ -115,7 +115,7 @@ final class DatabaseManagerForAddFriendsViewController {
 					print("--found: ", found, " ", id, " ", status)
 					if(emailToFind == email) {
 						if(childSnapshot.childrenCount > 0) {
-							if(status == "recieved" || status == "sent"){
+							if(status == "received" || status == "sent"){
 								found = id
 							} else {
 								found = "found"

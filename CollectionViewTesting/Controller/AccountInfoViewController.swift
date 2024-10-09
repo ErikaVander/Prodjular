@@ -32,6 +32,7 @@ class AccountInfoViewController: UIViewController {
 		headerContainerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 25, width: headerContainerView.frame.width, height: headerContainerView.frame.height/2)).cgPath
 		headerContainerView.layer.shadowOpacity = 0.5
 		headerContainerView.layer.shadowRadius = 3
+		headerContainerView.layer.shadowColor = UIColor.label.cgColor
 		
 		headerContainerView.layer.shouldRasterize = true
 		headerContainerView.layer.rasterizationScale = UIScreen.main.scale

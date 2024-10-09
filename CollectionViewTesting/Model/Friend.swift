@@ -8,7 +8,7 @@
 import UIKit
 ///An array of friends
 var friendList = [Friend]()
-var friendReqRecieved = [Friend]()
+var friendReqReceived = [Friend]()
 var friendReqSent = [Friend]()
 
 ///The definition of a Friend.

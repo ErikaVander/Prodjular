@@ -43,7 +43,7 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.rowHeight = UITableView.automaticDimension
 		
 //		print("--printing friendList from viewWillAppear: ", friendList)
-//		print("--printing friendReqRecieved from viewWillAppear: ", friendReqRecieved)
+//		print("--printing friendReqReceived from viewWillAppear: ", friendReqReceived)
 //		print("--printing friendReqSent from viewWillAppear: ", friendReqSent)
 		friendsTableView.reloadData()
 	}
@@ -58,6 +58,7 @@ class YourFriendsViewController: UIViewController {
 		headerContainerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 25, width: headerContainerView.frame.width, height: headerContainerView.frame.height/2)).cgPath
 		headerContainerView.layer.shadowOpacity = 0.5
 		headerContainerView.layer.shadowRadius = 3
+		headerContainerView.layer.shadowColor = UIColor.label.cgColor
 		
 		headerContainerView.layer.shouldRasterize = true
 		headerContainerView.layer.rasterizationScale = UIScreen.main.scale
@@ -75,8 +76,8 @@ extension YourFriendsViewController: UITableViewDataSource {
 				return 0
 			}
 		} else if(section == 1) {
-			if friendReqRecieved.isEmpty == false {
-				return friendReqRecieved.count
+			if friendReqReceived.isEmpty == false {
+				return friendReqReceived.count
 			} else {
 				return 0
 			}
@@ -93,7 +94,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 		if(section == 0){
 			return "Friend Requests Sent"
 		} else if (section == 1){
-			return "Friend Requests Recieved"
+			return "Friend Requests Received"
 		} else {
 			return "Friends"
 		}
@@ -113,11 +114,11 @@ extension YourFriendsViewController: UITableViewDataSource {
 				cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
 				cellOne.emailLabel.text = friendReqSent[indexPath.item].email
 			} else if(indexPath.section == 1) {
-				cellOne.nameLabel.text = friendReqRecieved[indexPath.item - friendReqSent.count].userName
-				cellOne.emailLabel.text = friendReqRecieved[indexPath.item - friendReqSent.count].email
+				cellOne.nameLabel.text = friendReqReceived[indexPath.item - friendReqSent.count].userName
+				cellOne.emailLabel.text = friendReqReceived[indexPath.item - friendReqSent.count].email
 			} else {
-				cellOne.nameLabel.text = friendList[indexPath.item - friendReqRecieved.count - friendReqSent.count].userName
-				cellOne.emailLabel.text = friendList[indexPath.item - friendReqRecieved.count - friendReqSent.count].email
+				cellOne.nameLabel.text = friendList[indexPath.item - friendReqReceived.count - friendReqSent.count].userName
+				cellOne.emailLabel.text = friendList[indexPath.item - friendReqReceived.count - friendReqSent.count].email
 			}
 			
 		}
@@ -168,7 +169,7 @@ extension YourFriendsViewController {
 			
 			var tempFriendList = [Friend]()
 			var tempFriendReqSent = [Friend]()
-			var tempFriendReqRecieved = [Friend]()
+			var tempFriendReqReceived = [Friend]()
 			
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
@@ -185,14 +186,14 @@ extension YourFriendsViewController {
 						tempFriendList.append(friend)
 					} else if(status == "sent") {
 						tempFriendReqSent.append(friend)
-					} else if(status == "recieved") {
-						tempFriendReqRecieved.append(friend)
+					} else if(status == "received") {
+						tempFriendReqReceived.append(friend)
 					}
 				}
 			}
 			
 			friendList = tempFriendList
-			friendReqRecieved = tempFriendReqRecieved
+			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
 			
 			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
