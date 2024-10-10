@@ -8,7 +8,8 @@
 import UIKit
 
 class EmptyFriendsTableViewCell: UITableViewCell {
-
+	@IBOutlet weak var emptyLabel: UILabel!
+	
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

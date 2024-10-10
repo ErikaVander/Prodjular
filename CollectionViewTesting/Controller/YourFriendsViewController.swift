@@ -13,6 +13,10 @@ var initialLoadingOfDataForFriendsTableView = true
 
 class YourFriendsViewController: UIViewController {
 	
+	@IBOutlet weak var friendReqButton: UIButton!
+	@IBOutlet var YourFriendsContainerView: UIView!
+	@IBOutlet weak var footerButtonContainerView: UIView!
+	@IBOutlet weak var footerContainerView: UIView!
 	@IBOutlet weak var headerContainerView: UIView!
 	@IBOutlet weak var friendsTableView: UITableView!
 	@IBOutlet weak var addFriends: UIButton!
@@ -24,11 +28,13 @@ class YourFriendsViewController: UIViewController {
 		self.observeFriends()
 		
 		setHeaderContainerViewLook()
+		setFooterContainerViewLook()
 		
 		addFriends.setTitle("", for: .normal)
 		
 		//Registering xib files
 		friendsTableView.register(UINib(nibName: "FriendsTableViewTableViewCell", bundle: nil), forCellReuseIdentifier: "friendsTableCell")
+		friendsTableView.register(UINib(nibName: "EmptyFriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "emptyFriendsTableViewCell")
 		
 		friendsTableView.dataSource = self
 		friendsTableView.delegate = self
@@ -62,6 +68,26 @@ class YourFriendsViewController: UIViewController {
 		
 		headerContainerView.layer.shouldRasterize = true
 		headerContainerView.layer.rasterizationScale = UIScreen.main.scale
+		friendsTableView.contentInset = UIEdgeInsets(top: -15, left: 0, bottom: 0, right: 0)
+	}
+	
+	func setFooterContainerViewLook() {
+		footerButtonContainerView.backgroundColor = UIColor.clear
+		let maskLayer = CAShapeLayer()
+		maskLayer.path = UIBezierPath(roundedRect: footerContainerView.bounds, byRoundingCorners: .topLeft, cornerRadii: CGSize(width: 20, height: 20)).cgPath
+		footerContainerView.layer.mask = maskLayer
+		
+		
+		let outerView = UIView(frame: CGRect(origin: footerContainerView.frame.origin, size: CGSize(width: footerContainerView.frame.width + 10.0, height: footerContainerView.frame.height + 10.0)))
+		outerView.backgroundColor = .clear
+		
+		
+		outerView.layer.shadowColor = UIColor.label.cgColor
+		outerView.layer.shadowOpacity = 0.5
+		outerView.layer.shadowOffset = .zero
+		outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, byRoundingCorners: .topLeft, cornerRadii: CGSize(width: 20, height: 20)).cgPath
+		YourFriendsContainerView.addSubview(outerView)
+		outerView.addSubview(footerContainerView)
 	}
 }
 
@@ -73,52 +99,53 @@ extension YourFriendsViewController: UITableViewDataSource {
 			if friendReqSent.isEmpty == false {
 				return friendReqSent.count
 			} else {
-				return 0
-			}
-		} else if(section == 1) {
-			if friendReqReceived.isEmpty == false {
-				return friendReqReceived.count
-			} else {
-				return 0
+				return 1
 			}
 		} else {
 			if friendList.isEmpty == false {
 				return friendList.count
 			} else {
-				return 0
+				return 1
 			}
 		}
 	}
 	
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if(section == 0){
-			return "Friend Requests Sent"
-		} else if (section == 1){
-			return "Friend Requests Received"
+			return "Pending Requests"
 		} else {
 			return "Friends"
 		}
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 3
+		return 2
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = friendsTableView.dequeueReusableCell(withIdentifier: "friendsTableCell", for: indexPath) as! FriendsTableViewTableViewCell
 		print("--index path section: ", indexPath.section)
+		let cellTwo = friendsTableView.dequeueReusableCell(withIdentifier: "emptyFriendsTableViewCell", for: indexPath) as! EmptyFriendsTableViewCell
 		if (tableView.numberOfRows(inSection: 0) == 0 && tableView.numberOfRows(inSection: 1) == 0 && tableView.numberOfRows(inSection: 2) == 0) {
 		} else {
 			if(indexPath.section == 0)
 			{
-				cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
-				cellOne.emailLabel.text = friendReqSent[indexPath.item].email
+				if(friendReqSent.isEmpty != true) {
+					cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
+					cellOne.emailLabel.text = friendReqSent[indexPath.item].email
+				} else {
+					cellTwo.emptyLabel.text = "No pending requests"
+					return cellTwo
+				}
 			} else if(indexPath.section == 1) {
-				cellOne.nameLabel.text = friendReqReceived[indexPath.item - friendReqSent.count].userName
-				cellOne.emailLabel.text = friendReqReceived[indexPath.item - friendReqSent.count].email
-			} else {
-				cellOne.nameLabel.text = friendList[indexPath.item - friendReqReceived.count - friendReqSent.count].userName
-				cellOne.emailLabel.text = friendList[indexPath.item - friendReqReceived.count - friendReqSent.count].email
+				if( friendReqReceived.isEmpty != true) {
+					cellOne.nameLabel.text = friendList[indexPath.item - friendReqSent.count].userName
+					cellOne.emailLabel.text = friendList[indexPath.item - friendReqSent.count].email
+				} else {
+					cellTwo.emptyLabel.text = "You have no friends"
+					return cellTwo
+				}
+				
 			}
 			
 		}
@@ -195,6 +222,12 @@ extension YourFriendsViewController {
 			friendList = tempFriendList
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
+			
+			if (friendReqReceived.count != 0) {
+				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
+			} else {
+				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
+			}
 			
 			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
 			if(initialLoadingOfDataForFriendsTableView == true) {
