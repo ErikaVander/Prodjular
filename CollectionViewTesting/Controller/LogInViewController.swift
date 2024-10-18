@@ -44,7 +44,7 @@ extension LogInViewController {
 		Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
 			guard error == nil else {
 				print("**Error logging in: \(error!.localizedDescription)")
-				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
+				alertUserAndGoToRootController(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
 			//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
@@ -52,7 +52,7 @@ extension LogInViewController {
 				currentUser = user
 			}
 			print("**User has signed in: \(authResult?.user.email ?? "No user has signed in") isLoggedIn: \(true)")
-			alertUser(view: self, title: "Success", content: "You are now logged in", dismissView: true)
+			alertUserAndGoToRootController(view: self, title: "Success", content: "You are now logged in", dismissView: true)
 		}
 	}
 }

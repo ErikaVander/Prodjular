@@ -40,6 +40,7 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.delegate = self
 		
 		DatabaseManagerForFriendsViewController.shared.delegate = self
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -47,10 +48,6 @@ class YourFriendsViewController: UIViewController {
 		
 		friendsTableView.estimatedRowHeight = 200
 		friendsTableView.rowHeight = UITableView.automaticDimension
-		
-//		print("--printing friendList from viewWillAppear: ", friendList)
-//		print("--printing friendReqReceived from viewWillAppear: ", friendReqReceived)
-//		print("--printing friendReqSent from viewWillAppear: ", friendReqSent)
 		friendsTableView.reloadData()
 	}
 	
@@ -97,14 +94,16 @@ extension YourFriendsViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if(section == 0) {
 			if friendReqSent.isEmpty == false {
-				return friendReqSent.count
+				return friendReqSent.count + 1
 			} else {
 				return 1
 			}
 		} else {
 			if friendList.isEmpty == false {
-				return friendList.count
+				return friendList.count + 1
+				//print("--friendList.count: ", friendList.count)
 			} else {
+				//print("--friendList.count 2: ", friendList.count)
 				return 1
 			}
 		}
@@ -124,28 +123,58 @@ extension YourFriendsViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cellOne = friendsTableView.dequeueReusableCell(withIdentifier: "friendsTableCell", for: indexPath) as! FriendsTableViewTableViewCell
-		print("--index path section: ", indexPath.section)
 		let cellTwo = friendsTableView.dequeueReusableCell(withIdentifier: "emptyFriendsTableViewCell", for: indexPath) as! EmptyFriendsTableViewCell
 		if (tableView.numberOfRows(inSection: 0) == 0 && tableView.numberOfRows(inSection: 1) == 0 && tableView.numberOfRows(inSection: 2) == 0) {
 		} else {
 			if(indexPath.section == 0)
 			{
-				if(friendReqSent.isEmpty != true) {
-					cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
-					cellOne.emailLabel.text = friendReqSent[indexPath.item].email
-				} else {
+				if( friendReqSent.isEmpty == true) {
 					cellTwo.emptyLabel.text = "No pending requests"
+					cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
+					let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 45)
+					emptyLabelHeightConstraint.isActive = true
+					emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
 					return cellTwo
+				} else {
+					if(indexPath.item == friendReqSent.count) {
+						cellTwo.emptyLabel.text = ""
+						cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
+						let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 1)
+						emptyLabelHeightConstraint.isActive = true
+						emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+						return cellTwo
+					} else {
+						print("--indexPath.item: ", indexPath.item, friendReqSent.count)
+						cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
+						cellOne.emailLabel.text = friendReqSent[indexPath.item].email
+						cellOne.delegate = self
+						cellOne.setFriend(friend: friendReqSent[indexPath.item])
+					}
 				}
 			} else if(indexPath.section == 1) {
-				if( friendReqReceived.isEmpty != true) {
-					cellOne.nameLabel.text = friendList[indexPath.item - friendReqSent.count].userName
-					cellOne.emailLabel.text = friendList[indexPath.item - friendReqSent.count].email
-				} else {
+				if( friendList.isEmpty == true) {
 					cellTwo.emptyLabel.text = "You have no friends"
+					cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
+					let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 45)
+					emptyLabelHeightConstraint.isActive = true
+					emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
 					return cellTwo
+				} else {
+					if(indexPath.item == friendList.count) {
+						cellTwo.emptyLabel.text = ""
+						cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
+						let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 1)
+						emptyLabelHeightConstraint.isActive = true
+						emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+						return cellTwo
+					} else {
+						print("--indexPath.item: ", indexPath.item, friendList.count)
+						cellOne.nameLabel.text = friendList[indexPath.item].userName
+						cellOne.emailLabel.text = friendList[indexPath.item].email
+						cellOne.delegate = self
+						cellOne.setFriend(friend: friendList[indexPath.item])
+					}
 				}
-				
 			}
 			
 		}
@@ -156,12 +185,14 @@ extension YourFriendsViewController: UITableViewDataSource {
 
 
 //MARK: TableViewDelegate
-extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegateForFriendsViewController {
+extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegateForFriendsViewController, FriendsTableViewTableViewCellDelegate {
+	
+	func deleteRow(cell: UITableViewCell, friend: Friend) {
+		
+	}
 	
 	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendsViewController, indexPath: IndexPath) {
 		DispatchQueue.main.async {
-			
-			//friendList.remove(at: indexPath.row)
 			self.friendsTableView.deleteRows(at: [indexPath], with: .fade)
 			
 			if(self.friendsTableView.numberOfRows(inSection: 0) == 0) {
@@ -180,7 +211,23 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			DatabaseManagerForFriendsViewController.shared.deleteFriend(with: friendList[indexPath.item], indexPath: indexPath)
+			if(indexPath.section == 0) {
+				let cell = tableView.cellForRow(at: indexPath) as? FriendsTableViewTableViewCell
+				let index = friendReqSent.firstIndex(of: cell!.friend)
+				
+				print("--cell: ", cell?.friend ?? "did not find a friend")
+				
+				DatabaseManagerForFriendsViewController.shared.deleteFriend(with: friendReqSent[index!], indexPath: indexPath)
+				friendReqSent.remove(at: index!)
+			} else if(indexPath.section == 1) {
+				let cell = tableView.cellForRow(at: indexPath) as? FriendsTableViewTableViewCell
+				let index = friendList.firstIndex(of: cell!.friend)
+				
+				print("--cell: ", cell?.friend ?? "did not find a friend")
+				
+				DatabaseManagerForFriendsViewController.shared.deleteFriend(with: friendList[index!], indexPath: indexPath)
+				friendList.remove(at: index!)
+			}
 		}
 	}
 	
@@ -198,6 +245,8 @@ extension YourFriendsViewController {
 			var tempFriendReqSent = [Friend]()
 			var tempFriendReqReceived = [Friend]()
 			
+			print("snapshot: ", snapshot)
+			
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
@@ -208,7 +257,7 @@ extension YourFriendsViewController {
 				   let status = dict["status"] as? String
 				{
 					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
-					print("--friend got from database: ", friend)
+					print("--friend got from database: ", status)
 					if(status == "accepted") {
 						tempFriendList.append(friend)
 					} else if(status == "sent") {
@@ -222,18 +271,16 @@ extension YourFriendsViewController {
 			friendList = tempFriendList
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
+			print("--friendList: ", friendList)
+			print("--friendReqReceived: ", friendReqReceived)
+			print("--friendReqSent: ", friendReqSent)
 			
 			if (friendReqReceived.count != 0) {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			
-			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
-			if(initialLoadingOfDataForFriendsTableView == true) {
-				self.friendsTableView.reloadData()
-				initialLoadingOfDataForFriendsTableView = false
-			}
+			self.friendsTableView.reloadData()
 		})
 		
 	}

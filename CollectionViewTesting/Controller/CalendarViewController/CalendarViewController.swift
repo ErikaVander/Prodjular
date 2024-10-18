@@ -38,7 +38,7 @@ class CalendarViewController: UIViewController {
 				self.showEventDurationViewController()
 			}),
 			UIAction(title: "add Prep to existing Project", image: nil, handler: { (action) in
-				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
+				alertUserAndGoToRootController(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
 			})
 		]
 	}
@@ -102,8 +102,8 @@ class CalendarViewController: UIViewController {
 		fillMonth(parDate: selectedDate)
 		selectCellAfterScroll()
 		
-		DatabaseManagerForAddFriendsViewController.shared.checkDuplicateFriend(emailToFind: "erikajvanderhoff@gmail.com", idToUse: "eI3cX84Nn1MJIvh82kmkHp49hrF2") { user in
-			print("--from viewDidLoad: ", user)
+		Database.database().reference().child("userList").observe( .value) { snapshot in
+			print("--snapshot all: ", snapshot)
 		}
     }
 	

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,8 +25,8 @@
                         <rect key="frame" x="28" y="0.0" width="328" height="38"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="38" id="1pp-Vy-VW7"/>
-                            <constraint firstAttribute="width" constant="328" id="vIs-qZ-gyR"/>
+                            <constraint firstAttribute="height" constant="38" identifier="CellForEventDurationDayOfTheWeekView" id="1pp-Vy-VW7"/>
+                            <constraint firstAttribute="width" constant="328" identifier="CellForEventDurationDayOfTheWeekView" id="vIs-qZ-gyR"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Agk-sF-MWo">
                             <size key="itemSize" width="128" height="128"/>
@@ -47,15 +47,15 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="OmD-6c-Jna" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="1z0-VG-lmT"/>
-                <constraint firstItem="QcO-BN-Y6E" firstAttribute="trailing" secondItem="OmD-6c-Jna" secondAttribute="trailing" constant="-46" id="402-8J-pnB"/>
-                <constraint firstItem="OmD-6c-Jna" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" constant="-38" id="9Lt-Rs-WLv"/>
-                <constraint firstAttribute="trailing" secondItem="QHC-ea-uSp" secondAttribute="trailing" id="Isg-qt-R3t"/>
-                <constraint firstItem="QcO-BN-Y6E" firstAttribute="top" secondItem="OmD-6c-Jna" secondAttribute="top" id="KJ4-Xk-1dM"/>
-                <constraint firstItem="QcO-BN-Y6E" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" id="SYN-bj-oPs"/>
-                <constraint firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" id="hZX-Mr-7bU"/>
-                <constraint firstItem="QcO-BN-Y6E" firstAttribute="leading" secondItem="OmD-6c-Jna" secondAttribute="leading" constant="28" id="idL-mY-UEy"/>
-                <constraint firstItem="QHC-ea-uSp" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="top" id="khP-Of-AAH"/>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" identifier="CellForEventDurationDurationTable" id="1z0-VG-lmT"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="trailing" secondItem="OmD-6c-Jna" secondAttribute="trailing" constant="-46" identifier="CellForEventDurationDurationTable" id="402-8J-pnB"/>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" constant="-38" identifier="CellForEventDurationDurationTable" id="9Lt-Rs-WLv"/>
+                <constraint firstAttribute="trailing" secondItem="QHC-ea-uSp" secondAttribute="trailing" identifier="CellForEventDurationDayOfTheWeekView" id="Isg-qt-R3t"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="top" secondItem="OmD-6c-Jna" secondAttribute="top" identifier="CellForEventDurationDurationTable" id="KJ4-Xk-1dM"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" identifier="CellForEventDurationDurationTable" id="SYN-bj-oPs"/>
+                <constraint firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" identifier="CellForEventDurationDurationTable" id="hZX-Mr-7bU"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="leading" secondItem="OmD-6c-Jna" secondAttribute="leading" constant="28" identifier="CellForEventDurationDurationTable" id="idL-mY-UEy"/>
+                <constraint firstItem="QHC-ea-uSp" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="top" identifier="CellForEventDurationDurationTable" id="khP-Of-AAH"/>
             </constraints>
             <size key="customSize" width="379" height="655"/>
             <connections>

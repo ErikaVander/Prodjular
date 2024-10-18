@@ -53,13 +53,13 @@ extension SignUpViewController {
 		FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
 			guard let result = authResult, error == nil else {
 				print("**Error creating user: \(error!.localizedDescription)")
-				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
+				alertUserAndGoToRootController(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
 			let user: String = result.user.email!
 			print("**Created User: \(user), Logged in: \(true)")
 			//self.dismiss(animated: true, completion: nil)
-			alertUser(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
+			alertUserAndGoToRootController(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
 			self.sendVerificationEmail()
 		})
 		
@@ -69,9 +69,9 @@ extension SignUpViewController {
 	func sendVerificationEmail() {
 		Auth.auth().currentUser?.sendEmailVerification(completion: { [self](error) -> Void in
 			if (error != nil) {
-				alertUser(view: self, title: "Success", content: "You are now a verified user", dismissView: true)
+				alertUserAndGoToRootController(view: self, title: "Success", content: "You are now a verified user", dismissView: true)
 			} else {
-				alertUser(view: self, title: "Error", content: "There was an error in the verification process", dismissView: false)
+				alertUserAndGoToRootController(view: self, title: "Error", content: "There was an error in the verification process", dismissView: false)
 			}
 		})
 	}
@@ -89,7 +89,7 @@ extension SignUpViewController {
 				
 				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 			} else {
-				alertUser(view: self, title: "Not yet verified.", content: "Please verify your account and try again.", dismissView: true)
+				alertUserAndGoToRootController(view: self, title: "Not yet verified.", content: "Please verify your account and try again.", dismissView: true)
 			}
 		}
 		)

@@ -22,6 +22,8 @@
 		D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61F04C325D3891D00A2BC05 /* Main.storyboard */; };
 		D61F04C725D3891D00A2BC05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D61F04C625D3891D00A2BC05 /* Assets.xcassets */; };
 		D61F04CA25D3891D00A2BC05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */; };
+		D62335592CBDE42500FEC65A /* FriendReqTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */; };
+		D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */; };
 		D629397F27B2F87F00BF4FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */; };
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
 		D6301151267AA10800128ADA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6301150267AA10800128ADA /* Event.swift */; };
@@ -35,6 +37,7 @@
 		D668826D2B6E156B00DE1726 /* EventDurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668826C2B6E156B00DE1726 /* EventDurationHelper.swift */; };
 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
 		D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */; };
+		D6A12A432CB866FF00BF2E88 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */; };
 		D6B46CC92C70186E0050EDFB /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */; };
 		D6B46CCB2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */; };
 		D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB026A6479000498ECB /* LogInViewController.swift */; };
@@ -83,6 +86,8 @@
 		D61F04C625D3891D00A2BC05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D61F04C925D3891D00A2BC05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D61F04CB25D3891D00A2BC05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendReqTableViewCell.swift; sourceTree = "<group>"; };
+		D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendReqTableViewCell.xib; sourceTree = "<group>"; };
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -97,6 +102,7 @@
 		D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollectionViewTesting.entitlements; sourceTree = "<group>"; };
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForAddFriendViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB026A6479000498ECB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +227,8 @@
 				D64566662C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib */,
 				D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */,
 				D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */,
+				D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */,
+				D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,6 +245,7 @@
 				D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */,
 				D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */,
 				D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */,
+				D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -356,6 +365,7 @@
 				D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */,
 				D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
+				D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */,
 				D64566682C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib in Resources */,
 				D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */,
 			);
@@ -440,6 +450,7 @@
 				D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */,
 				D645666C2C6FCBFF00A8AF7B /* User.swift in Sources */,
 				D6E35C0B285242A000D8B327 /* customGesture.swift in Sources */,
+				D62335592CBDE42500FEC65A /* FriendReqTableViewCell.swift in Sources */,
 				D61F04C225D3891D00A2BC05 /* CalendarViewController.swift in Sources */,
 				D6DB6647278F970C0087550C /* CalendarViewController_ads.swift in Sources */,
 				D630114E267A978C00128ADA /* EventViewController.swift in Sources */,
@@ -448,6 +459,7 @@
 				D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */,
 				D61221652CB5E9AA0050B22C /* UDM.swift in Sources */,
 				D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */,
+				D6A12A432CB866FF00BF2E88 /* FriendRequestViewController.swift in Sources */,
 				D61F04C025D3891D00A2BC05 /* SceneDelegate.swift in Sources */,
 				D6E35C092852428D00D8B327 /* EventDurationTableViewCell.swift in Sources */,
 			);

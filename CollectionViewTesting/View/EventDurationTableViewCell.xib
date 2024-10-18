@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -80,23 +80,23 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="wXk-hY-L1M" firstAttribute="leading" secondItem="yfZ-ou-ftw" secondAttribute="trailing" constant="15" id="3sI-bN-nGy"/>
-                    <constraint firstItem="sBD-Z5-VNV" firstAttribute="leading" secondItem="1Sr-F0-oEB" secondAttribute="trailing" constant="46" id="58s-98-UsE"/>
-                    <constraint firstItem="pRC-xF-b5R" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5pF-jY-Dfb"/>
-                    <constraint firstItem="6Ma-Hm-bm5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6m3-kD-NM9"/>
-                    <constraint firstItem="SwL-Db-3yP" firstAttribute="leading" secondItem="pRC-xF-b5R" secondAttribute="trailing" constant="46" id="7a1-uy-sUl"/>
-                    <constraint firstItem="pRC-xF-b5R" firstAttribute="leading" secondItem="sBD-Z5-VNV" secondAttribute="trailing" constant="46" id="Cvs-c1-SWk"/>
-                    <constraint firstItem="WZZ-yN-0kW" firstAttribute="trailing" secondItem="6Ma-Hm-bm5" secondAttribute="leading" constant="-46" id="DDw-Va-bts"/>
-                    <constraint firstItem="wXk-hY-L1M" firstAttribute="trailing" secondItem="6Ma-Hm-bm5" secondAttribute="trailing" constant="46" id="EpO-If-OMD"/>
-                    <constraint firstItem="yfZ-ou-ftw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LVP-O7-cXB"/>
-                    <constraint firstAttribute="trailing" secondItem="wXk-hY-L1M" secondAttribute="trailing" id="USl-pj-aB1"/>
-                    <constraint firstItem="wXk-hY-L1M" firstAttribute="leading" secondItem="1Sr-F0-oEB" secondAttribute="leading" constant="-46" id="Xz1-bo-qoR"/>
-                    <constraint firstItem="WZZ-yN-0kW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="bJb-DZ-j9h"/>
-                    <constraint firstItem="SwL-Db-3yP" firstAttribute="trailing" secondItem="WZZ-yN-0kW" secondAttribute="leading" constant="-46" id="eGq-NV-I4i"/>
-                    <constraint firstItem="SwL-Db-3yP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fQ4-K6-bXo"/>
-                    <constraint firstItem="wXk-hY-L1M" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hMF-bS-tm3"/>
-                    <constraint firstItem="1Sr-F0-oEB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kIa-XV-gun"/>
-                    <constraint firstItem="sBD-Z5-VNV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xoI-Rm-FDM"/>
+                    <constraint firstItem="wXk-hY-L1M" firstAttribute="leading" secondItem="yfZ-ou-ftw" secondAttribute="trailing" constant="15" identifier="EventDurationTableViewHourSegmentLine" id="3sI-bN-nGy"/>
+                    <constraint firstItem="sBD-Z5-VNV" firstAttribute="leading" secondItem="1Sr-F0-oEB" secondAttribute="trailing" constant="46" identifier="EventDurationTableViewHourSegmentLine" id="58s-98-UsE"/>
+                    <constraint firstItem="pRC-xF-b5R" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="5pF-jY-Dfb"/>
+                    <constraint firstItem="6Ma-Hm-bm5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="6m3-kD-NM9"/>
+                    <constraint firstItem="SwL-Db-3yP" firstAttribute="leading" secondItem="pRC-xF-b5R" secondAttribute="trailing" constant="46" identifier="EventDurationTableViewHourSegmentLine" id="7a1-uy-sUl"/>
+                    <constraint firstItem="pRC-xF-b5R" firstAttribute="leading" secondItem="sBD-Z5-VNV" secondAttribute="trailing" constant="46" identifier="EventDurationTableViewHourSegmentLine" id="Cvs-c1-SWk"/>
+                    <constraint firstItem="WZZ-yN-0kW" firstAttribute="trailing" secondItem="6Ma-Hm-bm5" secondAttribute="leading" constant="-46" identifier="EventDurationTableViewHourSegmentLine" id="DDw-Va-bts"/>
+                    <constraint firstItem="wXk-hY-L1M" firstAttribute="trailing" secondItem="6Ma-Hm-bm5" secondAttribute="trailing" constant="46" identifier="EventDurationTableViewHourSegmentLine" id="EpO-If-OMD"/>
+                    <constraint firstItem="yfZ-ou-ftw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourLabel" id="LVP-O7-cXB"/>
+                    <constraint firstAttribute="trailing" secondItem="wXk-hY-L1M" secondAttribute="trailing" identifier="EventDurationTableViewHourSegmentLine" id="USl-pj-aB1"/>
+                    <constraint firstItem="wXk-hY-L1M" firstAttribute="leading" secondItem="1Sr-F0-oEB" secondAttribute="leading" constant="-46" identifier="EventDurationTableViewHourSegmentLine" id="Xz1-bo-qoR"/>
+                    <constraint firstItem="WZZ-yN-0kW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="bJb-DZ-j9h"/>
+                    <constraint firstItem="SwL-Db-3yP" firstAttribute="trailing" secondItem="WZZ-yN-0kW" secondAttribute="leading" constant="-46" identifier="EventDurationTableViewHourSegmentLine" id="eGq-NV-I4i"/>
+                    <constraint firstItem="SwL-Db-3yP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="fQ4-K6-bXo"/>
+                    <constraint firstItem="wXk-hY-L1M" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="hMF-bS-tm3"/>
+                    <constraint firstItem="1Sr-F0-oEB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="kIa-XV-gun"/>
+                    <constraint firstItem="sBD-Z5-VNV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="EventDurationTableViewHourSegmentLine" id="xoI-Rm-FDM"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

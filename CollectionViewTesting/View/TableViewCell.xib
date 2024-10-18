@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,20 +45,20 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="tsD-Q2-6CT" secondAttribute="trailing" id="Abx-yf-Ftb"/>
-                    <constraint firstItem="6gg-Rc-P0o" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" id="BDf-Ru-2oD"/>
-                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="leading" secondItem="6gg-Rc-P0o" secondAttribute="trailing" constant="3" id="K3b-aM-Iun"/>
-                    <constraint firstItem="6gg-Rc-P0o" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" constant="3" id="NbF-8R-epr"/>
-                    <constraint firstAttribute="trailing" secondItem="KTp-LJ-at2" secondAttribute="trailing" id="Ncz-IV-mOx"/>
-                    <constraint firstItem="KTp-LJ-at2" firstAttribute="top" secondItem="T7u-mJ-H5V" secondAttribute="top" id="OfX-hD-3NW"/>
-                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" constant="6" id="YBX-ZX-cCy"/>
-                    <constraint firstAttribute="bottom" secondItem="tsD-Q2-6CT" secondAttribute="bottom" constant="8" id="YGq-4N-Cg6"/>
-                    <constraint firstItem="KTp-LJ-at2" firstAttribute="height" secondItem="T7u-mJ-H5V" secondAttribute="height" id="aBI-sB-llu"/>
-                    <constraint firstItem="tsD-Q2-6CT" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" constant="6" id="bLP-Yc-P66"/>
-                    <constraint firstAttribute="bottom" secondItem="6gg-Rc-P0o" secondAttribute="bottom" constant="3" id="bda-pe-ZVG"/>
-                    <constraint firstItem="tsD-Q2-6CT" firstAttribute="top" secondItem="KTp-LJ-at2" secondAttribute="bottom" id="kOn-d4-uu0"/>
-                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" constant="4" id="meC-Ru-dA1"/>
-                    <constraint firstItem="KTp-LJ-at2" firstAttribute="leading" secondItem="T7u-mJ-H5V" secondAttribute="trailing" id="tWj-tP-Jsf"/>
+                    <constraint firstAttribute="trailing" secondItem="tsD-Q2-6CT" secondAttribute="trailing" identifier="TableViewCellDescriptionLabel" id="Abx-yf-Ftb"/>
+                    <constraint firstItem="6gg-Rc-P0o" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" identifier="TableViewCellViewInTableViewCell" id="BDf-Ru-2oD"/>
+                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="leading" secondItem="6gg-Rc-P0o" secondAttribute="trailing" constant="3" identifier="TableViewCellEventLabel" id="K3b-aM-Iun"/>
+                    <constraint firstItem="6gg-Rc-P0o" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" constant="3" identifier="TableViewCellViewInTableViewCell" id="NbF-8R-epr"/>
+                    <constraint firstAttribute="trailing" secondItem="KTp-LJ-at2" secondAttribute="trailing" identifier="TableViewCellTimeLabel" id="Ncz-IV-mOx"/>
+                    <constraint firstItem="KTp-LJ-at2" firstAttribute="top" secondItem="T7u-mJ-H5V" secondAttribute="top" identifier="TableViewCellTimeLabel" id="OfX-hD-3NW"/>
+                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" constant="6" identifier="TableViewCellEventLabel" id="YBX-ZX-cCy"/>
+                    <constraint firstAttribute="bottom" secondItem="tsD-Q2-6CT" secondAttribute="bottom" constant="8" identifier="TableViewCellDescription" id="YGq-4N-Cg6"/>
+                    <constraint firstItem="KTp-LJ-at2" firstAttribute="height" secondItem="T7u-mJ-H5V" secondAttribute="height" identifier="TableViewCellTimeLabel" id="aBI-sB-llu"/>
+                    <constraint firstItem="tsD-Q2-6CT" firstAttribute="leading" secondItem="7Rc-VK-I6b" secondAttribute="leading" constant="6" identifier="TableViewCellDescriptionLabel" id="bLP-Yc-P66"/>
+                    <constraint firstAttribute="bottom" secondItem="6gg-Rc-P0o" secondAttribute="bottom" constant="3" identifier="TableViewCellViewInTableViewCell" id="bda-pe-ZVG"/>
+                    <constraint firstItem="tsD-Q2-6CT" firstAttribute="top" secondItem="KTp-LJ-at2" secondAttribute="bottom" identifier="TableViewCellDescriptionLabel" id="kOn-d4-uu0"/>
+                    <constraint firstItem="T7u-mJ-H5V" firstAttribute="top" secondItem="7Rc-VK-I6b" secondAttribute="top" constant="4" identifier="TableViewCellEventLabel" id="meC-Ru-dA1"/>
+                    <constraint firstItem="KTp-LJ-at2" firstAttribute="leading" secondItem="T7u-mJ-H5V" secondAttribute="trailing" identifier="TableViewCellTimeLabel" id="tWj-tP-Jsf"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

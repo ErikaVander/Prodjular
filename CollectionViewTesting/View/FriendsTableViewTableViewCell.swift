@@ -6,10 +6,17 @@
 //
 
 import UIKit
+protocol FriendsTableViewTableViewCellDelegate {
+	func deleteRow(cell: UITableViewCell, friend: Friend)
+}
 
 class FriendsTableViewTableViewCell: UITableViewCell {
+	static let shared = FriendsTableViewTableViewCell()
+	var delegate: FriendsTableViewTableViewCellDelegate?
+	
 	@IBOutlet weak var emailLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
+	var friend = Friend(id: "nil", userName: "nil", email: "nil", tagName: "nil", status: "nil")
 	
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,4 +29,10 @@ class FriendsTableViewTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+	func setFriend(friend: Friend) {
+		self.friend = friend
+	}
+	func getFriend() -> Friend {
+		return friend
+	}
 }
