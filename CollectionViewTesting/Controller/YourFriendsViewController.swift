@@ -129,11 +129,22 @@ extension YourFriendsViewController: UITableViewDataSource {
 			if(indexPath.section == 0)
 			{
 				if( friendReqSent.isEmpty == true) {
+					print("--here")
 					cellTwo.emptyLabel.text = "No pending requests"
-					cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
+					cellTwo.emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+					
 					let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 45)
 					emptyLabelHeightConstraint.isActive = true
 					emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+					
+					let emptyLabelCenterXConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerXAnchor.constraint(equalTo: cellTwo.contentView.centerXAnchor)
+					emptyLabelCenterXConstraint.isActive = true
+					emptyLabelCenterXConstraint.identifier = "emptyLabelLeadingConstraint-centerX"
+					
+					let emptyLabelCenterYConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerYAnchor.constraint(equalTo: cellTwo.contentView.centerYAnchor)
+					emptyLabelCenterYConstraint.isActive = true
+					emptyLabelCenterYConstraint.identifier = "emptyLabelLeadingConstraint-centerY"
+					
 					return cellTwo
 				} else {
 					if(indexPath.item == friendReqSent.count) {
@@ -142,6 +153,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 						let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 1)
 						emptyLabelHeightConstraint.isActive = true
 						emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+						
 						return cellTwo
 					} else {
 						print("--indexPath.item: ", indexPath.item, friendReqSent.count)
@@ -154,10 +166,20 @@ extension YourFriendsViewController: UITableViewDataSource {
 			} else if(indexPath.section == 1) {
 				if( friendList.isEmpty == true) {
 					cellTwo.emptyLabel.text = "You have no friends"
-					cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
+					cellTwo.emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+					
 					let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 45)
 					emptyLabelHeightConstraint.isActive = true
 					emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+					
+					let emptyLabelCenterXConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerXAnchor.constraint(equalTo: cellTwo.contentView.centerXAnchor)
+					emptyLabelCenterXConstraint.isActive = true
+					emptyLabelCenterXConstraint.identifier = "emptyLabelLeadingConstraint-centerX"
+					
+					let emptyLabelCenterYConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerYAnchor.constraint(equalTo: cellTwo.contentView.centerYAnchor)
+					emptyLabelCenterYConstraint.isActive = true
+					emptyLabelCenterYConstraint.identifier = "emptyLabelLeadingConstraint-centerY"
+
 					return cellTwo
 				} else {
 					if(indexPath.item == friendList.count) {
@@ -166,6 +188,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 						let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 1)
 						emptyLabelHeightConstraint.isActive = true
 						emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+						
 						return cellTwo
 					} else {
 						print("--indexPath.item: ", indexPath.item, friendList.count)
