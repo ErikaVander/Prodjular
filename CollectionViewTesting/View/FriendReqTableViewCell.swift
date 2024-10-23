@@ -32,7 +32,7 @@ class FriendReqTableViewCell: UITableViewCell {
 	
 	@IBAction func acceptFriend(_ sender: Any) {
 		print("--accepted friend")
-		DatabaseManagerForAddFriendViewController.shared.acceptFriendRequest(friend: self.friend)
+		DatabaseManagerForFriendViewController.shared.acceptFriendRequest(friend: self.friend)
 		self.delegate!.deleteRow(cell: self, friend: self.friend)
 	}
 	

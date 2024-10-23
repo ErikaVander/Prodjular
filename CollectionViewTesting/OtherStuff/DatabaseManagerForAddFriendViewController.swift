@@ -10,8 +10,13 @@ import FirebaseDatabase
 import FirebaseAuth
 import UIKit
 
-final class DatabaseManagerForAddFriendViewController {
-	static let shared = DatabaseManagerForAddFriendViewController()
+protocol DatabaseManagerDelegateForFriendsViewController {
+	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendViewController, indexPath: IndexPath)
+}
+
+final class DatabaseManagerForFriendViewController {
+	static let shared = DatabaseManagerForFriendViewController()
+	var delegate: DatabaseManagerDelegateForFriendsViewController?
 	
 	private let database = Database.database().reference()
 	
@@ -38,6 +43,40 @@ final class DatabaseManagerForAddFriendViewController {
 		print("--user: ", user, "location: ", location)
 		database.child("users").child(user).child("friends").child(location).updateChildValues(data)
 		
+	}
+	
+	public func deleteFriend(with friend: Friend, indexPath: IndexPath) {
+		/*self.database.ref.child("users/\(Auth.auth().currentUser!.uid)/events/\(String(describing: event.id))").removeValue() {_,_ in
+		 print("--LogicForDeletingTableViewCell about to be called")
+		 self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
+		 print("--at the end")
+		 }*/
+		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid) { id in
+			self.database.ref.child("users").child(Auth.auth().currentUser!.uid).child("friends").child(String(describing: friend.id)).setValue(nil) {
+				(error: Error?, ref: DatabaseReference) in
+				if let error = error {
+					print("**Data could not be saved: \(error).")
+				} else {
+					//print("--Trying to print friendList", friendList)
+					print("--indexPath of deleting cell: ", indexPath)
+					self.delegate?.logicForDeletingFriendTableViewCell(self, indexPath: indexPath)
+					//				print("--Just triend to call the function")
+					print("**Data saved successfully!")
+				}
+				
+			}
+			self.database.ref.child("users").child(id).child("friends").child(String(describing: Auth.auth().currentUser!.uid)).setValue(nil) {
+				(error: Error?, ref: DatabaseReference) in
+				if let error = error {
+					print("**Data could not be saved: \(error).")
+				} else {
+					//print("--Trying to print friendList", friendList)
+					//				print("--Just triend to call the function")
+					print("**Data saved successfully!")
+				}
+				
+			}
+		}
 	}
 	
 	func findUser(emailToFind: String, completionSuccess: @escaping (String) -> Void) {

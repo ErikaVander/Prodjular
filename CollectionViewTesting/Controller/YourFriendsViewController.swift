@@ -25,7 +25,8 @@ class YourFriendsViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.observeFriends()
+		self.observeAddedFriends()
+		self.observeChangedFriends()
 		
 		setHeaderContainerViewLook()
 		setFooterContainerViewLook()
@@ -39,7 +40,7 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.dataSource = self
 		friendsTableView.delegate = self
 		
-		DatabaseManagerForFriendsViewController.shared.delegate = self
+		DatabaseManagerForFriendViewController.shared.delegate = self
 		
 	}
 	
@@ -101,9 +102,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 		} else {
 			if friendList.isEmpty == false {
 				return friendList.count + 1
-				//print("--friendList.count: ", friendList.count)
 			} else {
-				//print("--friendList.count 2: ", friendList.count)
 				return 1
 			}
 		}
@@ -128,31 +127,35 @@ extension YourFriendsViewController: UITableViewDataSource {
 		} else {
 			if(indexPath.section == 0)
 			{
-				if( friendReqSent.isEmpty == true) {
+				if(self.friendsTableView.numberOfRows(inSection: 0) == 1) {
 					print("--here")
+					
+					cellTwo.setNeedsLayout()
+						
 					cellTwo.emptyLabel.text = "No pending requests"
+					cellTwo.emptyLabel.sizeToFit()
 					cellTwo.emptyLabel.translatesAutoresizingMaskIntoConstraints = false
 					
-					let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 45)
-					emptyLabelHeightConstraint.isActive = true
-					emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+					cellTwo.heightConstraint!.isActive = false
+					cellTwo.heightConstraintEmpty!.isActive = true
 					
-					let emptyLabelCenterXConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerXAnchor.constraint(equalTo: cellTwo.contentView.centerXAnchor)
-					emptyLabelCenterXConstraint.isActive = true
-					emptyLabelCenterXConstraint.identifier = "emptyLabelLeadingConstraint-centerX"
+					cellTwo.emptyLabelCenterXConstraint!.isActive = true
+					cellTwo.emptyLabelCenterYConstraint!.isActive = true
 					
-					let emptyLabelCenterYConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerYAnchor.constraint(equalTo: cellTwo.contentView.centerYAnchor)
-					emptyLabelCenterYConstraint.isActive = true
-					emptyLabelCenterYConstraint.identifier = "emptyLabelLeadingConstraint-centerY"
+					var emptyLabelWidth: NSLayoutConstraint
+					emptyLabelWidth = cellTwo.containerView.widthAnchor.constraint(equalTo: cellTwo.widthAnchor, multiplier: 1)
+					emptyLabelWidth.isActive = true
+					
+					cellTwo.layoutIfNeeded()
 					
 					return cellTwo
 				} else {
 					if(indexPath.item == friendReqSent.count) {
 						cellTwo.emptyLabel.text = ""
 						cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
-						let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 1)
-						emptyLabelHeightConstraint.isActive = true
-						emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+						
+						cellTwo.heightConstraintEmpty!.isActive = false
+						cellTwo.heightConstraint!.isActive = true
 						
 						return cellTwo
 					} else {
@@ -164,30 +167,31 @@ extension YourFriendsViewController: UITableViewDataSource {
 					}
 				}
 			} else if(indexPath.section == 1) {
-				if( friendList.isEmpty == true) {
+				if(self.friendsTableView.numberOfRows(inSection: 1) == 1) {
 					cellTwo.emptyLabel.text = "You have no friends"
+					cellTwo.emptyLabel.sizeToFit()
 					cellTwo.emptyLabel.translatesAutoresizingMaskIntoConstraints = false
 					
-					let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 45)
-					emptyLabelHeightConstraint.isActive = true
-					emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+					cellTwo.heightConstraint!.isActive = false
+					cellTwo.heightConstraintEmpty!.isActive = true
 					
-					let emptyLabelCenterXConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerXAnchor.constraint(equalTo: cellTwo.contentView.centerXAnchor)
-					emptyLabelCenterXConstraint.isActive = true
-					emptyLabelCenterXConstraint.identifier = "emptyLabelLeadingConstraint-centerX"
+					cellTwo.emptyLabelCenterXConstraint!.isActive = true
+					cellTwo.emptyLabelCenterYConstraint!.isActive = true
 					
-					let emptyLabelCenterYConstraint: NSLayoutConstraint = cellTwo.emptyLabel.centerYAnchor.constraint(equalTo: cellTwo.contentView.centerYAnchor)
-					emptyLabelCenterYConstraint.isActive = true
-					emptyLabelCenterYConstraint.identifier = "emptyLabelLeadingConstraint-centerY"
+					var emptyLabelWidth: NSLayoutConstraint
+					emptyLabelWidth = cellTwo.containerView.widthAnchor.constraint(equalTo: cellTwo.widthAnchor, multiplier: 1)
+					emptyLabelWidth.isActive = true
+					
+					cellTwo.layoutIfNeeded()
 
 					return cellTwo
 				} else {
 					if(indexPath.item == friendList.count) {
 						cellTwo.emptyLabel.text = ""
 						cellTwo.contentView.translatesAutoresizingMaskIntoConstraints = false
-						let emptyLabelHeightConstraint: NSLayoutConstraint = cellTwo.contentView.heightAnchor.constraint(equalToConstant: 1)
-						emptyLabelHeightConstraint.isActive = true
-						emptyLabelHeightConstraint.identifier = "emptyLabelHeightConstraint-Height"
+						
+						cellTwo.heightConstraintEmpty!.isActive = false
+						cellTwo.heightConstraint!.isActive = true
 						
 						return cellTwo
 					} else {
@@ -203,6 +207,15 @@ extension YourFriendsViewController: UITableViewDataSource {
 		}
 		return cellOne
 	}
+	
+	func setConstraintsForCell(indexPath: IndexPath) {
+		let cell = self.friendsTableView.cellForRow(at: indexPath) as! EmptyFriendsTableViewCell
+		if(indexPath.section == 0) {
+			cell.emptyLabel.text = "no pending requests"
+		} else {
+			cell.emptyLabel.text = "you have no friends"
+		}
+	}
 }
 	
 
@@ -214,13 +227,11 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 		
 	}
 	
-	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendsViewController, indexPath: IndexPath) {
+	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendViewController, indexPath: IndexPath) {
 		DispatchQueue.main.async {
+			friendList.remove(at: indexPath.item)
 			self.friendsTableView.deleteRows(at: [indexPath], with: .fade)
-			
-			if(self.friendsTableView.numberOfRows(inSection: 0) == 0) {
-				//self.noEventsScheduledLabel.text = "no events scheduled"
-			}
+			self.friendsTableView.reloadData()
 		}
 	}
 	
@@ -240,29 +251,31 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 				
 				print("--cell: ", cell?.friend ?? "did not find a friend")
 				
-				DatabaseManagerForFriendsViewController.shared.deleteFriend(with: friendReqSent[index!], indexPath: indexPath)
+				DatabaseManagerForFriendViewController.shared.deleteFriend(with: friendReqSent[index!], indexPath: indexPath)
 				friendReqSent.remove(at: index!)
+				
 			} else if(indexPath.section == 1) {
+				print("--number of rows in section before before: ", self.friendsTableView.numberOfRows(inSection: 1))
 				let cell = tableView.cellForRow(at: indexPath) as? FriendsTableViewTableViewCell
 				let index = friendList.firstIndex(of: cell!.friend)
 				
 				print("--cell: ", cell?.friend ?? "did not find a friend")
 				
-				DatabaseManagerForFriendsViewController.shared.deleteFriend(with: friendList[index!], indexPath: indexPath)
-				friendList.remove(at: index!)
+				DatabaseManagerForFriendViewController.shared.deleteFriend(with: friendList[index!], indexPath: indexPath)
+				print("--number of rows in section before after: ", self.friendsTableView.numberOfRows(inSection: 1))
+				
 			}
 		}
 	}
-	
 }
 
 //MARK: FirebaseRealtimeDatabase
 extension YourFriendsViewController {
 	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
-	func observeFriends() {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
+	func observeAddedFriends() {
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
 		
-		friendRef.observe(.value, with: { snapshot in
+		friendRef.observe(.childAdded, with: { snapshot in
 			
 			var tempFriendList = [Friend]()
 			var tempFriendReqSent = [Friend]()
@@ -294,6 +307,7 @@ extension YourFriendsViewController {
 			friendList = tempFriendList
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
+			
 			print("--friendList: ", friendList)
 			print("--friendReqReceived: ", friendReqReceived)
 			print("--friendReqSent: ", friendReqSent)
@@ -305,6 +319,53 @@ extension YourFriendsViewController {
 			}
 			self.friendsTableView.reloadData()
 		})
+	}
+	func observeChangedFriends() {
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
 		
+		friendRef.observe(.childChanged, with: { snapshot in
+			
+			var tempFriendList = [Friend]()
+			var tempFriendReqSent = [Friend]()
+			var tempFriendReqReceived = [Friend]()
+			
+			print("snapshot: ", snapshot)
+			
+			for child in snapshot.children {
+				if let childSnapshot = child as? DataSnapshot,
+				   let id = childSnapshot.key as? String,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let userName = dict["userName"] as? String,
+				   let email = dict["email"] as? String,
+				   let tagName = dict["tagName"] as? String,
+				   let status = dict["status"] as? String
+				{
+				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
+				print("--friend got from database: ", status)
+				if(status == "accepted") {
+					tempFriendList.append(friend)
+				} else if(status == "sent") {
+					tempFriendReqSent.append(friend)
+				} else if(status == "received") {
+					tempFriendReqReceived.append(friend)
+				}
+				}
+			}
+			
+			friendList = tempFriendList
+			friendReqReceived = tempFriendReqReceived
+			friendReqSent = tempFriendReqSent
+			
+			print("--friendList: ", friendList)
+			print("--friendReqReceived: ", friendReqReceived)
+			print("--friendReqSent: ", friendReqSent)
+			
+			if (friendReqReceived.count != 0) {
+				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
+			} else {
+				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
+			}
+			self.friendsTableView.reloadData()
+		})
 	}
 }

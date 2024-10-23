@@ -104,7 +104,7 @@ extension FriendRequestViewController: UITableViewDelegate, FriendReqTableViewCe
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			DatabaseManagerForFriendsViewController.shared.deleteFriend(with: friendList[indexPath.item], indexPath: indexPath)
+			DatabaseManagerForFriendViewController.shared.deleteFriend(with: friendList[indexPath.item], indexPath: indexPath)
 		}
 	}
 	

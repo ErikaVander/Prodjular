@@ -33,7 +33,6 @@
 		D64566682C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D64566662C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib */; };
 		D645666A2C6FCAD000A8AF7B /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64566692C6FCAD000A8AF7B /* Friend.swift */; };
 		D645666C2C6FCBFF00A8AF7B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D645666B2C6FCBFF00A8AF7B /* User.swift */; };
-		D645666E2C70034000A8AF7B /* DatabaseManagerForFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D645666D2C70034000A8AF7B /* DatabaseManagerForFriendsViewController.swift */; };
 		D668826D2B6E156B00DE1726 /* EventDurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668826C2B6E156B00DE1726 /* EventDurationHelper.swift */; };
 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
 		D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */; };
@@ -97,7 +96,6 @@
 		D64566662C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsTableViewTableViewCell.xib; sourceTree = "<group>"; };
 		D64566692C6FCAD000A8AF7B /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		D645666B2C6FCBFF00A8AF7B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		D645666D2C70034000A8AF7B /* DatabaseManagerForFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForFriendsViewController.swift; sourceTree = "<group>"; };
 		D668826C2B6E156B00DE1726 /* EventDurationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDurationHelper.swift; sourceTree = "<group>"; };
 		D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollectionViewTesting.entitlements; sourceTree = "<group>"; };
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 				D61F04C625D3891D00A2BC05 /* Assets.xcassets */,
 				D6BE7AB826C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift */,
 				D6E35C0A285242A000D8B327 /* customGesture.swift */,
-				D645666D2C70034000A8AF7B /* DatabaseManagerForFriendsViewController.swift */,
 				D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */,
 			);
 			path = OtherStuff;
@@ -425,7 +422,6 @@
 				D6301151267AA10800128ADA /* Event.swift in Sources */,
 				D668826D2B6E156B00DE1726 /* EventDurationHelper.swift in Sources */,
 				D6E35C0D285242AD00D8B327 /* EventDurationViewController.swift in Sources */,
-				D645666E2C70034000A8AF7B /* DatabaseManagerForFriendsViewController.swift in Sources */,
 				D6DB6643278F96970087550C /* CalendarViewController_Navigation.swift in Sources */,
 				D6DB664B278F97AB0087550C /* CalendarViewController_TableView.swift in Sources */,
 				D64566672C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift in Sources */,
