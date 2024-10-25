@@ -45,34 +45,33 @@ final class DatabaseManagerForFriendViewController {
 		
 	}
 	
-	public func deleteFriend(with friend: Friend, indexPath: IndexPath) {
-		/*self.database.ref.child("users/\(Auth.auth().currentUser!.uid)/events/\(String(describing: event.id))").removeValue() {_,_ in
-		 print("--LogicForDeletingTableViewCell about to be called")
-		 self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
-		 print("--at the end")
-		 }*/
-		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid) { id in
-			self.database.ref.child("users").child(Auth.auth().currentUser!.uid).child("friends").child(String(describing: friend.id)).setValue(nil) {
-				(error: Error?, ref: DatabaseReference) in
-				if let error = error {
-					print("**Data could not be saved: \(error).")
-				} else {
-					//print("--Trying to print friendList", friendList)
-					print("--indexPath of deleting cell: ", indexPath)
-					self.delegate?.logicForDeletingFriendTableViewCell(self, indexPath: indexPath)
-					//				print("--Just triend to call the function")
-					print("**Data saved successfully!")
-				}
-				
+	func deleteFriend(friend: Friend, completionSuccess: @escaping (String) -> Void) {
+		self.database.ref.child("users").child(Auth.auth().currentUser!.uid).child("friends").child(String(describing: friend.id)).setValue(nil) {
+			(error: Error?, ref: DatabaseReference) in
+			if let error = error {
+				print("**Data could not be saved: \(error).")
+				completionSuccess("fail")
+			} else {
+				//print("--Trying to print friendList", friendList)
+				//				print("--Just triend to call the function")
+				print("**Data saved successfully!")
+				completionSuccess("success")
 			}
+		}
+	}
+	
+	func deleteMyselfAsFriend(friend: Friend, completionSuccess: @escaping(String) -> Void) {
+		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid, function: "deleteFriend") { id in
 			self.database.ref.child("users").child(id).child("friends").child(String(describing: Auth.auth().currentUser!.uid)).setValue(nil) {
 				(error: Error?, ref: DatabaseReference) in
 				if let error = error {
 					print("**Data could not be saved: \(error).")
+					completionSuccess("fail")
 				} else {
 					//print("--Trying to print friendList", friendList)
 					//				print("--Just triend to call the function")
 					print("**Data saved successfully!")
+					completionSuccess("success")
 				}
 				
 			}
@@ -85,7 +84,7 @@ final class DatabaseManagerForFriendViewController {
 			return
 		}
 		
-		checkDuplicateFriend(emailToFind: emailToFind, idToUse: Auth.auth().currentUser!.uid) {double in
+		checkDuplicateFriend(emailToFind: emailToFind, idToUse: Auth.auth().currentUser!.uid, function: "findUser") {double in
 			if(double == "found") {
 				completionSuccess("double")
 				return
@@ -113,7 +112,7 @@ final class DatabaseManagerForFriendViewController {
 							print("emailToFind: ", Auth.auth().currentUser!.email!)
 							
 							print("-----id: ", id)
-							self.checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: id) { idFound in
+							self.checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: id, function: "findUser") { idFound in
 								print("--idFound: ", idFound)
 								self.updateFriend(with: myself, user: id, location: idFound)
 							}
@@ -145,7 +144,7 @@ final class DatabaseManagerForFriendViewController {
 		}
 	}
 	
-	func checkDuplicateFriend(emailToFind: String, idToUse: String, completionSuccess: @escaping (String) -> Void) {
+	func checkDuplicateFriend(emailToFind: String, idToUse: String, function: String, completionSuccess: @escaping (String) -> Void) {
 		let friendRef = Database.database().reference().child("users").child(idToUse).child("friends")
 		friendRef.queryOrdered(byChild: "email").queryEqual(toValue: emailToFind).observeSingleEvent(of: .value, with: { snapshot in
 			print("snapshot checkDuplicateFriend: ", snapshot)
@@ -157,8 +156,9 @@ final class DatabaseManagerForFriendViewController {
 				   let status = dict["status"] as? String,
 				   let email = dict["email"] as? String
 				{
-					print("--foundhere: ", email , " ", id, " ", status)
-//					if(emailToFind == email) {
+					if(function == "findUser") {
+						print("--foundhere: ", email , " ", id, " ", status)
+						//					if(emailToFind == email) {
 						if(childSnapshot.childrenCount > 0) {
 							if(status == "received" || status == "sent"){
 								found = id
@@ -168,10 +168,20 @@ final class DatabaseManagerForFriendViewController {
 						} else {
 							found = "notFound"
 						}
+						completionSuccess(found)
+						return
+						//					}
+					} else if(function == "deleteFriend") {
+						print("--foundhere: ", email , " ", id, " ", status)
+						if(childSnapshot.childrenCount > 0) {
+							found = id
+						} else {
+							print("--Was not able to find a user to delete.")
+						}
 //						print("--found: ", found)
 						completionSuccess(found)
 						return
-//					}
+					}
 				}
 			}
 			completionSuccess(found)
@@ -182,16 +192,44 @@ final class DatabaseManagerForFriendViewController {
 	func acceptFriendRequest(friend: Friend) {
 		let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted")
 		let friendAccepted = Friend(id: friend.id, userName: friend.userName, email: friend.email, tagName: "", status: "accepted")
-			
-//		checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: friend.id) { idFound in
+		
+		//		checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: friend.id) { idFound in
 		self.updateFriend(with: myself, user: friend.id, location: Auth.auth().currentUser!.uid)
-//		}
-//		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid) { idFound in
+		//		}
+		//		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid) { idFound in
 		self.updateFriend(with: friendAccepted, user: Auth.auth().currentUser!.uid, location: friend.id)
-//		}
+		//		}
 	}
 	
-	func sendFriendRequest(emailToFind: String, id: String) {
-		//newFriend(with: Friend(id: currentUser.userID, userName: currentUser.userName, email: currentUser.email, tagName: "", status: "not approved"), location: id)
+	func declineFriendRequest(friend: Friend) {
+		self.deleteFriend(friend: friend) { completed in
+			print("declining friend request failed on deleteFriend")
+		}
+		self.deleteMyselfAsFriend(friend: friend) { completed in
+			print("declining friend request failed on deleteMyselfAsFriend")
+		}
 	}
+	
+	public func deleteFriendFromCell(with friend: Friend, indexPath: IndexPath) {
+		/*self.database.ref.child("users/\(Auth.auth().currentUser!.uid)/events/\(String(describing: event.id))").removeValue() {_,_ in
+		 print("--LogicForDeletingTableViewCell about to be called")
+		 self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
+		 print("--at the end")
+		 }*/
+		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid, function: "deleteFriend") { id in
+			self.deleteFriend(friend: friend) { completed in
+				if(completed == "success") {
+					print("--indexPath of deleting cell: ", indexPath)
+					self.delegate?.logicForDeletingFriendTableViewCell(self, indexPath: indexPath)
+				}
+			}
+			self.deleteMyselfAsFriend(friend: friend) { completed in
+				print("--delete myself as friend failed")
+			}
+		}
+	}
+	
+//	func sendFriendRequest(emailToFind: String, id: String) {
+//		//newFriend(with: Friend(id: currentUser.userID, userName: currentUser.userName, email: currentUser.email, tagName: "", status: "not approved"), location: id)
+//	}
 }

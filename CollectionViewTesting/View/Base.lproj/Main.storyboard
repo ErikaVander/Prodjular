@@ -559,7 +559,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="top" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tqw-tv-tYA">
-                                <rect key="frame" x="59.666666666666657" y="99" width="295" height="561"/>
+                                <rect key="frame" x="59.666666666666657" y="99" width="295" height="522"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTM-Je-Ju9">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="30"/>
@@ -628,7 +628,7 @@
                                         </connections>
                                     </collectionView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmm-fi-Ijb">
-                                        <rect key="frame" x="0.0" y="230" width="295" height="331"/>
+                                        <rect key="frame" x="0.0" y="230" width="295" height="292"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
                                         <viewLayoutGuide key="contentLayoutGuide" id="uZg-QB-SQR"/>
@@ -688,7 +688,7 @@
                             <constraint firstItem="ioE-yX-3d7" firstAttribute="trailing" secondItem="tqw-tv-tYA" secondAttribute="trailing" identifier="CalendarViewYearLabel" id="eOH-UN-ezI"/>
                             <constraint firstItem="htq-Gi-RaB" firstAttribute="leading" secondItem="zmm-fi-Ijb" secondAttribute="leading" constant="19" identifier="CalendarViewTableView" id="fb8-l3-GYz"/>
                             <constraint firstItem="yxx-mZ-vGh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" identifier="CalendarViewSettingsButton" id="m0P-qm-DOc"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tqw-tv-tYA" secondAttribute="bottom" constant="76" identifier="CalendarViewStackView" id="u7k-jz-dzh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tqw-tv-tYA" secondAttribute="bottom" constant="115" identifier="CalendarViewStackView" id="u7k-jz-dzh"/>
                             <constraint firstItem="tqw-tv-tYA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="79" identifier="CalendarViewStackView" id="uck-5I-Nm1"/>
                             <constraint firstItem="htq-Gi-RaB" firstAttribute="top" secondItem="zmm-fi-Ijb" secondAttribute="top" constant="5" identifier="CalendarViewTableView" id="vv3-9S-pOJ"/>
                             <constraint firstItem="b4Y-HG-Uq9" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" identifier="CalendarViewBannerView" id="vvD-PM-dTL"/>
@@ -981,22 +981,22 @@
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="person.fill.badge.plus" catalog="system" width="128" height="126"/>
         <systemColor name="placeholderTextColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

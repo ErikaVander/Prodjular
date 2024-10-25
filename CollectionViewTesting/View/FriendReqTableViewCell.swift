@@ -36,6 +36,13 @@ class FriendReqTableViewCell: UITableViewCell {
 		self.delegate!.deleteRow(cell: self, friend: self.friend)
 	}
 	
+	@IBAction func declineFriend(_ sender: Any) {
+		print("--declined friend")
+		DatabaseManagerForFriendViewController.shared.declineFriendRequest(friend: self.friend)
+		self.delegate!.deleteRow(cell: self, friend: self.friend)
+	}
+	
+	
 	func setFriend(friend: Friend) {
 		self.friend = friend
 		print("--trying to set friend: ", self.friend)

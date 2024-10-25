@@ -22,6 +22,13 @@ class YourFriendsViewController: UIViewController {
 	@IBOutlet weak var addFriends: UIButton!
 	@IBOutlet weak var backButton: NSLayoutConstraint!
 	
+	private let refreshControl = UIRefreshControl()
+	
+	deinit {
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
+		friendRef.removeAllObservers()
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -42,6 +49,9 @@ class YourFriendsViewController: UIViewController {
 		
 		DatabaseManagerForFriendViewController.shared.delegate = self
 		
+		friendsTableView.translatesAutoresizingMaskIntoConstraints = false
+		setupPullToRefresh()
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +66,10 @@ class YourFriendsViewController: UIViewController {
 	@IBAction func backToSettings(_ sender: Any) {
 		self.dismiss(animated: true, completion: nil)
 	}
+	
+//	func setupPullToRefresh() {
+//		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+//	}
 	
 	func setHeaderContainerViewLook() {
 		headerContainerView.layer.shadowOffset = .zero
@@ -162,7 +176,6 @@ extension YourFriendsViewController: UITableViewDataSource {
 						print("--indexPath.item: ", indexPath.item, friendReqSent.count)
 						cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
 						cellOne.emailLabel.text = friendReqSent[indexPath.item].email
-						cellOne.delegate = self
 						cellOne.setFriend(friend: friendReqSent[indexPath.item])
 					}
 				}
@@ -198,7 +211,6 @@ extension YourFriendsViewController: UITableViewDataSource {
 						print("--indexPath.item: ", indexPath.item, friendList.count)
 						cellOne.nameLabel.text = friendList[indexPath.item].userName
 						cellOne.emailLabel.text = friendList[indexPath.item].email
-						cellOne.delegate = self
 						cellOne.setFriend(friend: friendList[indexPath.item])
 					}
 				}
@@ -221,14 +233,38 @@ extension YourFriendsViewController: UITableViewDataSource {
 
 
 //MARK: TableViewDelegate
-extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegateForFriendsViewController, FriendsTableViewTableViewCellDelegate {
+extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegateForFriendsViewController {
 	
-	func deleteRow(cell: UITableViewCell, friend: Friend) {
+	private func setupPullToRefresh() {
+		// Configure refresh control
+		let attributes: [NSAttributedString.Key: Any] = [
+			.foregroundColor: UIColor.placeholderText,
+			.font: UIFont.systemFont(ofSize: 12)
+		]
 		
+		refreshControl.attributedTitle = NSAttributedString(string: "")
+		let attributedText = NSAttributedString(
+			string: "refreshing",
+			attributes: attributes
+		)
+		
+		refreshControl.attributedTitle = attributedText
+		refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+		
+		// Add refresh control to table view
+		friendsTableView.refreshControl = refreshControl
+	}
+	
+	@objc private func refreshData() {
+		refreshControl.beginRefreshing()
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+			self?.fetchData()
+		}
 	}
 	
 	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendViewController, indexPath: IndexPath) {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else {return}
 			friendList.remove(at: indexPath.item)
 			self.friendsTableView.deleteRows(at: [indexPath], with: .fade)
 			self.friendsTableView.reloadData()
@@ -251,7 +287,7 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 				
 				print("--cell: ", cell?.friend ?? "did not find a friend")
 				
-				DatabaseManagerForFriendViewController.shared.deleteFriend(with: friendReqSent[index!], indexPath: indexPath)
+				DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendReqSent[index!], indexPath: indexPath)
 				friendReqSent.remove(at: index!)
 				
 			} else if(indexPath.section == 1) {
@@ -261,7 +297,7 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 				
 				print("--cell: ", cell?.friend ?? "did not find a friend")
 				
-				DatabaseManagerForFriendViewController.shared.deleteFriend(with: friendList[index!], indexPath: indexPath)
+				DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendList[index!], indexPath: indexPath)
 				print("--number of rows in section before after: ", self.friendsTableView.numberOfRows(inSection: 1))
 				
 			}
@@ -275,7 +311,8 @@ extension YourFriendsViewController {
 	func observeAddedFriends() {
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
 		
-		friendRef.observe(.childAdded, with: { snapshot in
+		friendRef.observe(.childAdded, with: { [weak self] snapshot in
+			guard let self = self else {return}
 			
 			var tempFriendList = [Friend]()
 			var tempFriendReqSent = [Friend]()
@@ -323,7 +360,8 @@ extension YourFriendsViewController {
 	func observeChangedFriends() {
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
 		
-		friendRef.observe(.childChanged, with: { snapshot in
+		friendRef.observe(.childChanged, with: { [weak self] snapshot in
+			guard let self = self else {return}
 			
 			var tempFriendList = [Friend]()
 			var tempFriendReqSent = [Friend]()
@@ -367,5 +405,59 @@ extension YourFriendsViewController {
 			}
 			self.friendsTableView.reloadData()
 		})
+	}
+	func fetchData() {
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
+		
+		friendRef.observeSingleEvent(of: .value, with: { [weak self] snapshot in
+			guard let self = self else {return}
+			
+			var tempFriendList = [Friend]()
+			var tempFriendReqSent = [Friend]()
+			var tempFriendReqReceived = [Friend]()
+			
+			print("snapshot: ", snapshot)
+			
+			for child in snapshot.children {
+				if let childSnapshot = child as? DataSnapshot,
+				   let id = childSnapshot.key as? String,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let userName = dict["userName"] as? String,
+				   let email = dict["email"] as? String,
+				   let tagName = dict["tagName"] as? String,
+				   let status = dict["status"] as? String
+				{
+				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
+				print("--friend got from database: ", status)
+				if(status == "accepted") {
+					tempFriendList.append(friend)
+				} else if(status == "sent") {
+					tempFriendReqSent.append(friend)
+				} else if(status == "received") {
+					tempFriendReqReceived.append(friend)
+				}
+				}
+			}
+			
+			friendList = tempFriendList
+			friendReqReceived = tempFriendReqReceived
+			friendReqSent = tempFriendReqSent
+			
+			print("--friendList: ", friendList)
+			print("--friendReqReceived: ", friendReqReceived)
+			print("--friendReqSent: ", friendReqSent)
+			
+			if (friendReqReceived.count != 0) {
+				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
+			} else {
+				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
+			}
+			self.friendsTableView.reloadData()
+		})
+		
+		DispatchQueue.main.async { [weak self] in
+			self?.refreshControl.endRefreshing()
+			self?.friendsTableView.reloadData()
+		}
 	}
 }

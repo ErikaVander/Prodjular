@@ -18,6 +18,11 @@ class FriendRequestViewController: UIViewController {
 	
 	var initialLoadingOfData = true
 	
+	deinit {
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
+		friendRef.removeAllObservers()
+	}
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -104,7 +109,7 @@ extension FriendRequestViewController: UITableViewDelegate, FriendReqTableViewCe
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			DatabaseManagerForFriendViewController.shared.deleteFriend(with: friendList[indexPath.item], indexPath: indexPath)
+			DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendList[indexPath.item], indexPath: indexPath)
 		}
 	}
 	

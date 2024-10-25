@@ -6,13 +6,9 @@
 //
 
 import UIKit
-protocol FriendsTableViewTableViewCellDelegate {
-	func deleteRow(cell: UITableViewCell, friend: Friend)
-}
 
 class FriendsTableViewTableViewCell: UITableViewCell {
 	static let shared = FriendsTableViewTableViewCell()
-	var delegate: FriendsTableViewTableViewCellDelegate?
 	
 	@IBOutlet weak var emailLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!

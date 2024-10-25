@@ -37,7 +37,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" text="email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pnf-e4-GdX">
-                        <rect key="frame" x="83" y="37" width="35" height="15"/>
+                        <rect key="frame" x="83.333333333333329" y="37.333333333333336" width="35" height="14.333333333333336"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" identifier="FriendReqCellEmail_Width" id="JDE-dl-9a5"/>
                             <constraint firstAttribute="height" constant="14.333333333333336" identifier="FriendReqCellEmail_Height" id="mnB-iE-qYF"/>
@@ -62,6 +62,9 @@
                         <color key="tintColor" name="MyRed"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="filled" title="Decline"/>
+                        <connections>
+                            <action selector="declineFriend:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="WZl-c2-8Gi"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
