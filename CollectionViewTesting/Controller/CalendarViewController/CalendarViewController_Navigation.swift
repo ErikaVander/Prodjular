@@ -30,11 +30,11 @@ extension CalendarViewController {
 		present(vc!, animated: true, completion: nil)
 	}
 	
-	func showEventDurationViewController() {
-		let vc = storyboard?.instantiateViewController(identifier: "EventDurationViewController")
-		
-		vc!.modalPresentationStyle = .fullScreen
-		
-		present(vc!, animated: true, completion: nil)
-	}
+//	func showEventDurationViewController() {
+//		let vc = storyboard?.instantiateViewController(identifier: "EventDurationViewController")
+//		
+//		vc!.modalPresentationStyle = .fullScreen
+//		
+//		present(vc!, animated: true, completion: nil)
+//	}
 }

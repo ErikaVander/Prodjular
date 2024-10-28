@@ -34,9 +34,9 @@ class CalendarViewController: UIViewController {
 			UIAction(title: "add Event", image: nil, handler: { (action) in
 				self.showEventViewController()
 			}),
-			UIAction(title: "add Project", image: nil, handler: { (action) in
-				self.showEventDurationViewController()
-			}),
+//			UIAction(title: "add Project", image: nil, handler: { (action) in
+//				self.showEventDurationViewController()
+//			}),
 			UIAction(title: "add Prep to existing Project", image: nil, handler: { (action) in
 				alertUserAndGoToRootController(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
 			})
