@@ -36,4 +36,5 @@ final class DatabaseManagerForSignUpandLogin {
 			print("**error: ", err)
 		})
 	}
+	
 }

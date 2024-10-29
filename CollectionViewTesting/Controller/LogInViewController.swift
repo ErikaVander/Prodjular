@@ -14,7 +14,6 @@ class LogInViewController: UIViewController
 	@IBOutlet weak var Email: UITextField!
 	@IBOutlet weak var Password: UITextField!
 	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -88,7 +87,7 @@ extension LogInViewController {
 	func showSignUp() {
 		let vc = storyboard?.instantiateViewController(identifier: "SignInViewController")
 		
-		vc!.modalPresentationStyle = .popover
+		vc!.modalPresentationStyle = .fullScreen
 		
 		present(vc!, animated: true, completion: nil)
 	}

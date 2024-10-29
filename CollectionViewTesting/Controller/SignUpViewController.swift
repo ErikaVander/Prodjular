@@ -15,23 +15,21 @@ class SignUpViewController: UIViewController
 	@IBOutlet weak var userNameTextfieldSignUp: UITextField!
 	@IBOutlet weak var Verified: UIButton!
 	
+	@IBAction func login(_ sender: Any) {
+		showLogin()
+	}
+	
 	override func viewDidLoad() {
 		emailTextFieldSignUp.delegate = self
 		passwordTextfieldSignUp.delegate = self
 		userNameTextfieldSignUp.delegate = self
 		
 		super .viewDidLoad()
-		setProfilePicImage()
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(true)
 		signUp()
-	}
-	
-	func setProfilePicImage() {
-		//profilePicture.layer.cornerRadius = 10
-		//profilePicture.backgroundColor = UIColor.white
 	}
 }
 
@@ -87,7 +85,12 @@ extension SignUpViewController {
 				DatabaseManagerForCollectionViewController.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? ""))
 				currentUser = ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "")
 				
-				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+//				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+				let vc = self.storyboard?.instantiateViewController(identifier: "UploadPhotoViewController")
+				
+				vc!.modalPresentationStyle = .fullScreen
+				
+				self.present(vc!, animated: true, completion: nil)
 			} else {
 				alertUserAndGoToRootController(view: self, title: "Not yet verified.", content: "Please verify your account and try again.", dismissView: true)
 			}
@@ -107,6 +110,13 @@ extension SignUpViewController: UITextFieldDelegate {
 			signUp()
 		}
 		return true
+	}
+	func showLogin() {
+		let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
+		
+		vc!.modalPresentationStyle = .fullScreen
+		
+		present(vc!, animated: true, completion: nil)
 	}
 }
 
