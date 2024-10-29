@@ -13,5 +13,6 @@ target 'CollectionViewTesting' do
 	pod 'Firebase/Messaging'
 	pod 'Firebase/Database'
 	pod 'Google-Mobile-Ads-SDK'
+	pod 'Firebase/Storage'
 
 end
