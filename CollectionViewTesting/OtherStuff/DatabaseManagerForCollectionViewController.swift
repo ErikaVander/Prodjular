@@ -26,13 +26,14 @@ final class DatabaseManagerForCollectionViewController {
 		print("**tryingto create a new user: ", user.userID)
 		database.child("userList").child(Auth.auth().currentUser!.uid).setValue([
 			"email": user.email,
-			"userName": user.userName
+			"userName": user.userName,
+			"profilePhotoURL": user.profilePhotoURL
 			//"userID": Auth.auth().currentUser!.uid
 		])
 	}
 	
 	func findUser(emailToFind: String, completionSuccess: @escaping (ProjdularUser) -> Void) {
-		var user = ProjdularUser(email: "", userID: "", userName: "")
+		var user = ProjdularUser(email: "", userID: "", userName: "", profilePhotoURL: "")
 		let friendRef = Database.database().reference().child("userList")
 		
 		friendRef.queryOrdered(byChild: "email").observeSingleEvent(of: .value, with: { snapshot in
@@ -42,10 +43,11 @@ final class DatabaseManagerForCollectionViewController {
 				   let id = childSnapshot.key as? String,
 				   let dict = childSnapshot.value as? [String: Any],
 				   let emailFound = dict["email"] as? String,
-				   let userName = dict["userName"] as? String
+				   let userName = dict["userName"] as? String,
+				   let photoURL = dict["profilePhotoURL"] as? String
 				{
 					if(emailToFind == emailFound) {
-						user = ProjdularUser(email: emailFound, userID: id, userName: userName)
+						user = ProjdularUser(email: emailFound, userID: id, userName: userName, profilePhotoURL: photoURL)
 //						print("--user1: ", user)
 						completionSuccess(user)
 					}

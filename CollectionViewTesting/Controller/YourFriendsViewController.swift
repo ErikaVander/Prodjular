@@ -327,9 +327,10 @@ extension YourFriendsViewController {
 				   let userName = dict["userName"] as? String,
 				   let email = dict["email"] as? String,
 				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String
+				   let status = dict["status"] as? String,
+				   let photoURL = dict["profilePhotoURL"] as? String
 				{
-					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
+					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
 					print("--friend got from database: ", status)
 					if(status == "accepted") {
 						tempFriendList.append(friend)
@@ -376,9 +377,10 @@ extension YourFriendsViewController {
 				   let userName = dict["userName"] as? String,
 				   let email = dict["email"] as? String,
 				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String
+				   let status = dict["status"] as? String,
+				   let photoURL = dict["profilePhotoURL"] as? String
 				{
-				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
+				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
 				print("--friend got from database: ", status)
 				if(status == "accepted") {
 					tempFriendList.append(friend)
@@ -425,9 +427,10 @@ extension YourFriendsViewController {
 				   let userName = dict["userName"] as? String,
 				   let email = dict["email"] as? String,
 				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String
+				   let status = dict["status"] as? String,
+				   let photoURL = dict["profilePhotoURL"] as? String
 				{
-				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
+				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
 				print("--friend got from database: ", status)
 				if(status == "accepted") {
 					tempFriendList.append(friend)

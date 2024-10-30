@@ -26,7 +26,9 @@ final class DatabaseManagerForFriendViewController {
 			"userName": friend.userName,
 			"email": friend.email,
 			"tagName": friend.tagName,
-			"status": friend.status
+			"status": friend.status,
+			"profilePhotoURL": friend.profilePhotoURL,
+//			"ProfilePhotoLastUpdated": friend.ProfilePhotoLastUpdated
 		])
 		//friendList.append(friend)
 //		print("--Trying to print friendList from the create function", friendList)
@@ -39,6 +41,8 @@ final class DatabaseManagerForFriendViewController {
 			"email": friend.email,
 			"tagName": friend.tagName,
 			"status": friend.status,
+			"profilePhotoURL": friend.profilePhotoURL,
+//			"ProfilePhotoLastUpdated": friend.profilePhotoURL
 		]
 		print("--user: ", user, "location: ", location)
 		database.child("users").child(user).child("friends").child(location).updateChildValues(data)
@@ -102,12 +106,13 @@ final class DatabaseManagerForFriendViewController {
 					   let id = childSnapshot.key as? String,
 					   let dict = childSnapshot.value as? [String: Any],
 					   let emailFound = dict["email"] as? String,
-					   let userName = dict["userName"] as? String
+					   let userName = dict["userName"] as? String,
+					   let photoURL = dict["profilePhotoURL"] as? String
 					{
 //					if(emailFound == emailToFind) {
 						if(double != "found" && double != "notFound") {
-							let friend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "accepted")
-							let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted")
+							let friend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "accepted", profilePhotoURL: photoURL)
+							let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted", profilePhotoURL: currentUser!.profilePhotoURL)
 							self.updateFriend(with: friend, user: Auth.auth().currentUser!.uid, location: double)
 							print("emailToFind: ", Auth.auth().currentUser!.email!)
 							
@@ -118,8 +123,8 @@ final class DatabaseManagerForFriendViewController {
 							}
 //							print("--Found a user: ", friend)
 						} else {
-							let myfriend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "sent")
-							let friend = Friend(id: currentUser!.userID, userName: currentUser!.userName, email: currentUser!.email, tagName: "", status: "received")
+							let myfriend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "sent", profilePhotoURL: photoURL)
+							let friend = Friend(id: currentUser!.userID, userName: currentUser!.userName, email: currentUser!.email, tagName: "", status: "received", profilePhotoURL: currentUser!.profilePhotoURL)
 							//print("--Found a user: ", friend)
 							self.newFriend(with: myfriend, location: Auth.auth().currentUser!.uid)
 							self.newFriend(with: friend, location: id)
@@ -154,7 +159,8 @@ final class DatabaseManagerForFriendViewController {
 				   let id = childSnapshot.key as? String,
 				   let dict = childSnapshot.value as? [String: Any],
 				   let status = dict["status"] as? String,
-				   let email = dict["email"] as? String
+				   let email = dict["email"] as? String,
+				   let photoURL = dict["profilePhotoURL"] as? String
 				{
 					if(function == "findUser") {
 						print("--foundhere: ", email , " ", id, " ", status)
@@ -190,8 +196,8 @@ final class DatabaseManagerForFriendViewController {
 	}
 	
 	func acceptFriendRequest(friend: Friend) {
-		let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted")
-		let friendAccepted = Friend(id: friend.id, userName: friend.userName, email: friend.email, tagName: "", status: "accepted")
+		let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted", profilePhotoURL: currentUser!.profilePhotoURL)
+		let friendAccepted = Friend(id: friend.id, userName: friend.userName, email: friend.email, tagName: "", status: "accepted", profilePhotoURL: friend.profilePhotoURL)
 		
 		//		checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: friend.id) { idFound in
 		self.updateFriend(with: myself, user: friend.id, location: Auth.auth().currentUser!.uid)

@@ -14,7 +14,7 @@ class AccountInfoViewController: UIViewController {
 	@IBOutlet weak var headerContainerView: UIView!
 	@IBOutlet weak var backButton: UIButton!
 	@IBOutlet weak var pageTitle: UILabel!
-	@IBOutlet weak var UserPhoto: UIImageView!
+	@IBOutlet weak var profileImage: UIImageView!
 	@IBOutlet weak var UserEmail: UILabel!
 	
 	override func viewDidLoad() {
@@ -25,6 +25,16 @@ class AccountInfoViewController: UIViewController {
 		super.viewWillAppear(true)
 		setUserEmail()
 		setHeaderContainerViewLook()
+		setProfileImageConstraints()
+		
+		DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: currentUser!.userID) { result in
+			switch result {
+			case .failure(let error):
+				print("--error: ", error)
+			case .success(let image):
+				self.profileImage.image = image
+			}
+		}
 	}
 	
 	func setHeaderContainerViewLook() {
@@ -37,6 +47,12 @@ class AccountInfoViewController: UIViewController {
 		headerContainerView.layer.shouldRasterize = true
 		headerContainerView.layer.rasterizationScale = UIScreen.main.scale
 	}
+	
+	private func setProfileImageConstraints() {
+		profileImage.contentMode = .scaleAspectFit
+		profileImage.backgroundColor = .lightGray
+		profileImage.layer.cornerRadius = profileImage.frame.width/2
+	}
 }
 
 //MARK: EditAccount or Logout
@@ -46,7 +62,7 @@ extension AccountInfoViewController {
 	}
 	
 	@IBAction func changePhoto(_ sender: Any) {
-		
+		presentImagePicker()
 	}
 	
 	@IBAction func logout(_ sender: Any) {
@@ -59,10 +75,31 @@ extension AccountInfoViewController {
 			alertUserOfError(title: "Error", content: error.localizedDescription, goAway: false)
 		}
 	}
+	private func presentImagePicker() {
+		let imagePicker = UIImagePickerController()
+		imagePicker.delegate = self
+		imagePicker.sourceType = .photoLibrary
+		imagePicker.allowsEditing = true
+		present(imagePicker, animated: true, completion: nil)
+	}
 }
 
 //MARK: Navigation
 extension AccountInfoViewController {
+	func updateProfilePhoto(with image: UIImage) {
+		guard let userID = Auth.auth().currentUser?.uid else { return }
+		DatabaseManagerForSignUpandLogin.shared.uploadProfilePhoto(image: image, for: userID) { [weak self] result in
+			switch result {
+			case .success(let url):
+				print("Successfully uploaded photo: \(url)")
+				self?.profileImage.image = image
+			case .failure(let error):
+				print("Error uploading photo: \(error)")
+				// Show error to user
+			}
+		}
+	}
+	
 	///Goes back to the settings page
 	@IBAction func backToSettings(_ sender: Any) {
 		self.dismiss(animated: true, completion: nil)
@@ -82,5 +119,26 @@ extension AccountInfoViewController {
 			}
 		}))
 		present(alert, animated: true, completion: nil)
+	}
+}
+
+//MARK: UIImagePickerDelegate
+extension AccountInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	func imagePickerController(_ _picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		if let selectedProfileImage = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+			//			self.selectedProfileImage = selectedProfileImage
+			print("--I'm here")
+			profileImage.image = selectedProfileImage
+			updateProfilePhoto(with: selectedProfileImage)
+			dismiss(animated: true, completion: nil)
+			return
+		}
+		
+		dismiss(animated: true, completion: nil)
+		
+	}
+	
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		dismiss(animated: true, completion: nil)
 	}
 }

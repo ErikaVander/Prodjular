@@ -20,7 +20,7 @@ class FriendReqTableViewCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel!
 	
 	var indexPath: IndexPath?
-	var friend = Friend(id: "nil", userName: "nil", email: "nil", tagName: "nil", status: "nil")
+	var friend = Friend(id: "nil", userName: "nil", email: "nil", tagName: "nil", status: "nil", profilePhotoURL: "nil")
 	
 	override func awakeFromNib() {
         super.awakeFromNib()

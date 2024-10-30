@@ -133,10 +133,12 @@ extension FriendRequestViewController {
 				   let userName = dict["userName"] as? String,
 				   let email = dict["email"] as? String,
 				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String
+				   let status = dict["status"] as? String,
+				   let photoURL = dict["profilePhotoURL"] as? String
+//				   let ProfilePhotoLastUpdated = dict["ProfilePhotoLastUpdated"] as? String
 				{
 					print("--observeFriends: ", snapshot)
-					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status)
+				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
 					if(status == "received") {
 						tempFriendReqReceived.append(friend)
 					}

@@ -18,4 +18,6 @@ struct Friend : Equatable {
 	let email: String
 	var tagName: String?
 	var status: String
+	var profilePhotoURL: String
+//	var ProfilePhotoLastUpdated: String
 }

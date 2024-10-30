@@ -99,10 +99,10 @@
                     </view>
                     <connections>
                         <outlet property="UserEmail" destination="Gx1-KV-DMz" id="Cj8-kg-6gh"/>
-                        <outlet property="UserPhoto" destination="hKC-Ql-zKU" id="Mv7-uN-LEv"/>
                         <outlet property="backButton" destination="PWn-ex-luV" id="sIJ-fm-WaS"/>
                         <outlet property="headerContainerView" destination="2Mv-PC-ITF" id="J9g-O3-dOH"/>
                         <outlet property="pageTitle" destination="nwY-oP-p2E" id="rom-FP-wzm"/>
+                        <outlet property="profileImage" destination="hKC-Ql-zKU" id="Mv7-uN-LEv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BJj-KY-247" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -542,6 +542,9 @@
                                 <rect key="frame" x="143.33333333333334" y="352" width="127.66666666666666" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Upload Photo"/>
+                                <connections>
+                                    <action selector="uploadPhoto:" destination="PUM-yi-s73" eventType="touchUpInside" id="wsQ-GZ-2o8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9an-ko-56Y">
                                 <rect key="frame" x="15" y="20" width="77.333333333333329" height="35"/>
@@ -563,6 +566,9 @@
                             <constraint firstItem="Zjg-Ay-QBt" firstAttribute="top" secondItem="wth-r9-7uC" secondAttribute="top" constant="165.00000000000011" id="suc-2n-PN3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="profileImage" destination="Zjg-Ay-QBt" id="Ger-qy-aX5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GcN-Zf-hIZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -841,7 +847,7 @@
                                         </constraints>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cjW-RM-HuV">
-                                        <rect key="frame" x="119.33333333333333" y="0.0" width="0.0" height="50"/>
+                                        <rect key="frame" x="118.66666666666667" y="0.0" width="0.0" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>

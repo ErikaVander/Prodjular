@@ -13,4 +13,5 @@ struct ProjdularUser : Equatable {
 	let email: String
 	let userID: String
 	let userName: String
+	var profilePhotoURL: String
 }
