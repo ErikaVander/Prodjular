@@ -409,7 +409,7 @@ extension YourFriendsViewController {
 		})
 	}
 	func fetchData() {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
 		
 		friendRef.observeSingleEvent(of: .value, with: { [weak self] snapshot in
 			guard let self = self else {return}

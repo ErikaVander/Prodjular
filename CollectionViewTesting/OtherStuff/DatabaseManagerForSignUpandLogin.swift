@@ -96,9 +96,8 @@ final class DatabaseManagerForSignUpandLogin {
 	// Function to load profile photo
 	func loadProfilePhoto(for userID: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
 		// 1. Get URL from database
-		database.child("users").child(userID).child("profilePhotoURL").observeSingleEvent(of: .value) { snapshot in
-			guard let urlString = snapshot.value as? String,
-				  let url = URL(string: urlString) else {
+		database.child("userList").child(userID).child("profilePhotoURL").observeSingleEvent(of: .value) { snapshot in
+			guard let urlString = snapshot.value as? String, let url = URL(string: urlString) else {
 				completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
 				return
 			}
