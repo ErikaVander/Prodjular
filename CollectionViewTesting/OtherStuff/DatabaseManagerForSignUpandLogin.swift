@@ -31,7 +31,6 @@ final class DatabaseManagerForSignUpandLogin {
 					{
 						if(emailToFind == emailFound) {
 							user = ProjdularUser(email: emailFound, userID: id, userName: userName, profilePhotoURL: photoURL)
-							//print("--user1: ", user)
 							completionSuccess(user)
 						}
 					}

@@ -102,9 +102,7 @@ class CalendarViewController: UIViewController {
 		fillMonth(parDate: selectedDate)
 		selectCellAfterScroll()
 		
-		Database.database().reference().child("userList").observe( .value) { snapshot in
-			print("--snapshot all: ", snapshot)
-		}
+		loadData()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -114,11 +112,28 @@ class CalendarViewController: UIViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		
 		tableView.reloadData()
-
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+	}
+	
+	func loadData() {
+		DatabaseManagerForFriendViewController.shared.fetchFriendsData { string in }
+		DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: Auth.auth().currentUser!.uid) { result in
+			switch result {
+			case .failure(let error):
+				print("**error: ", error)
+			case .success(let image):
+				currentUserProfilePhoto = image
+			}
+		}
+	}
+}
+
+extension CalendarViewController {
+	func testDatabase() {
+		
 	}
 }
 

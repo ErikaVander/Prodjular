@@ -70,15 +70,13 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 		//This variable makes it so that infinite scroll actually works. It keeps track of which cell is actually touching the midpoint in EventDurationTableViewContainerCollectionView
 //		let midIndexPath = EventDurationTableViewContainerCollectionView.indexPathForItem(at: CGPoint(x: midX, y: midY))
 		let midIndexPath2 = EventDurationTableViewContainerCollectionView.indexPathsForVisibleItems
-		
-		print(midIndexPath2)
+
 		let midIndexPath = midIndexPath2.last
 		//If the index that is at the end of the array midIndexPath2 is [0, 2], then it will scroll to the right, otherwise it will scroll to the left.
 		if(midIndexPath == IndexPath.init(item: 2, section: 0)) {
 			//plus a week on selected date
 			selectedDate = plusWeek(date: selectedDate)
 			fillWeek(parDate: selectedDate)
-			print(numWeek)
 			reloadData()
 			//Change month string to match current viewed month
 			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
@@ -91,7 +89,6 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 			//minus a week on selected date
 			selectedDate = minusWeek(date: selectedDate)
 			fillWeek(parDate: selectedDate)
-			print(numWeek)
 			reloadData()
 			//Change month string to match current viewed month
 			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))

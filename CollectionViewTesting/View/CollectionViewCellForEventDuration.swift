@@ -27,8 +27,6 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		print("_-----------Reloaded---------------_")
-		
 		eventDurationTableView.register(UINib(nibName: "EventDurationTableViewCell", bundle: nil), forCellReuseIdentifier: "eventDurationTableViewCell")
 		
 		dayOfTheWeekCollectionView.register(UINib(nibName: "weekNumberForEventDuration", bundle: nil), forCellWithReuseIdentifier: "weekNumberForEventDuration")
@@ -105,9 +103,6 @@ class CollectionViewCellForEventDuration: UICollectionViewCell {
 					let locationOfTouchY = sender.initialTouchPoint.y
 					let howManyY : CGFloat = locationOfTouchY - locationOfTouchY.truncatingRemainder(dividingBy: CGFloat(eventDurationTableViewCellHeight) / 4.0)
 					let yCorrection = 0.5//(1 + (Int(locationOfTouchY) / tableViewCellHeight))
-					print(eventDurationTableView.rowHeight)
-					print(eventDurationTableViewCellHeight)
-					print(eventDurationTableViewCellHeight*24)
 					
 					if howManyH <= 0 {
 						howManyH = 1
@@ -172,7 +167,6 @@ extension CollectionViewCellForEventDuration: UITableViewDelegate, UITableViewDa
 //		if(scrollPosition.y.truncatingRemainder(dividingBy: eventDurationTableView.frame.height+1) != 0) {
 //			eventDurationTableView.scrollToNearestSelectedRow(at: .top, animated: true)
 //		}
-		print(scrollPosition.y)
 	}
 	
 	func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {

@@ -44,7 +44,7 @@ extension SignUpViewController {
 			!email.isEmpty,
 			!userName.isEmpty
 		else {
-			print("FailedLogin")
+			print("**FailedLogin")
 			return
 		}
 		

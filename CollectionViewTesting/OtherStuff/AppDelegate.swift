@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 				print("**FCM registration token: \(token)")
 			}
 		}
-
+		
         return true
     }
 
@@ -90,7 +90,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 		let userInfo = notification.request.content.userInfo
 		
 		// Print full message.
-		print(userInfo)
+		print("**", userInfo)
 		
 		// Change this to your preferred presentation option
 		completionHandler([[.alert, .sound]])
@@ -102,7 +102,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 		let userInfo = response.notification.request.content.userInfo
 		
 		// Print full message.
-		print(userInfo)
+		print("**", userInfo)
 		
 		completionHandler()
 	}

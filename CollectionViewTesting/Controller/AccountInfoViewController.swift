@@ -26,15 +26,7 @@ class AccountInfoViewController: UIViewController {
 		setUserEmail()
 		setHeaderContainerViewLook()
 		setProfileImageConstraints()
-		
-		DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: currentUser!.userID) { result in
-			switch result {
-			case .failure(let error):
-				print("--error: ", error)
-			case .success(let image):
-				self.profileImage.image = image
-			}
-		}
+		profileImage.image = currentUserProfilePhoto!
 	}
 	
 	func setHeaderContainerViewLook() {
@@ -91,10 +83,10 @@ extension AccountInfoViewController {
 		DatabaseManagerForSignUpandLogin.shared.uploadProfilePhoto(image: image, for: userID) { [weak self] result in
 			switch result {
 			case .success(let url):
-				print("Successfully uploaded photo: \(url)")
+				print("**Successfully uploaded photo: \(url)")
 				self?.profileImage.image = image
 			case .failure(let error):
-				print("Error uploading photo: \(error)")
+				print("**Error uploading photo: \(error)")
 				// Show error to user
 			}
 		}
@@ -127,7 +119,6 @@ extension AccountInfoViewController: UIImagePickerControllerDelegate, UINavigati
 	func imagePickerController(_ _picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		if let selectedProfileImage = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
 			//			self.selectedProfileImage = selectedProfileImage
-			print("--I'm here")
 			profileImage.image = selectedProfileImage
 			updateProfilePhoto(with: selectedProfileImage)
 			dismiss(animated: true, completion: nil)

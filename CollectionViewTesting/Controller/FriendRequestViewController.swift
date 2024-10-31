@@ -62,9 +62,7 @@ extension FriendRequestViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		print("--friendReqReceived: ", friendReqReceived)
 		let cellOne = friendRequestTableView.dequeueReusableCell(withIdentifier: "FriendRequestReceivedCell", for: indexPath) as! FriendReqTableViewCell
-		print("--index path section: ", indexPath.section)
 		if (tableView.numberOfRows(inSection: 0) == 0) {
 			DispatchQueue.main.async {
 				self.noPendingRequestsLabel.isHidden = false
@@ -75,6 +73,9 @@ extension FriendRequestViewController: UITableViewDataSource {
 			}
 				cellOne.nameLabel.text = friendReqReceived[indexPath.item].userName
 				cellOne.emailLabel.text = friendReqReceived[indexPath.item].email
+				cellOne.friendProfilePhoto.image = friendProfilePhotos[friendReqReceived[indexPath.item].id]
+				cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendRequestTableView.frame.width/5.5)/2
+//				cellOne.friendProfilePhoto.image = friendReqReceived[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 				cellOne.indexPath = indexPath
 				cellOne.delegate = self
 				cellOne.setFriend(friend: friendReqReceived[indexPath.item])
@@ -119,13 +120,12 @@ extension FriendRequestViewController: UITableViewDelegate, FriendReqTableViewCe
 extension FriendRequestViewController {
 	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
 	func observeFriends() {
-		print("--observing database friends requests")
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
 		
-		friendRef.observe(.childAdded, with: { snapshot in
+		friendRef.observe(.childAdded, with: { [weak self] snapshot in
 			
 			var tempFriendReqReceived = [Friend]()
-			print("--observeFriends: ", snapshot)
+
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
@@ -137,8 +137,7 @@ extension FriendRequestViewController {
 				   let photoURL = dict["profilePhotoURL"] as? String
 //				   let ProfilePhotoLastUpdated = dict["ProfilePhotoLastUpdated"] as? String
 				{
-					print("--observeFriends: ", snapshot)
-				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
+					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
 					if(status == "received") {
 						tempFriendReqReceived.append(friend)
 					}
@@ -146,8 +145,23 @@ extension FriendRequestViewController {
 			}
 			
 			friendReqReceived = tempFriendReqReceived
-			self.friendRequestTableView.reloadData()
+			self?.getProfilePhotos(photosToLoad: tempFriendReqReceived)
 		})
 		
+	}
+	func getProfilePhotos(photosToLoad: [Friend]) {
+		for friend in photosToLoad {
+			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friend.id) { result in
+				switch result {
+				case .success(let image):
+					friendProfilePhotos[friend.id] = image
+					if(photosToLoad.last == friend) {
+						self.friendRequestTableView.reloadData()
+					}
+				case .failure(let error):
+					print("**", error)
+				}
+			}
+		}
 	}
 }

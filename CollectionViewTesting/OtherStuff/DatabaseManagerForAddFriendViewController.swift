@@ -44,7 +44,7 @@ final class DatabaseManagerForFriendViewController {
 			"profilePhotoURL": friend.profilePhotoURL,
 //			"ProfilePhotoLastUpdated": friend.profilePhotoURL
 		]
-		print("--user: ", user, "location: ", location)
+//		print("--user: ", user, "location: ", location)
 		database.child("users").child(user).child("friends").child(location).updateChildValues(data)
 		
 	}
@@ -82,7 +82,7 @@ final class DatabaseManagerForFriendViewController {
 		}
 	}
 	
-	func findUser(emailToFind: String, completionSuccess: @escaping (String) -> Void) {
+	func findAndAddFriend(emailToFind: String, completionSuccess: @escaping (String) -> Void) {
 		if (emailToFind == Auth.auth().currentUser?.email) {
 			completionSuccess("self")
 			return
@@ -95,12 +95,8 @@ final class DatabaseManagerForFriendViewController {
 			}
 			
 			let friendRef = Database.database().reference().child("userList")
-			
-			print("--double: ", double)
-			
 			friendRef.queryOrdered(byChild: "email").queryEqual(toValue: emailToFind).observeSingleEvent(of: .value, with: { snapshot in
 				var found = "notFound"
-				print("snapshot findUser: ", snapshot)
 				for child in snapshot.children {
 					if let childSnapshot = child as? DataSnapshot,
 					   let id = childSnapshot.key as? String,
@@ -114,11 +110,7 @@ final class DatabaseManagerForFriendViewController {
 							let friend = Friend(id: id, userName: userName, email: emailToFind, tagName: "", status: "accepted", profilePhotoURL: photoURL)
 							let myself = Friend(id: Auth.auth().currentUser!.uid, userName: currentUser!.userName, email: Auth.auth().currentUser!.email!, tagName: "", status: "accepted", profilePhotoURL: currentUser!.profilePhotoURL)
 							self.updateFriend(with: friend, user: Auth.auth().currentUser!.uid, location: double)
-							print("emailToFind: ", Auth.auth().currentUser!.email!)
-							
-							print("-----id: ", id)
 							self.checkDuplicateFriend(emailToFind: Auth.auth().currentUser!.email!, idToUse: id, function: "findUser") { idFound in
-								print("--idFound: ", idFound)
 								self.updateFriend(with: myself, user: id, location: idFound)
 							}
 //							print("--Found a user: ", friend)
@@ -144,7 +136,7 @@ final class DatabaseManagerForFriendViewController {
 				//print("--gotToHere2: ", found)
 				completionSuccess(found)
 			}, withCancel: {(err) in
-				print("--error: ", err)
+				print("**error: ", err)
 			})
 		}
 	}
@@ -152,7 +144,6 @@ final class DatabaseManagerForFriendViewController {
 	func checkDuplicateFriend(emailToFind: String, idToUse: String, function: String, completionSuccess: @escaping (String) -> Void) {
 		let friendRef = Database.database().reference().child("users").child(idToUse).child("friends")
 		friendRef.queryOrdered(byChild: "email").queryEqual(toValue: emailToFind).observeSingleEvent(of: .value, with: { snapshot in
-			print("snapshot checkDuplicateFriend: ", snapshot)
 			var found = "notFound"
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
@@ -163,8 +154,6 @@ final class DatabaseManagerForFriendViewController {
 				   let photoURL = dict["profilePhotoURL"] as? String
 				{
 					if(function == "findUser") {
-						print("--foundhere: ", email , " ", id, " ", status)
-						//					if(emailToFind == email) {
 						if(childSnapshot.childrenCount > 0) {
 							if(status == "received" || status == "sent"){
 								found = id
@@ -176,13 +165,11 @@ final class DatabaseManagerForFriendViewController {
 						}
 						completionSuccess(found)
 						return
-						//					}
 					} else if(function == "deleteFriend") {
-						print("--foundhere: ", email , " ", id, " ", status)
 						if(childSnapshot.childrenCount > 0) {
 							found = id
 						} else {
-							print("--Was not able to find a user to delete.")
+							print("**Was not able to find a user to delete.")
 						}
 //						print("--found: ", found)
 						completionSuccess(found)
@@ -209,10 +196,10 @@ final class DatabaseManagerForFriendViewController {
 	
 	func declineFriendRequest(friend: Friend) {
 		self.deleteFriend(friend: friend) { completed in
-			print("declining friend request failed on deleteFriend")
+			print("**declining friend request failed on deleteFriend")
 		}
 		self.deleteMyselfAsFriend(friend: friend) { completed in
-			print("declining friend request failed on deleteMyselfAsFriend")
+			print("**declining friend request failed on deleteMyselfAsFriend")
 		}
 	}
 	
@@ -225,12 +212,76 @@ final class DatabaseManagerForFriendViewController {
 		checkDuplicateFriend(emailToFind: friend.email, idToUse: Auth.auth().currentUser!.uid, function: "deleteFriend") { id in
 			self.deleteFriend(friend: friend) { completed in
 				if(completed == "success") {
-					print("--indexPath of deleting cell: ", indexPath)
 					self.delegate?.logicForDeletingFriendTableViewCell(self, indexPath: indexPath)
 				}
 			}
 			self.deleteMyselfAsFriend(friend: friend) { completed in
-				print("--delete myself as friend failed")
+			}
+		}
+	}
+	
+	func fetchFriendsData(completionSuccess: @escaping (String) -> Void) {
+		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
+		
+		friendRef.observeSingleEvent(of: .value, with: { [weak self] snapshot in
+			//			var tempFriendList = [Friend]()
+			//			var tempFriendReqSent = [Friend]()
+			//			var tempFriendReqReceived = [Friend]()
+			
+			var tempFriendList = [Friend]()
+			var tempFriendReqReceived = [Friend]()
+			var tempFriendReqSent = [Friend]()
+			
+			for child in snapshot.children {
+				if let childSnapshot = child as? DataSnapshot,
+				   let id = childSnapshot.key as? String,
+				   let dict = childSnapshot.value as? [String: Any],
+				   let userName = dict["userName"] as? String,
+				   let email = dict["email"] as? String,
+				   let tagName = dict["tagName"] as? String,
+				   let status = dict["status"] as? String,
+				   let profilePhotoURL = dict["profilePhotoURL"] as? String
+				{
+				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: profilePhotoURL)
+				print("--friend got from database: ", status)
+				if(status == "accepted") {
+					print("--here")
+					tempFriendList.append(friend)
+				} else if(status == "sent") {
+					tempFriendReqSent.append(friend)
+				} else if(status == "received") {
+					tempFriendReqReceived.append(friend)
+				}
+				}
+			}
+			friendList = tempFriendList
+			friendReqReceived = tempFriendReqReceived
+			friendReqSent = tempFriendReqSent
+			
+			var allFriendsForProfilePhotoLoad = [Friend]()
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
+			self?.getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
+			
+			print("--friendList: ", friendList)
+			print("--friendReqReceived: ", friendReqReceived)
+			print("--friendReqSent: ", friendReqSent)
+		})
+	}
+	
+	func getProfilePhotos(photosToLoad: [Friend]) {
+		for friend in photosToLoad {
+			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friend.id) { result in
+				switch result {
+				case .success(let image):
+					friendProfilePhotos[friend.id] = image
+					if(photosToLoad.last == friend) {
+						print("--here2")
+					}
+				case .failure(let error):
+					print("**", error)
+				} 
 			}
 		}
 	}

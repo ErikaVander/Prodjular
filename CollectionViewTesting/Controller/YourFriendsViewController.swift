@@ -60,6 +60,10 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.estimatedRowHeight = 200
 		friendsTableView.rowHeight = UITableView.automaticDimension
 		friendsTableView.reloadData()
+		
+		DatabaseManagerForFriendViewController.shared.fetchFriendsData { result in
+			print("--hello")
+		}
 	}
 	
 	///Goes back to the settings page
@@ -142,8 +146,6 @@ extension YourFriendsViewController: UITableViewDataSource {
 			if(indexPath.section == 0)
 			{
 				if(self.friendsTableView.numberOfRows(inSection: 0) == 1) {
-					print("--here")
-					
 					cellTwo.setNeedsLayout()
 						
 					cellTwo.emptyLabel.text = "No pending requests"
@@ -173,9 +175,11 @@ extension YourFriendsViewController: UITableViewDataSource {
 						
 						return cellTwo
 					} else {
-						print("--indexPath.item: ", indexPath.item, friendReqSent.count)
 						cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
 						cellOne.emailLabel.text = friendReqSent[indexPath.item].email
+						cellOne.friendProfilePhoto.image = friendProfilePhotos[friendReqSent[indexPath.item].id]
+						cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendsTableView.frame.width/5.5)/2
+//						cellOne.friendProfilePhoto.image = friendReqSent[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 						cellOne.setFriend(friend: friendReqSent[indexPath.item])
 					}
 				}
@@ -208,9 +212,11 @@ extension YourFriendsViewController: UITableViewDataSource {
 						
 						return cellTwo
 					} else {
-						print("--indexPath.item: ", indexPath.item, friendList.count)
 						cellOne.nameLabel.text = friendList[indexPath.item].userName
 						cellOne.emailLabel.text = friendList[indexPath.item].email
+						cellOne.friendProfilePhoto.image = friendProfilePhotos[friendList[indexPath.item].id]
+						cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendsTableView.frame.width/5.5)/2
+//						cellOne.friendProfilePhoto.image = friendList[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 						cellOne.setFriend(friend: friendList[indexPath.item])
 					}
 				}
@@ -285,20 +291,18 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 				let cell = tableView.cellForRow(at: indexPath) as? FriendsTableViewTableViewCell
 				let index = friendReqSent.firstIndex(of: cell!.friend)
 				
-				print("--cell: ", cell?.friend ?? "did not find a friend")
+				print("**cell: ", cell?.friend ?? "did not find a friend")
 				
 				DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendReqSent[index!], indexPath: indexPath)
 				friendReqSent.remove(at: index!)
 				
 			} else if(indexPath.section == 1) {
-				print("--number of rows in section before before: ", self.friendsTableView.numberOfRows(inSection: 1))
 				let cell = tableView.cellForRow(at: indexPath) as? FriendsTableViewTableViewCell
 				let index = friendList.firstIndex(of: cell!.friend)
 				
-				print("--cell: ", cell?.friend ?? "did not find a friend")
+				print("**cell: ", cell?.friend ?? "did not find a friend")
 				
 				DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendList[index!], indexPath: indexPath)
-				print("--number of rows in section before after: ", self.friendsTableView.numberOfRows(inSection: 1))
 				
 			}
 		}
@@ -318,8 +322,6 @@ extension YourFriendsViewController {
 			var tempFriendReqSent = [Friend]()
 			var tempFriendReqReceived = [Friend]()
 			
-			print("snapshot: ", snapshot)
-			
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
@@ -331,7 +333,6 @@ extension YourFriendsViewController {
 				   let photoURL = dict["profilePhotoURL"] as? String
 				{
 					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
-					print("--friend got from database: ", status)
 					if(status == "accepted") {
 						tempFriendList.append(friend)
 					} else if(status == "sent") {
@@ -346,16 +347,20 @@ extension YourFriendsViewController {
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
 			
-			print("--friendList: ", friendList)
-			print("--friendReqReceived: ", friendReqReceived)
-			print("--friendReqSent: ", friendReqSent)
+//			print("--friendList: ", friendList)
+//			print("--friendReqReceived: ", friendReqReceived)
+//			print("--friendReqSent: ", friendReqSent)
 			
 			if (friendReqReceived.count != 0) {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			self.friendsTableView.reloadData()
+			var allFriendsForProfilePhotoLoad = [Friend]()
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
+			getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
 		})
 	}
 	func observeChangedFriends() {
@@ -368,8 +373,6 @@ extension YourFriendsViewController {
 			var tempFriendReqSent = [Friend]()
 			var tempFriendReqReceived = [Friend]()
 			
-			print("snapshot: ", snapshot)
-			
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
@@ -380,15 +383,14 @@ extension YourFriendsViewController {
 				   let status = dict["status"] as? String,
 				   let photoURL = dict["profilePhotoURL"] as? String
 				{
-				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
-				print("--friend got from database: ", status)
-				if(status == "accepted") {
-					tempFriendList.append(friend)
-				} else if(status == "sent") {
-					tempFriendReqSent.append(friend)
-				} else if(status == "received") {
-					tempFriendReqReceived.append(friend)
-				}
+					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
+					if(status == "accepted") {
+						tempFriendList.append(friend)
+					} else if(status == "sent") {
+						tempFriendReqSent.append(friend)
+					} else if(status == "received") {
+						tempFriendReqReceived.append(friend)
+					}
 				}
 			}
 			
@@ -396,16 +398,20 @@ extension YourFriendsViewController {
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
 			
-			print("--friendList: ", friendList)
-			print("--friendReqReceived: ", friendReqReceived)
-			print("--friendReqSent: ", friendReqSent)
+//			print("--friendList: ", friendList)
+//			print("--friendReqReceived: ", friendReqReceived)
+//			print("--friendReqSent: ", friendReqSent)
 			
 			if (friendReqReceived.count != 0) {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			self.friendsTableView.reloadData()
+			var allFriendsForProfilePhotoLoad = [Friend]()
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
+			getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
 		})
 	}
 	func fetchData() {
@@ -446,21 +452,49 @@ extension YourFriendsViewController {
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
 			
-			print("--friendList: ", friendList)
-			print("--friendReqReceived: ", friendReqReceived)
-			print("--friendReqSent: ", friendReqSent)
-			
 			if (friendReqReceived.count != 0) {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			self.friendsTableView.reloadData()
+			var allFriendsForProfilePhotoLoad = [Friend]()
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
+			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
+			getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
 		})
-		
-		DispatchQueue.main.async { [weak self] in
-			self?.refreshControl.endRefreshing()
-			self?.friendsTableView.reloadData()
+	}
+	
+	func getProfilePhotos(photosToLoad: [Friend]) {
+		for friend in photosToLoad {
+			DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friend.id) { result in
+				switch result {
+				case .success(let image):
+					friendProfilePhotos[friend.id] = image
+					if(photosToLoad.last == friend) {
+						self.friendsTableView.reloadData()
+						self.refreshControl.endRefreshing()
+					}
+				case .failure(let error):
+					print("**", error)
+				}
+			}
+		}
+	}
+	
+	func getProfilePhotosWithCaching(photosToLoad: [Friend]) {
+		for friend in photosToLoad {
+			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friend.id) { result in
+				switch result {
+				case .success(let image):
+					friendProfilePhotos[friend.id] = image
+					if(photosToLoad.last == friend) {
+						self.friendsTableView.reloadData()
+					}
+				case .failure(let error):
+					print("**", error)
+				}
+			}
 		}
 	}
 }

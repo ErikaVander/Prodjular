@@ -16,6 +16,7 @@ class FriendReqTableViewCell: UITableViewCell {
 	var delegate: FriendReqTableViewCellDelegate?
 	static let shared = FriendReqTableViewCell()
 
+	@IBOutlet weak var friendProfilePhoto: UIImageView!
 	@IBOutlet weak var emailLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
 	
@@ -24,20 +25,24 @@ class FriendReqTableViewCell: UITableViewCell {
 	
 	override func awakeFromNib() {
         super.awakeFromNib()
+		setFriendProfilePhotoConstraints()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
 	
+	func setFriendProfilePhotoConstraints() {
+		friendProfilePhoto.layer.cornerRadius = friendProfilePhoto.frame.width/2
+		friendProfilePhoto.clipsToBounds = true
+	}
+	
 	@IBAction func acceptFriend(_ sender: Any) {
-		print("--accepted friend")
 		DatabaseManagerForFriendViewController.shared.acceptFriendRequest(friend: self.friend)
 		self.delegate!.deleteRow(cell: self, friend: self.friend)
 	}
 	
 	@IBAction func declineFriend(_ sender: Any) {
-		print("--declined friend")
 		DatabaseManagerForFriendViewController.shared.declineFriendRequest(friend: self.friend)
 		self.delegate!.deleteRow(cell: self, friend: self.friend)
 	}
@@ -45,11 +50,9 @@ class FriendReqTableViewCell: UITableViewCell {
 	
 	func setFriend(friend: Friend) {
 		self.friend = friend
-		print("--trying to set friend: ", self.friend)
 	}
 	
 	func getFriend() -> Friend {
-		print("--trying to get friend: ", friend)
 		return friend
 	}
 }
