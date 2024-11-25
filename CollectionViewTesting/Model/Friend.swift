@@ -10,7 +10,6 @@ import UIKit
 var friendList = [Friend]()
 var friendReqReceived = [Friend]()
 var friendReqSent = [Friend]()
-var friendProfilePhotos = [String : UIImage]()
 
 ///The definition of a Friend.
 struct Friend : Equatable {

@@ -177,7 +177,27 @@ extension YourFriendsViewController: UITableViewDataSource {
 					} else {
 						cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
 						cellOne.emailLabel.text = friendReqSent[indexPath.item].email
-						cellOne.friendProfilePhoto.image = friendProfilePhotos[friendReqSent[indexPath.item].id]
+						if(initialLoadingOfDataForFriendsTableView == true) {
+							DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendReqSent[indexPath.item].id, completion: { [weak self] result in
+								switch result {
+								case .success(let image):
+									cellOne.friendProfilePhoto.image = image
+								case .failure(let error):
+									print("**error: ", error)
+								}
+							})
+							initialLoadingOfDataForFriendsTableView = false
+						} else {
+							DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendReqSent[indexPath.item].id, completion: { [weak self] result in
+								switch result {
+								case .success(let image):
+									cellOne.friendProfilePhoto.image = image
+								case .failure(let error):
+									print("**error: ", error)
+								}
+							})
+						}
+//						friendProfilePhotos[friendReqSent[indexPath.item].id]
 						cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendsTableView.frame.width/5.5)/2
 //						cellOne.friendProfilePhoto.image = friendReqSent[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 						cellOne.setFriend(friend: friendReqSent[indexPath.item])
@@ -214,7 +234,28 @@ extension YourFriendsViewController: UITableViewDataSource {
 					} else {
 						cellOne.nameLabel.text = friendList[indexPath.item].userName
 						cellOne.emailLabel.text = friendList[indexPath.item].email
-						cellOne.friendProfilePhoto.image = friendProfilePhotos[friendList[indexPath.item].id]
+						if(initialLoadingOfDataForFriendsTableView == true) {
+							DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendList[indexPath.item].id, completion: { [weak self] result in
+								switch result {
+								case .success(let image):
+									cellOne.friendProfilePhoto.image = image
+								case .failure(let error):
+									print("**error: ", error)
+								}
+							})
+							print("--initialLoadingOfDataForFriendTableView == true")
+							initialLoadingOfDataForFriendsTableView = false
+						} else {
+							DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendList[indexPath.item].id, completion: { [weak self] result in
+								switch result {
+								case .success(let image):
+									cellOne.friendProfilePhoto.image = image
+								case .failure(let error):
+									print("**error: ", error)
+								}
+							})
+							print("--initialLoadingOfDataForFriendTableView == false")
+						}
 						cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendsTableView.frame.width/5.5)/2
 //						cellOne.friendProfilePhoto.image = friendList[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 						cellOne.setFriend(friend: friendList[indexPath.item])
@@ -356,11 +397,6 @@ extension YourFriendsViewController {
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			var allFriendsForProfilePhotoLoad = [Friend]()
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
-			getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
 		})
 	}
 	func observeChangedFriends() {
@@ -407,11 +443,6 @@ extension YourFriendsViewController {
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			var allFriendsForProfilePhotoLoad = [Friend]()
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
-			getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
 		})
 	}
 	func fetchData() {
@@ -457,44 +488,6 @@ extension YourFriendsViewController {
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
-			var allFriendsForProfilePhotoLoad = [Friend]()
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
-			getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
 		})
-	}
-	
-	func getProfilePhotos(photosToLoad: [Friend]) {
-		for friend in photosToLoad {
-			DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friend.id) { result in
-				switch result {
-				case .success(let image):
-					friendProfilePhotos[friend.id] = image
-					if(photosToLoad.last == friend) {
-						self.friendsTableView.reloadData()
-						self.refreshControl.endRefreshing()
-					}
-				case .failure(let error):
-					print("**", error)
-				}
-			}
-		}
-	}
-	
-	func getProfilePhotosWithCaching(photosToLoad: [Friend]) {
-		for friend in photosToLoad {
-			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friend.id) { result in
-				switch result {
-				case .success(let image):
-					friendProfilePhotos[friend.id] = image
-					if(photosToLoad.last == friend) {
-						self.friendsTableView.reloadData()
-					}
-				case .failure(let error):
-					print("**", error)
-				}
-			}
-		}
 	}
 }

@@ -257,36 +257,6 @@ final class DatabaseManagerForFriendViewController {
 			friendList = tempFriendList
 			friendReqReceived = tempFriendReqReceived
 			friendReqSent = tempFriendReqSent
-			
-			var allFriendsForProfilePhotoLoad = [Friend]()
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendList)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqSent)
-			allFriendsForProfilePhotoLoad.append(contentsOf: friendReqReceived)
-			self?.getProfilePhotos(photosToLoad: allFriendsForProfilePhotoLoad)
-			
-			print("--friendList: ", friendList)
-			print("--friendReqReceived: ", friendReqReceived)
-			print("--friendReqSent: ", friendReqSent)
 		})
 	}
-	
-	func getProfilePhotos(photosToLoad: [Friend]) {
-		for friend in photosToLoad {
-			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friend.id) { result in
-				switch result {
-				case .success(let image):
-					friendProfilePhotos[friend.id] = image
-					if(photosToLoad.last == friend) {
-						print("--here2")
-					}
-				case .failure(let error):
-					print("**", error)
-				} 
-			}
-		}
-	}
-	
-//	func sendFriendRequest(emailToFind: String, id: String) {
-//		//newFriend(with: Friend(id: currentUser.userID, userName: currentUser.userName, email: currentUser.email, tagName: "", status: "not approved"), location: id)
-//	}
 }

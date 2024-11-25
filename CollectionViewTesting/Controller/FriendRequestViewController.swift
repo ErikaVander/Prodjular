@@ -73,7 +73,28 @@ extension FriendRequestViewController: UITableViewDataSource {
 			}
 				cellOne.nameLabel.text = friendReqReceived[indexPath.item].userName
 				cellOne.emailLabel.text = friendReqReceived[indexPath.item].email
-				cellOne.friendProfilePhoto.image = friendProfilePhotos[friendReqReceived[indexPath.item].id]
+				if(initialLoadingOfData == true) {
+					DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
+						switch result {
+						case .success(let image):
+							cellOne.friendProfilePhoto.image = image
+						case .failure(let error):
+							print("**error: ", error)
+						}
+					})
+					print("--initialLoadingOfData == true")
+					initialLoadingOfData = false
+				} else {
+					DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
+						switch result {
+						case .success(let image):
+							cellOne.friendProfilePhoto.image = image
+						case .failure(let error):
+							print("**error: ", error)
+						}
+					})
+					print("--initialLoadingOfData == false")
+				}
 				cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendRequestTableView.frame.width/5.5)/2
 //				cellOne.friendProfilePhoto.image = friendReqReceived[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 				cellOne.indexPath = indexPath
@@ -145,23 +166,7 @@ extension FriendRequestViewController {
 			}
 			
 			friendReqReceived = tempFriendReqReceived
-			self?.getProfilePhotos(photosToLoad: tempFriendReqReceived)
 		})
 		
-	}
-	func getProfilePhotos(photosToLoad: [Friend]) {
-		for friend in photosToLoad {
-			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friend.id) { result in
-				switch result {
-				case .success(let image):
-					friendProfilePhotos[friend.id] = image
-					if(photosToLoad.last == friend) {
-						self.friendRequestTableView.reloadData()
-					}
-				case .failure(let error):
-					print("**", error)
-				}
-			}
-		}
 	}
 }
