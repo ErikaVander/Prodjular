@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import FirebaseAuth
 
+var initialLoadingOfDataForAccountInfo = true
+
 class AccountInfoViewController: UIViewController {
 	
 	@IBOutlet weak var headerContainerView: UIView!
@@ -26,7 +28,29 @@ class AccountInfoViewController: UIViewController {
 		setUserEmail()
 		setHeaderContainerViewLook()
 		setProfileImageConstraints()
-		profileImage.image = currentUserProfilePhoto!
+//		profileImage.image = currentUserProfilePhoto!
+		if initialLoadingOfDataForAccountInfo == true {
+			DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: Auth.auth().currentUser!.uid) { [weak self] result in
+				switch result {
+				case .failure(let error):
+					print("**error: ", error)
+				case .success(let image):
+					self?.profileImage.image = image
+				}
+			}
+			print("--initialLoadingOfDataForAccountInfo = true")
+			initialLoadingOfDataForAccountInfo = false
+		} else {
+			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: Auth.auth().currentUser!.uid) { [weak self] result in
+				switch result {
+				case .failure(let error):
+					print("**error: ", error)
+				case .success(let image):
+					self?.profileImage.image = image
+				}
+			}
+			print("--initialLoadingOfDataForAccountInfo = false")
+		}
 	}
 	
 	func setHeaderContainerViewLook() {

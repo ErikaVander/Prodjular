@@ -10,13 +10,13 @@ import FirebaseAuth
 import FirebaseDatabase
 import Foundation
 
+var initialLoadingOfDataForFriendRequest = true
+
 class FriendRequestViewController: UIViewController {
 
 	@IBOutlet weak var noPendingRequestsLabel: UILabel!
 	@IBOutlet weak var friendRequestContainerView: UIView!
 	@IBOutlet weak var friendRequestTableView: UITableView!
-	
-	var initialLoadingOfData = true
 	
 	deinit {
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
@@ -73,7 +73,7 @@ extension FriendRequestViewController: UITableViewDataSource {
 			}
 				cellOne.nameLabel.text = friendReqReceived[indexPath.item].userName
 				cellOne.emailLabel.text = friendReqReceived[indexPath.item].email
-				if(initialLoadingOfData == true) {
+				if(initialLoadingOfDataForFriendRequest == true) {
 					DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
 						switch result {
 						case .success(let image):
@@ -82,8 +82,8 @@ extension FriendRequestViewController: UITableViewDataSource {
 							print("**error: ", error)
 						}
 					})
-					print("--initialLoadingOfData == true")
-					initialLoadingOfData = false
+					print("--initialLoadingOfDataForFriendRequest == true")
+					initialLoadingOfDataForFriendRequest = false
 				} else {
 					DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
 						switch result {
@@ -93,7 +93,7 @@ extension FriendRequestViewController: UITableViewDataSource {
 							print("**error: ", error)
 						}
 					})
-					print("--initialLoadingOfData == false")
+					print("--initialLoadingOfDataForFriendRequest == false")
 				}
 				cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendRequestTableView.frame.width/5.5)/2
 //				cellOne.friendProfilePhoto.image = friendReqReceived[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")

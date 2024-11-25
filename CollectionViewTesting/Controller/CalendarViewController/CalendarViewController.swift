@@ -101,8 +101,6 @@ class CalendarViewController: UIViewController {
         setCollectionViewLayout()
 		fillMonth(parDate: selectedDate)
 		selectCellAfterScroll()
-		
-		loadData()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -118,17 +116,6 @@ class CalendarViewController: UIViewController {
 		super.viewDidAppear(animated)
 	}
 	
-	func loadData() {
-		DatabaseManagerForFriendViewController.shared.fetchFriendsData { string in }
-		DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: Auth.auth().currentUser!.uid) { result in
-			switch result {
-			case .failure(let error):
-				print("**error: ", error)
-			case .success(let image):
-				currentUserProfilePhoto = image
-			}
-		}
-	}
 }
 
 extension CalendarViewController {

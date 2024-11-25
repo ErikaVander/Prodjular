@@ -7,7 +7,7 @@
 
 import UIKit
 var currentUser: ProjdularUser?
-var currentUserProfilePhoto: UIImage?
+//var currentUserProfilePhoto: UIImage?
 
 ///The definition of a ProjdularUser.
 struct ProjdularUser : Equatable {
