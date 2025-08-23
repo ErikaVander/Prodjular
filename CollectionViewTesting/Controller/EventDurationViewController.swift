@@ -12,6 +12,8 @@ class EventDurationViewController: UIViewController {
 	
 	@IBOutlet weak var EventDurationTableViewContainerCollectionView: UICollectionView!
 	
+	@IBOutlet weak var selectGroupButton: UIButton!
+	@IBOutlet weak var selectGroupMenu: UIMenu!
 	@IBOutlet weak var monthLabel: UILabel!
 	@IBOutlet weak var mondayLabel: UILabel!
 	@IBOutlet weak var tuesdayLabel: UILabel!
@@ -31,6 +33,9 @@ class EventDurationViewController: UIViewController {
 		EventDurationTableViewContainerCollectionView.delegate = self
 		EventDurationTableViewContainerCollectionView.dataSource = self
 		
+		selectGroupButton.menu = selectGroupMenu
+		selectGroupButton.showsMenuAsPrimaryAction = true
+		
 		fillWeek(parDate: selectedDate)
 		
 		//Change month string to match current viewed month
@@ -45,6 +50,12 @@ class EventDurationViewController: UIViewController {
 		super.viewWillLayoutSubviews()
 		scroll()
 	}
+	
+	@IBAction func selectGroup(_ sender: Any) {
+		
+		print("hello")
+	}
+	
 }
 
 //MARK: - EventDurationViewController constraints

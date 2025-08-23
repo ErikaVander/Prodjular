@@ -401,7 +401,7 @@ extension YourFriendsViewController {
 	}
 	func observeChangedFriends() {
 		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
-		
+		//The .childChanged makes it so you don't have to add .child("friends") to the end of friendRef I think.
 		friendRef.observe(.childChanged, with: { [weak self] snapshot in
 			guard let self = self else {return}
 			
@@ -488,6 +488,7 @@ extension YourFriendsViewController {
 			} else {
 				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
 			}
+			refreshControl.endRefreshing()
 		})
 	}
 }
