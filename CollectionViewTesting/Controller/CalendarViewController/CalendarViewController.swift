@@ -11,7 +11,6 @@ import Firebase
 import FirebaseDatabase
 import FirebaseCore
 
-var isLoggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
 var selectedDate = currentDateAndTime()
 let dateFormatter = DateFormatter()
 var eventsForTableViewCell = [ProjdularEvent]()
@@ -35,11 +34,11 @@ class CalendarViewController: UIViewController {
 			UIAction(title: "add Event", image: nil, handler: { (action) in
 				self.showEventViewController()
 			}),
-			UIAction(title: "add Project", image: nil, handler: { (action) in
-				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
-			}),
+//			UIAction(title: "add Project", image: nil, handler: { (action) in
+//				self.showEventDurationViewController()
+//			}),
 			UIAction(title: "add Prep to existing Project", image: nil, handler: { (action) in
-				alertUser(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
+				alertUserAndGoToRootController(view: self, title: "not yet available", content: "this feature is not yet available", dismissView: false)
 			})
 		]
 	}
@@ -58,23 +57,27 @@ class CalendarViewController: UIViewController {
 		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
 		tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableCell")
 
-		print("--currentDate = \(currentDateAndTime())")
+//		print("--currentDate = \(currentDateAndTime())")
 		Database.database().isPersistenceEnabled = true
 		
 		
 		///Checking to see if a user is signed in. If not, shows the sign-in screen
 		FirebaseAuth.Auth.auth().addStateDidChangeListener{ auth, user in
-			if user != nil && user?.isEmailVerified == true {
-				print("-- User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
-				isLoggedIn = true
+			if(user != nil && user?.isEmailVerified == true) {
+				print("** User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
+				//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
+				userService.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
+//					print("--user2: ", user)
+					currentUser = user
+				}
 				self.observeEvents()
 			} else {
 				self.showLogIn()
-				print("-- No user is signed in. --")
+				print("** No user is signed in. ")
 			}
 		}
 		
-		DatabaseManager.shared.delegate = self
+		eventService.shared.delegate = self
 		
 		///bannerAd view setup
 		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
@@ -97,6 +100,7 @@ class CalendarViewController: UIViewController {
 		
         setCollectionViewLayout()
 		fillMonth(parDate: selectedDate)
+		selectCellAfterScroll()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -106,11 +110,17 @@ class CalendarViewController: UIViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		
 		tableView.reloadData()
-
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+	}
+	
+}
+
+extension CalendarViewController {
+	func testDatabase() {
+		
 	}
 }
 

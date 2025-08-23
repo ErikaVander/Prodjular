@@ -31,12 +31,12 @@ extension CalendarViewController {
 				   let tagColor = dict["tagColor"] as? String,
 				   let description = dict["description"] as? String
 				{
-				//let dateFormatter = DateFormatter()
-				dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
-				
-				let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagName: tagName, tagColor: tagColor, description: description)
-				
-				tempEvents.append(event)
+					//let dateFormatter = DateFormatter()
+					dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
+					
+					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagName: tagName, tagColor: tagColor, description: description)
+					
+					tempEvents.append(event)
 				}
 			}
 			eventList = tempEvents
@@ -69,7 +69,7 @@ extension CalendarViewController {
 				   let blueValue = dict["blueValue"] as? Float,
 				   let greenValue = dict["greenValue"] as? Float
 				{
-				ColorsArray.append(Colors(name: name, redValue: redValue, blueValue: blueValue, greenValue: greenValue))
+					ColorsArray.append(Colors(name: name, redValue: redValue, blueValue: blueValue, greenValue: greenValue))
 				}
 			}
 		})

@@ -14,7 +14,6 @@ class LogInViewController: UIViewController
 	@IBOutlet weak var Email: UITextField!
 	@IBOutlet weak var Password: UITextField!
 	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -33,23 +32,26 @@ extension LogInViewController {
 	///This is where the warning to the user when there is an error logging in should occurr
 	func login() {
 		guard let email = Email.text else {
-			print("--NoEmailProvided")
+			print("**NoEmailProvided")
 			return
 		}
 		guard let password = Password.text else {
-			print("--NoPasswordProvided")
+			print("**NoPasswordProvided")
 			return
 		}
 		
 		Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
 			guard error == nil else {
-				print("--Error logging in: \(error!.localizedDescription)")
-				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
+				print("**Error logging in: \(error!.localizedDescription)")
+				alertUserAndGoToRootController(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
-			isLoggedIn = true
-			print("--User has signed in: \(authResult?.user.email ?? "No user has signed in") isLoggedIn: \(isLoggedIn)")
-			alertUser(view: self, title: "Success", content: "You are now logged in", dismissView: true)
+			//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
+			userService.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
+				currentUser = user
+			}
+			print("**User has signed in: \(authResult?.user.email ?? "No user has signed in") isLoggedIn: \(true)")
+			alertUserAndGoToRootController(view: self, title: "Success", content: "You are now logged in", dismissView: true)
 		}
 	}
 }
@@ -85,7 +87,7 @@ extension LogInViewController {
 	func showSignUp() {
 		let vc = storyboard?.instantiateViewController(identifier: "SignInViewController")
 		
-		vc!.modalPresentationStyle = .popover
+		vc!.modalPresentationStyle = .fullScreen
 		
 		present(vc!, animated: true, completion: nil)
 	}

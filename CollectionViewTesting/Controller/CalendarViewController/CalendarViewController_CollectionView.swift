@@ -16,7 +16,8 @@ extension CalendarViewController: UICollectionViewDataSource {
 	
 	///The number of items in each section is determined by the lengthe of nums[] which keeps track of the content that will be added to the collectionView
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return num.count
+		//print("--num.count = ", numMonth.count)
+		return numMonth.count
 	}
 	
 	///Makes sure that only cells containing numbers can be selected by the user. Sets the default background view for selected cells. Sets each cells label to the elements within nums[] which keeps track of the content that will be added to the collectionView. Creates dotViews for cells that have events.
@@ -25,13 +26,13 @@ extension CalendarViewController: UICollectionViewDataSource {
 		
 		cellOne.isUserInteractionEnabled = false
 		cellOne.currentDateIndicatorView.isHidden = true
-		cellOne.label.textColor = .white
+		cellOne.label.textColor = .label
 		cellOne.theDotViewBackgroundView.isHidden = true
 		for subviews in cellOne.theDotViewBackgroundView.subviews {
 			subviews.removeFromSuperview()
 		}
 		
-		if Int(num[indexPath.item]) != nil {
+		if Int(numMonth[indexPath.item]) != nil {
 			cellOne.automaticallyUpdatesBackgroundConfiguration = true
 			cellOne.isUserInteractionEnabled = true
 			
@@ -42,7 +43,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 			formatterTwo.dateFormat = "yyyy-MMM-dd"
 			
 			let firstPartOfDate = "\(String(describing: yearLabel.text!))-\(String(describing: monthLabel.text!))"
-			let dateString = "\(firstPartOfDate)-\(num[indexPath.item])"
+			let dateString = "\(firstPartOfDate)-\(numMonth[indexPath.item])"
 			
 			let theDate = formatterTwo.date(from: dateString) ?? formatterTwo.date(from: "2020-August-21")!
 			
@@ -53,7 +54,16 @@ extension CalendarViewController: UICollectionViewDataSource {
 				
 				if(formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())){
 					
-					cellOne.currentDateIndicatorView.layer.borderColor = UIColor.white.cgColor
+					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) {
+						
+						cellOne.currentDateIndicatorView.layer.borderColor = UIColor.white.cgColor
+					} else {
+						
+						if self.traitCollection.userInterfaceStyle == .light {
+							
+							cellOne.currentDateIndicatorView.layer.borderColor = UIColor.darkGray.cgColor
+						}
+					}
 					cellOne.currentDateIndicatorView.layer.borderWidth = 2
 					cellOne.currentDateIndicatorView.layer.cornerRadius = 5
 					cellOne.currentDateIndicatorView.isHidden = false
@@ -62,15 +72,16 @@ extension CalendarViewController: UICollectionViewDataSource {
 				cellOne.cellDate = plusmonth(date: theDate)
 			}
 			
-			if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
+			if(eventService.shared.eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
 				cellOne.theDotViewBackgroundView.isHidden = false
 				
-				for events in eventsForDate(parDate: theDate) {
+				for events in eventService.shared.eventsForDate(parDate: theDate) {
 					let dotViewWidth: CGFloat = 4
 					let dotViewHeight: CGFloat = 4
 					
 					let dotView = UIView(frame: CGRect(x: 0, y: 0, width: dotViewWidth, height: dotViewHeight))
 					
+					//Set the dotview color to the user selected color
 					dotView.backgroundColor = UIColor(named: "\(events.tagColor!)")
 					dotView.layer.cornerRadius = dotViewWidth/3
 					
@@ -79,18 +90,21 @@ extension CalendarViewController: UICollectionViewDataSource {
 					cellOne.theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 					dotView.translatesAutoresizingMaskIntoConstraints = false
 					
-					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) {
+					///Changes the background based on whether or not the cell is selected, and whether or not it is the current date. If it isn't the current date, theDotViewBackgroundView will not have a background, if it is the current date, theDotViewBackgroundView will have background so that it is not hidden from the currentDateIndicator.
+					if (formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) && formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())) {
 						cellOne.changeBackgroundDarkGrey()
-						previouslySelectedCellIndexPath = indexPath
-					} else {
+					} else if formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime()) {
 						cellOne.changeBackgroundBlack()
+					} else {
+						cellOne.changeBackgroundTransparent()
 					}
+					
 					cellOne.theDotViewBackgroundView.layer.cornerRadius = 4
 					
 					//If statement for setting up theDotViewBackgroundView
 					var widthMultiplier: CGFloat = 0
-					if eventsForDate(parDate: theDate).count <= 4 {
-						widthMultiplier = CGFloat(eventsForDate(parDate: theDate).count)
+					if eventService.shared.eventsForDate(parDate: theDate).count <= 4 {
+						widthMultiplier = CGFloat(eventService.shared.eventsForDate(parDate: theDate).count)
 						
 						let theDotViewBackgroundBottomConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.bottomAnchor.constraint(equalTo: cellOne.label.bottomAnchor, constant: 7)
 						theDotViewBackgroundBottomConstraint.isActive = true
@@ -169,18 +183,24 @@ extension CalendarViewController: UICollectionViewDataSource {
 					}
 				}
 			}
+			//if cell is selected, change the background color of cellOne.selectedBackgroundView to darkGray or lightGray depending on light or dark mode
 			let _: () = cellOne.selectedBackgroundView = {
 				let view = UIView()
 				view.layer.cornerRadius = 5
-				view.backgroundColor = UIColor.darkGray
+				if self.traitCollection.userInterfaceStyle == .dark {
+					view.backgroundColor = UIColor.darkGray
+				} else {
+					view.backgroundColor = UIColor.lightGray
+				}
 				
 				return view
 			}()
 			
 			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
+			
 		}
 		
-		cellOne.label.text = num[indexPath.item]
+		cellOne.label.text = numMonth[indexPath.item]
 		
 		return cellOne
 	}
@@ -188,7 +208,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 
 //MARK: ColectionViewDelegate
 extension CalendarViewController: UICollectionViewDelegate {
-	///The logit for enabling infinite scrolling.
+	///The logic for enabling infinite scrolling.
 	func scroll() {
 		collectionView.scrollToItem(at: IndexPath(item: 50, section: 0), at: .top, animated: false)
 		collectionView.reloadData()
@@ -234,28 +254,35 @@ extension CalendarViewController: UICollectionViewDelegate {
 		
 	}
 	
-	///Checks to see if the value contained in cellOne.label.text is an integer. If true it updates the previously selected cell and the newly selected cell so that theDotViewBackGrouldView of CollectionViewCell's background color is equal to the background of the cell.
+	///Checks to see if the value contained in cellOne.label.text is an integer. If true it updates the previously selected cell and the newly selected cell so that theDotViewBackGrouldView of CollectionViewCell's background color is equal to the background of the cell. It does these things by calling cellForItemAt above
 	func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+		
 		if(Int(cellOne.label.text!) != nil) {
+			previouslySelectedCellIndexPath = collectionView.indexPathsForSelectedItems?.first!
 			selectCell(indexPath: indexPath)
+			//updates previouslySelectedCell and newely selected cell by calling reloadItems
 			collectionView.reloadItems(at: [indexPath, previouslySelectedCellIndexPath!])
 			//collectionView.reloadItems(at: [previouslySelectedCellIndexPath!])
 			return true
+			
 		} else {
 			return false
+			
 		}
 	}
 	
 	///Logic for updating userSelectedDate after a new cell is selected by user. This method then reloads the tableView data if data exists, otherwise it informs the user that no events are scheduled for the newly selected date.
 	func selectCell(indexPath: IndexPath) {
-		if Int(num[indexPath.item]) != nil
-		{
-		selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(num[indexPath.item]), \(yearString(date: selectedDate))")
+		if Int(numMonth[indexPath.item]) != nil {
+			selectedDate = dateFromNumbers(date: "\(monthString(date: selectedDate)) \(numMonth[indexPath.item]), \(yearString(date: selectedDate))")
+			
 		}
+		
 		tableView.reloadData()
 		if(tableView.numberOfRows(inSection: 0) == 0) {
 			noEventsScheduledLabel.text = "no events scheduled"
+			
 		}
 	}
 	

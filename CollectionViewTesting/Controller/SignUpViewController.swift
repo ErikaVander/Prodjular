@@ -12,24 +12,24 @@ class SignUpViewController: UIViewController
 {
 	@IBOutlet weak var emailTextFieldSignUp: UITextField!
 	@IBOutlet weak var passwordTextfieldSignUp: UITextField!
+	@IBOutlet weak var userNameTextfieldSignUp: UITextField!
 	@IBOutlet weak var Verified: UIButton!
+	
+	@IBAction func login(_ sender: Any) {
+		showLogin()
+	}
 	
 	override func viewDidLoad() {
 		emailTextFieldSignUp.delegate = self
 		passwordTextfieldSignUp.delegate = self
+		userNameTextfieldSignUp.delegate = self
 		
 		super .viewDidLoad()
-		setProfilePicImage()
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(true)
 		signUp()
-	}
-	
-	func setProfilePicImage() {
-		//profilePicture.layer.cornerRadius = 10
-		//profilePicture.backgroundColor = UIColor.white
 	}
 }
 
@@ -39,33 +39,37 @@ extension SignUpViewController {
 		guard
 			let email = emailTextFieldSignUp.text,
 			let password = passwordTextfieldSignUp.text,
+			let userName = userNameTextfieldSignUp.text,
 			!password.isEmpty,
-			!email.isEmpty
+			!email.isEmpty,
+			!userName.isEmpty
 		else {
-			print("FailedLogin")
+			print("**FailedLogin")
 			return
 		}
 		
 		FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
 			guard let result = authResult, error == nil else {
-				print("Error creating user: \(error!.localizedDescription)")
-				alertUser(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
+				print("**Error creating user: \(error!.localizedDescription)")
+				alertUserAndGoToRootController(view: self, title: "Error", content: error!.localizedDescription, dismissView: false)
 				return
 			}
 			let user: String = result.user.email!
-			print("Created User: \(user), Logged in: \(isLoggedIn)")
+			print("**Created User: \(user), Logged in: \(true)")
 			//self.dismiss(animated: true, completion: nil)
-			alertUser(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
+			alertUserAndGoToRootController(view: self, title: "Success", content: "An email has been sent for verification of this account", dismissView: true)
 			self.sendVerificationEmail()
 		})
+		
+//		DatabaseManagerForCollectionViewController.shared.newUser(with: ProjdularUser(email: email, userID: password))
 	}
 	
 	func sendVerificationEmail() {
 		Auth.auth().currentUser?.sendEmailVerification(completion: { [self](error) -> Void in
 			if (error != nil) {
-				alertUser(view: self, title: "Success", content: "You are now a verified user", dismissView: true)
+				alertUserAndGoToRootController(view: self, title: "Success", content: "You are now a verified user", dismissView: true)
 			} else {
-				alertUser(view: self, title: "Error", content: "There was an error in the verification process", dismissView: false)
+				alertUserAndGoToRootController(view: self, title: "Error", content: "There was an error in the verification process", dismissView: false)
 			}
 		})
 	}
@@ -74,16 +78,21 @@ extension SignUpViewController {
 //MARK: Navigation
 extension SignUpViewController {
 	@IBAction func verifyAndGoBack(_ sender: Any) {
-		Auth.auth().currentUser?.reload(completion:
-											{_ in
+		Auth.auth().currentUser?.reload(completion:	{_ in
 			if Auth.auth().currentUser?.isEmailVerified == true {
-				isLoggedIn = true
+				//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
 				
-				DatabaseManager.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid))
+				userService.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "", profilePhotoURL: "to be set"))
+				currentUser = ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "", profilePhotoURL: "to be set")
 				
-				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+//				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+				let vc = self.storyboard?.instantiateViewController(identifier: "UploadPhotoViewController")
+				
+				vc!.modalPresentationStyle = .fullScreen
+				
+				self.present(vc!, animated: true, completion: nil)
 			} else {
-				alertUser(view: self, title: "Not yet verified.", content: "Please verify your account and try again.", dismissView: true)
+				alertUserAndGoToRootController(view: self, title: "Not yet verified.", content: "Please verify your account and try again.", dismissView: true)
 			}
 		}
 		)
@@ -101,6 +110,13 @@ extension SignUpViewController: UITextFieldDelegate {
 			signUp()
 		}
 		return true
+	}
+	func showLogin() {
+		let vc = storyboard?.instantiateViewController(identifier: "LogInViewController")
+		
+		vc!.modalPresentationStyle = .fullScreen
+		
+		present(vc!, animated: true, completion: nil)
 	}
 }
 

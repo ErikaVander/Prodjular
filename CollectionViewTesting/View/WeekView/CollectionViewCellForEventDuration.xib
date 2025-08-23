@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="cellForEventDuration" id="gTV-IL-0wX" customClass="CollectionViewCellForEventDuration" customModule="CollectionViewTesting" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="356" height="521"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcO-BN-Y6E">
+                        <rect key="frame" x="28" y="38" width="282" height="483"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="QHC-ea-uSp">
+                        <rect key="frame" x="28" y="0.0" width="328" height="38"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" identifier="CellForEventDurationDayOfTheWeekView" id="1pp-Vy-VW7"/>
+                            <constraint firstAttribute="width" constant="328" identifier="CellForEventDurationDayOfTheWeekView" id="vIs-qZ-gyR"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Agk-sF-MWo">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                    </collectionView>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" maximumZoomScale="2" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OmD-6c-Jna">
+                        <rect key="frame" x="0.0" y="38" width="356" height="483"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="356" id="fjS-zW-gSE"/>
+                        </constraints>
+                    </tableView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" identifier="CellForEventDurationDurationTable" id="1z0-VG-lmT"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="trailing" secondItem="OmD-6c-Jna" secondAttribute="trailing" constant="-46" identifier="CellForEventDurationDurationTable" id="402-8J-pnB"/>
+                <constraint firstItem="OmD-6c-Jna" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" constant="-38" identifier="CellForEventDurationDurationTable" id="9Lt-Rs-WLv"/>
+                <constraint firstAttribute="trailing" secondItem="QHC-ea-uSp" secondAttribute="trailing" identifier="CellForEventDurationDayOfTheWeekView" id="Isg-qt-R3t"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="top" secondItem="OmD-6c-Jna" secondAttribute="top" identifier="CellForEventDurationDurationTable" id="KJ4-Xk-1dM"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" identifier="CellForEventDurationDurationTable" id="SYN-bj-oPs"/>
+                <constraint firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="bottom" identifier="CellForEventDurationDurationTable" id="hZX-Mr-7bU"/>
+                <constraint firstItem="QcO-BN-Y6E" firstAttribute="leading" secondItem="OmD-6c-Jna" secondAttribute="leading" constant="28" identifier="CellForEventDurationDurationTable" id="idL-mY-UEy"/>
+                <constraint firstItem="QHC-ea-uSp" firstAttribute="bottom" secondItem="OmD-6c-Jna" secondAttribute="top" identifier="CellForEventDurationDurationTable" id="khP-Of-AAH"/>
+            </constraints>
+            <size key="customSize" width="379" height="655"/>
+            <connections>
+                <outlet property="dayOfTheWeekCollectionView" destination="QHC-ea-uSp" id="Qlf-as-mEb"/>
+                <outlet property="eventDurationTableView" destination="OmD-6c-Jna" id="8br-Dg-qdU"/>
+                <outlet property="viewForAccurateCalc" destination="QcO-BN-Y6E" id="VCZ-bi-9xL"/>
+            </connections>
+            <point key="canvasLocation" x="180.15267175572518" y="139.08450704225353"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
