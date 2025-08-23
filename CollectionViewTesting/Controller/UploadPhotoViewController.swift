@@ -56,7 +56,7 @@ extension UploadPhotoViewController {
 	
 	func updateProfilePhoto(with image: UIImage) {
 		guard let userID = Auth.auth().currentUser?.uid else { return }
-		DatabaseManagerForSignUpandLogin.shared.uploadProfilePhoto(image: image, for: userID) { [weak self] result in
+		userService.shared.uploadProfilePhoto(image: image, for: userID) { [weak self] result in
 			switch result {
 			case .success(let url):
 				print("**Successfully uploaded photo: \(url)")

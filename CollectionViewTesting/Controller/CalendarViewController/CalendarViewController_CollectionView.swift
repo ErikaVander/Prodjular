@@ -72,10 +72,10 @@ extension CalendarViewController: UICollectionViewDataSource {
 				cellOne.cellDate = plusmonth(date: theDate)
 			}
 			
-			if(eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
+			if(eventService.shared.eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
 				cellOne.theDotViewBackgroundView.isHidden = false
 				
-				for events in eventsForDate(parDate: theDate) {
+				for events in eventService.shared.eventsForDate(parDate: theDate) {
 					let dotViewWidth: CGFloat = 4
 					let dotViewHeight: CGFloat = 4
 					
@@ -103,8 +103,8 @@ extension CalendarViewController: UICollectionViewDataSource {
 					
 					//If statement for setting up theDotViewBackgroundView
 					var widthMultiplier: CGFloat = 0
-					if eventsForDate(parDate: theDate).count <= 4 {
-						widthMultiplier = CGFloat(eventsForDate(parDate: theDate).count)
+					if eventService.shared.eventsForDate(parDate: theDate).count <= 4 {
+						widthMultiplier = CGFloat(eventService.shared.eventsForDate(parDate: theDate).count)
 						
 						let theDotViewBackgroundBottomConstraint: NSLayoutConstraint = cellOne.theDotViewBackgroundView.bottomAnchor.constraint(equalTo: cellOne.label.bottomAnchor, constant: 7)
 						theDotViewBackgroundBottomConstraint.isActive = true

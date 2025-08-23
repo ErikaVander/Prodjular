@@ -66,7 +66,7 @@ class CalendarViewController: UIViewController {
 			if(user != nil && user?.isEmailVerified == true) {
 				print("** User: \(Auth.auth().currentUser?.email ?? "Was a nil value") --")
 				//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
-				DatabaseManagerForCollectionViewController.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
+				userService.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
 //					print("--user2: ", user)
 					currentUser = user
 				}
@@ -77,7 +77,7 @@ class CalendarViewController: UIViewController {
 			}
 		}
 		
-		DatabaseManagerForCollectionViewController.shared.delegate = self
+		eventService.shared.delegate = self
 		
 		///bannerAd view setup
 		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"

@@ -24,6 +24,7 @@
 		D61F04CA25D3891D00A2BC05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */; };
 		D62335592CBDE42500FEC65A /* FriendReqTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */; };
 		D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */; };
+		D627D4D32E598CB4003E5E9A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627D4D22E598CA5003E5E9A /* HomeViewController.swift */; };
 		D629397F27B2F87F00BF4FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */; };
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
 		D6301151267AA10800128ADA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6301150267AA10800128ADA /* Event.swift */; };
@@ -57,6 +58,8 @@
 		D6E35C0D285242AD00D8B327 /* EventDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */; };
 		D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC825027470611002F7BA8 /* dotViewContainerReusableView.swift */; };
 		D6EC825327470611002F7BA8 /* dotViewContainerReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6EC825127470611002F7BA8 /* dotViewContainerReusableView.xib */; };
+		D6F2F56C2E5984900006E502 /* genericTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F2F56B2E5984900006E502 /* genericTable.xib */; };
+		D6F2F56D2E5984900006E502 /* genericTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F2F56A2E5984900006E502 /* genericTable.swift */; };
 		D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */; };
 		D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */; };
 		D6F9C69E273DB712003298E1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C69C273DB712003298E1 /* TableViewCell.swift */; };
@@ -91,6 +94,7 @@
 		D61F04CB25D3891D00A2BC05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendReqTableViewCell.swift; sourceTree = "<group>"; };
 		D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendReqTableViewCell.xib; sourceTree = "<group>"; };
+		D627D4D22E598CA5003E5E9A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDurationViewController.swift; sourceTree = "<group>"; };
 		D6EC825027470611002F7BA8 /* dotViewContainerReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dotViewContainerReusableView.swift; sourceTree = "<group>"; };
 		D6EC825127470611002F7BA8 /* dotViewContainerReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = dotViewContainerReusableView.xib; sourceTree = "<group>"; };
+		D6F2F56A2E5984900006E502 /* genericTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genericTable.swift; sourceTree = "<group>"; };
+		D6F2F56B2E5984900006E502 /* genericTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = genericTable.xib; sourceTree = "<group>"; };
 		D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		D6F9C69C273DB712003298E1 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -197,6 +203,57 @@
 			path = CollectionViewTesting;
 			sourceTree = "<group>";
 		};
+		D627D4CE2E598C13003E5E9A /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				D64566652C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift */,
+				D64566662C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib */,
+				D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */,
+				D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */,
+				D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */,
+				D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		D627D4CF2E598C3A003E5E9A /* MonthView */ = {
+			isa = PBXGroup;
+			children = (
+				D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */,
+				D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */,
+				D6F9C69C273DB712003298E1 /* TableViewCell.swift */,
+				D6F9C69D273DB712003298E1 /* TableViewCell.xib */,
+				D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */,
+				D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */,
+				D6EC825027470611002F7BA8 /* dotViewContainerReusableView.swift */,
+				D6EC825127470611002F7BA8 /* dotViewContainerReusableView.xib */,
+			);
+			path = MonthView;
+			sourceTree = "<group>";
+		};
+		D627D4D02E598C72003E5E9A /* WeekView */ = {
+			isa = PBXGroup;
+			children = (
+				D6E35C072852428D00D8B327 /* EventDurationTableViewCell.swift */,
+				D6E35C062852428C00D8B327 /* EventDurationTableViewCell.xib */,
+				D61C37302B2BC10D00AB705A /* weekNumberForEventDuration.swift */,
+				D61C37312B2BC10D00AB705A /* weekNumberForEventDuration.xib */,
+				D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */,
+				D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */,
+			);
+			path = WeekView;
+			sourceTree = "<group>";
+		};
+		D627D4D12E598C98003E5E9A /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */,
+				D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */,
+				D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
 		D64566642C6FC8B200A8AF7B /* Maybe later */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,26 +269,11 @@
 				D64566642C6FC8B200A8AF7B /* Maybe later */,
 				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
 				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
-				D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */,
-				D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */,
-				D6F9C69C273DB712003298E1 /* TableViewCell.swift */,
-				D6F9C69D273DB712003298E1 /* TableViewCell.xib */,
-				D6F9C6A0273DFD4B003298E1 /* ColorPickerCell.swift */,
-				D6F9C6A1273DFD4B003298E1 /* ColorPickerCell.xib */,
-				D6EC825027470611002F7BA8 /* dotViewContainerReusableView.swift */,
-				D6EC825127470611002F7BA8 /* dotViewContainerReusableView.xib */,
-				D6E35C072852428D00D8B327 /* EventDurationTableViewCell.swift */,
-				D6E35C062852428C00D8B327 /* EventDurationTableViewCell.xib */,
-				D61C37302B2BC10D00AB705A /* weekNumberForEventDuration.swift */,
-				D61C37312B2BC10D00AB705A /* weekNumberForEventDuration.xib */,
-				D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */,
-				D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */,
-				D64566652C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift */,
-				D64566662C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib */,
-				D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */,
-				D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */,
-				D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */,
-				D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */,
+				D627D4CF2E598C3A003E5E9A /* MonthView */,
+				D627D4D02E598C72003E5E9A /* WeekView */,
+				D627D4CE2E598C13003E5E9A /* Friends */,
+				D6F2F56A2E5984900006E502 /* genericTable.swift */,
+				D6F2F56B2E5984900006E502 /* genericTable.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -239,6 +281,7 @@
 		D69CDA4325E07584001F03AF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D627D4D22E598CA5003E5E9A /* HomeViewController.swift */,
 				D6B9A1442CD1E6F200946ACE /* UploadPhotoViewController.swift */,
 				D6DB6641278F96440087550C /* CalendarViewController */,
 				D630114D267A978C00128ADA /* EventViewController.swift */,
@@ -247,9 +290,7 @@
 				D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */,
 				D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */,
 				D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */,
-				D6FC107B2C6EAA6100BD4D00 /* YourFriendsViewController.swift */,
-				D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */,
-				D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */,
+				D627D4D12E598C98003E5E9A /* Friends */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -364,6 +405,7 @@
 				D61F04CA25D3891D00A2BC05 /* LaunchScreen.storyboard in Resources */,
 				D64566632C6FC10F00A8AF7B /* HeaderViewController.xib in Resources */,
 				D6B9A1472CD2948100946ACE /* PrivacyInfo.xcprivacy in Resources */,
+				D6F2F56C2E5984900006E502 /* genericTable.xib in Resources */,
 				D6F9C69F273DB712003298E1 /* TableViewCell.xib in Resources */,
 				D61F04C725D3891D00A2BC05 /* Assets.xcassets in Resources */,
 				D6E35C082852428D00D8B327 /* EventDurationTableViewCell.xib in Resources */,
@@ -449,6 +491,7 @@
 				D6E35C0D285242AD00D8B327 /* EventDurationViewController.swift in Sources */,
 				D6DB6643278F96970087550C /* CalendarViewController_Navigation.swift in Sources */,
 				D6DB664B278F97AB0087550C /* CalendarViewController_TableView.swift in Sources */,
+				D627D4D32E598CB4003E5E9A /* HomeViewController.swift in Sources */,
 				D64566672C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift in Sources */,
 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
 				D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */,
@@ -467,6 +510,7 @@
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
 				D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */,
+				D6F2F56D2E5984900006E502 /* genericTable.swift in Sources */,
 				D6BE7AB926C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift in Sources */,
 				D64566622C6FC10F00A8AF7B /* HeaderViewController.swift in Sources */,
 				D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */,

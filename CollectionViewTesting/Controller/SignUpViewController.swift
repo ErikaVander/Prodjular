@@ -82,7 +82,7 @@ extension SignUpViewController {
 			if Auth.auth().currentUser?.isEmailVerified == true {
 				//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
 				
-				DatabaseManagerForCollectionViewController.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "", profilePhotoURL: "to be set"))
+				userService.shared.insertUser(with: ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "", profilePhotoURL: "to be set"))
 				currentUser = ProjdularUser(email: (Auth.auth().currentUser?.email)!, userID: Auth.auth().currentUser!.uid, userName: self.userNameTextfieldSignUp.text ?? "", profilePhotoURL: "to be set")
 				
 //				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)

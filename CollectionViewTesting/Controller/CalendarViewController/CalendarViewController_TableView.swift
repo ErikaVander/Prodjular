@@ -11,9 +11,9 @@ import UIKit
 extension CalendarViewController: UITableViewDataSource {
 	///Determines the number of rows in each section of the tableView which is 	determined by the function eventsForDate which returns all the events that are associated with any givin date.
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
+		eventsForTableViewCell = eventService.shared.eventsForDate(parDate: selectedDate)
 		
-		if eventsForDate(parDate: selectedDate).isEmpty == false {
+		if eventService.shared.eventsForDate(parDate: selectedDate).isEmpty == false {
 			return eventsForTableViewCell.count
 		} else {
 			return 0
@@ -30,7 +30,7 @@ extension CalendarViewController: UITableViewDataSource {
 		//		majorStackViewConstraint.isActive = true
 		//		majorStackViewConstraint.identifier = "majorStackViewConstraint-width"
 		
-		eventsForTableViewCell = eventsForDate(parDate: selectedDate)
+		eventsForTableViewCell = eventService.shared.eventsForDate(parDate: selectedDate)
 		
 		if tableView.numberOfRows(inSection: 0) == 0 {
 			
@@ -64,9 +64,9 @@ extension CalendarViewController: UITableViewDataSource {
 }
 
 //MARK: TableViewDelegate
-extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegateForCollectionViewController {
+extension CalendarViewController: UITableViewDelegate, eventServiceDelegate {
 	
-	func logicForDeletingTableViewCell(_ databaseManager: DatabaseManagerForCollectionViewController, indexPath: IndexPath) {
+	func logicForDeletingTableViewCell(_ databaseManager: eventService, indexPath: IndexPath) {
 		DispatchQueue.main.async {
 			
 			eventsForTableViewCell.remove(at: indexPath.row)
@@ -89,7 +89,7 @@ extension CalendarViewController: UITableViewDelegate, DatabaseManagerDelegateFo
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			DatabaseManagerForCollectionViewController.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
+			eventService.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
 		}
 	}
 }

@@ -30,7 +30,7 @@ class AccountInfoViewController: UIViewController {
 		setProfileImageConstraints()
 //		profileImage.image = currentUserProfilePhoto!
 		if initialLoadingOfDataForAccountInfo == true {
-			DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: Auth.auth().currentUser!.uid) { [weak self] result in
+			userService.shared.loadProfilePhoto(for: Auth.auth().currentUser!.uid) { [weak self] result in
 				switch result {
 				case .failure(let error):
 					print("**error: ", error)
@@ -41,7 +41,7 @@ class AccountInfoViewController: UIViewController {
 			print("--initialLoadingOfDataForAccountInfo = true")
 			initialLoadingOfDataForAccountInfo = false
 		} else {
-			DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: Auth.auth().currentUser!.uid) { [weak self] result in
+			userService.shared.loadProfilePhotoWithCaching(for: Auth.auth().currentUser!.uid) { [weak self] result in
 				switch result {
 				case .failure(let error):
 					print("**error: ", error)
@@ -104,7 +104,7 @@ extension AccountInfoViewController {
 extension AccountInfoViewController {
 	func updateProfilePhoto(with image: UIImage) {
 		guard let userID = Auth.auth().currentUser?.uid else { return }
-		DatabaseManagerForSignUpandLogin.shared.uploadProfilePhoto(image: image, for: userID) { [weak self] result in
+		userService.shared.uploadProfilePhoto(image: image, for: userID) { [weak self] result in
 			switch result {
 			case .success(let url):
 				print("**Successfully uploaded photo: \(url)")

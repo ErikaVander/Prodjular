@@ -16,7 +16,7 @@ class AddFriendViewController: UIViewController {
 	@IBOutlet weak var searchButton: UIButton!
 	
 	@IBAction func addFriend(_ sender: Any) {
-		DatabaseManagerForFriendViewController.shared.findAndAddFriend(emailToFind: emailTextBox.text!) {found in
+		friendService.shared.findAndAddFriend(emailToFind: emailTextBox.text!) {found in
 			if found == "found" {
 				alertUserAndGoBack(view: self, title: "Success", content: "You've added an new friend!", dismissView: true)
 			} else if found == "notFound"{

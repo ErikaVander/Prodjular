@@ -74,7 +74,7 @@ extension FriendRequestViewController: UITableViewDataSource {
 				cellOne.nameLabel.text = friendReqReceived[indexPath.item].userName
 				cellOne.emailLabel.text = friendReqReceived[indexPath.item].email
 				if(initialLoadingOfDataForFriendRequest == true) {
-					DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
+					userService.shared.loadProfilePhoto(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
 						switch result {
 						case .success(let image):
 							cellOne.friendProfilePhoto.image = image
@@ -85,7 +85,7 @@ extension FriendRequestViewController: UITableViewDataSource {
 					print("--initialLoadingOfDataForFriendRequest == true")
 					initialLoadingOfDataForFriendRequest = false
 				} else {
-					DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
+					userService.shared.loadProfilePhotoWithCaching(for: friendReqReceived[indexPath.item].id, completion: { [weak self] result in
 						switch result {
 						case .success(let image):
 							cellOne.friendProfilePhoto.image = image
@@ -131,7 +131,7 @@ extension FriendRequestViewController: UITableViewDelegate, FriendReqTableViewCe
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendList[indexPath.item], indexPath: indexPath)
+			friendService.shared.deleteFriendFromCell(with: friendList[indexPath.item], indexPath: indexPath)
 		}
 	}
 	

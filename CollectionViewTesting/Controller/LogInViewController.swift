@@ -47,7 +47,7 @@ extension LogInViewController {
 				return
 			}
 			//UDM.shared.defaults.setValue(true, forKey: "isLoggedIn")
-			DatabaseManagerForSignUpandLogin.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
+			userService.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) {user in
 				currentUser = user
 			}
 			print("**User has signed in: \(authResult?.user.email ?? "No user has signed in") isLoggedIn: \(true)")

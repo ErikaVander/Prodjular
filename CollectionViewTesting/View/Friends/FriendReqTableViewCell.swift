@@ -38,12 +38,12 @@ class FriendReqTableViewCell: UITableViewCell {
 	}
 	
 	@IBAction func acceptFriend(_ sender: Any) {
-		DatabaseManagerForFriendViewController.shared.acceptFriendRequest(friend: self.friend)
+		friendService.shared.acceptFriendRequest(friend: self.friend)
 		self.delegate!.deleteRow(cell: self, friend: self.friend)
 	}
 	
 	@IBAction func declineFriend(_ sender: Any) {
-		DatabaseManagerForFriendViewController.shared.declineFriendRequest(friend: self.friend)
+		friendService.shared.declineFriendRequest(friend: self.friend)
 		self.delegate!.deleteRow(cell: self, friend: self.friend)
 	}
 	

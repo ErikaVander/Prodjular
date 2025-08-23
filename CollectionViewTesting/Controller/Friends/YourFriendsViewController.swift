@@ -47,7 +47,7 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.dataSource = self
 		friendsTableView.delegate = self
 		
-		DatabaseManagerForFriendViewController.shared.delegate = self
+		friendService.shared.delegate = self
 		
 		friendsTableView.translatesAutoresizingMaskIntoConstraints = false
 		setupPullToRefresh()
@@ -61,7 +61,7 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.rowHeight = UITableView.automaticDimension
 		friendsTableView.reloadData()
 		
-		DatabaseManagerForFriendViewController.shared.fetchFriendsData { result in
+		friendService.shared.fetchFriendsData { result in
 			print("--hello")
 		}
 	}
@@ -178,7 +178,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 						cellOne.nameLabel.text = friendReqSent[indexPath.item].userName
 						cellOne.emailLabel.text = friendReqSent[indexPath.item].email
 						if(initialLoadingOfDataForFriendsTableView == true) {
-							DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendReqSent[indexPath.item].id, completion: { [weak self] result in
+							userService.shared.loadProfilePhoto(for: friendReqSent[indexPath.item].id, completion: { [weak self] result in
 								switch result {
 								case .success(let image):
 									cellOne.friendProfilePhoto.image = image
@@ -188,7 +188,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 							})
 							initialLoadingOfDataForFriendsTableView = false
 						} else {
-							DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendReqSent[indexPath.item].id, completion: { [weak self] result in
+							userService.shared.loadProfilePhotoWithCaching(for: friendReqSent[indexPath.item].id, completion: { [weak self] result in
 								switch result {
 								case .success(let image):
 									cellOne.friendProfilePhoto.image = image
@@ -235,7 +235,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 						cellOne.nameLabel.text = friendList[indexPath.item].userName
 						cellOne.emailLabel.text = friendList[indexPath.item].email
 						if(initialLoadingOfDataForFriendsTableView == true) {
-							DatabaseManagerForSignUpandLogin.shared.loadProfilePhoto(for: friendList[indexPath.item].id, completion: { [weak self] result in
+							userService.shared.loadProfilePhoto(for: friendList[indexPath.item].id, completion: { [weak self] result in
 								switch result {
 								case .success(let image):
 									cellOne.friendProfilePhoto.image = image
@@ -246,7 +246,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 							print("--initialLoadingOfDataForFriendTableView == true")
 							initialLoadingOfDataForFriendsTableView = false
 						} else {
-							DatabaseManagerForSignUpandLogin.shared.loadProfilePhotoWithCaching(for: friendList[indexPath.item].id, completion: { [weak self] result in
+							userService.shared.loadProfilePhotoWithCaching(for: friendList[indexPath.item].id, completion: { [weak self] result in
 								switch result {
 								case .success(let image):
 									cellOne.friendProfilePhoto.image = image
@@ -280,7 +280,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 
 
 //MARK: TableViewDelegate
-extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegateForFriendsViewController {
+extension YourFriendsViewController: UITableViewDelegate, friendServiceDelegate {
 	
 	private func setupPullToRefresh() {
 		// Configure refresh control
@@ -309,7 +309,7 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 		}
 	}
 	
-	func logicForDeletingFriendTableViewCell(_ databaseManager: DatabaseManagerForFriendViewController, indexPath: IndexPath) {
+	func logicForDeletingFriendTableViewCell(_ databaseManager: friendService, indexPath: IndexPath) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else {return}
 			friendList.remove(at: indexPath.item)
@@ -334,7 +334,7 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 				
 				print("**cell: ", cell?.friend ?? "did not find a friend")
 				
-				DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendReqSent[index!], indexPath: indexPath)
+				friendService.shared.deleteFriendFromCell(with: friendReqSent[index!], indexPath: indexPath)
 				friendReqSent.remove(at: index!)
 				
 			} else if(indexPath.section == 1) {
@@ -343,7 +343,7 @@ extension YourFriendsViewController: UITableViewDelegate, DatabaseManagerDelegat
 				
 				print("**cell: ", cell?.friend ?? "did not find a friend")
 				
-				DatabaseManagerForFriendViewController.shared.deleteFriendFromCell(with: friendList[index!], indexPath: indexPath)
+				friendService.shared.deleteFriendFromCell(with: friendList[index!], indexPath: indexPath)
 				
 			}
 		}
