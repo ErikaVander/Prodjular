@@ -28,6 +28,8 @@
 		D629397F27B2F87F00BF4FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */; };
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
 		D6301151267AA10800128ADA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6301150267AA10800128ADA /* Event.swift */; };
+		D63F4F332E5A505D008304A6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63F4F322E5A5059008304A6 /* Group.swift */; };
+		D63F4F372E5AD1D1008304A6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63F4F362E5AD1C7008304A6 /* Notification.swift */; };
 		D64566622C6FC10F00A8AF7B /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64566602C6FC10F00A8AF7B /* HeaderViewController.swift */; };
 		D64566632C6FC10F00A8AF7B /* HeaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D64566612C6FC10F00A8AF7B /* HeaderViewController.xib */; };
 		D64566672C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64566652C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift */; };
@@ -98,6 +100,8 @@
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		D63F4F322E5A5059008304A6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		D63F4F362E5AD1C7008304A6 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		D64566602C6FC10F00A8AF7B /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
 		D64566612C6FC10F00A8AF7B /* HeaderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderViewController.xib; sourceTree = "<group>"; };
 		D64566652C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -298,6 +302,8 @@
 		D69CDA4425E07595001F03AF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D63F4F362E5AD1C7008304A6 /* Notification.swift */,
+				D63F4F322E5A5059008304A6 /* Group.swift */,
 				D61221642CB5E9A60050B22C /* UDM.swift */,
 				D673DA0425D486AA009C56EF /* CalendarHelper.swift */,
 				D6301150267AA10800128ADA /* Event.swift */,
@@ -502,6 +508,7 @@
 				D6F9C6A5273EFF03003298E1 /* Color.swift in Sources */,
 				D612CC4C2CD05D71009B40C8 /* Friend.swift in Sources */,
 				D615A04E2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift in Sources */,
+				D63F4F332E5A505D008304A6 /* Group.swift in Sources */,
 				D6F9C6A2273DFD4B003298E1 /* ColorPickerCell.swift in Sources */,
 				D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */,
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,
@@ -509,6 +516,7 @@
 				D6B46CCB2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift in Sources */,
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
+				D63F4F372E5AD1D1008304A6 /* Notification.swift in Sources */,
 				D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */,
 				D6F2F56D2E5984900006E502 /* genericTable.swift in Sources */,
 				D6BE7AB926C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift in Sources */,

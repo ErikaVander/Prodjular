@@ -34,19 +34,16 @@ final class eventService {
 	
 	private let database = Database.database().reference()
 	
-	///Adds an event to daysEvents which is an array of ProjdularEvents
+	///Returns a list of all events on a given date
 	public func eventsForDate(parDate: Date) -> [ProjdularEvent] {
-		
 		var daysEvents = [ProjdularEvent]()
-		for event in eventList
-		{
-		let eventDate = calendar.dateComponents([.day, .month, .year], from: event.startDate)
-		let parDateC = calendar.dateComponents([.day, .month, .year], from: parDate)
-		if(eventDate == parDateC)
-		{
-		daysEvents.append(event)
-		//print("--addedEvent")
-		}
+		for event in eventList {
+			let eventDate = calendar.dateComponents([.day, .month, .year], from: event.startDate)
+			let parDateC = calendar.dateComponents([.day, .month, .year], from: parDate)
+			if(eventDate == parDateC) {
+				daysEvents.append(event)
+				//print("--addedEvent")
+			}
 		}
 		return daysEvents
 	}
