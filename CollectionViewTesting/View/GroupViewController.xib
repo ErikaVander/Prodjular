@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroupViewController" customModule="CollectionViewTesting" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="dv3-pW-7rQ" id="eN9-wg-Fl8"/>
+                <outlet property="groupInvitationsView" destination="TOd-0B-igd" id="B4w-0v-LGN"/>
+                <outlet property="groupsView" destination="Cp4-wv-zxt" id="uOi-nO-wOr"/>
+                <outlet property="homeButton" destination="urZ-yb-3Pf" id="nY2-93-iF7"/>
+                <outlet property="numGroupsButton" destination="GZE-si-AJv" id="iHL-E9-OLk"/>
+                <outlet property="numInvitesButton" destination="UxP-ho-Znh" id="any-fi-aHh"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Anm-Ps-LxY">
+                    <rect key="frame" x="23" y="80.666666666666657" width="42" height="40.333333333333329"/>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Anm-Ps-LxY" secondAttribute="height" multiplier="1:1" id="7w3-p2-BI6"/>
+                        <constraint firstAttribute="width" secondItem="Anm-Ps-LxY" secondAttribute="height" multiplier="1:1" id="9BX-b0-4xr"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Groups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFF-5c-8lb">
+                    <rect key="frame" x="65.000000000000014" y="79.333333333333329" width="200.33333333333337" height="42"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dv3-pW-7rQ">
+                    <rect key="frame" x="9" y="35" width="39.666666666666664" height="34.333333333333343"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
+                    <connections>
+                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Zz2-iA-8j0"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZE-si-AJv">
+                    <rect key="frame" x="23" y="129" width="75" height="35"/>
+                    <color key="backgroundColor" name="UIGreen"/>
+                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOd-0B-igd" customClass="GenericTableWithHeader" customModule="CollectionViewTesting" customModuleProvider="target">
+                    <rect key="frame" x="23" y="189" width="368" height="184"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cp4-wv-zxt" customClass="GenericTableWithHeader" customModule="CollectionViewTesting" customModuleProvider="target">
+                    <rect key="frame" x="23" y="397.99999999999994" width="368" height="245.33333333333331"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UxP-ho-Znh">
+                    <rect key="frame" x="106" y="129.33333333333334" width="98" height="34.333333333333343"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Button" imagePadding="7" titleAlignment="leading">
+                        <imageReference key="image" image="bell" catalog="system" symbolScale="medium"/>
+                        <directionalEdgeInsets key="contentInsets" top="7" leading="8" bottom="7" trailing="13"/>
+                    </buttonConfiguration>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urZ-yb-3Pf">
+                    <rect key="frame" x="350.33333333333331" y="35" width="54.666666666666686" height="34.333333333333343"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="house" catalog="system"/>
+                    <connections>
+                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="cVW-AJ-VRQ"/>
+                        <action selector="goHome:" destination="-1" eventType="touchUpInside" id="J31-nl-Aom"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="urZ-yb-3Pf" firstAttribute="centerY" secondItem="dv3-pW-7rQ" secondAttribute="centerY" id="57b-pO-7my"/>
+                <constraint firstItem="nFF-5c-8lb" firstAttribute="centerY" secondItem="Anm-Ps-LxY" secondAttribute="centerY" id="BIY-dp-rJQ"/>
+                <constraint firstItem="TOd-0B-igd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="23" id="ENK-bF-IUs"/>
+                <constraint firstItem="Anm-Ps-LxY" firstAttribute="top" secondItem="dv3-pW-7rQ" secondAttribute="bottom" constant="10" id="Eqm-ge-KI6"/>
+                <constraint firstItem="Cp4-wv-zxt" firstAttribute="top" secondItem="TOd-0B-igd" secondAttribute="bottom" constant="25" id="Fzg-6X-hba"/>
+                <constraint firstItem="Cp4-wv-zxt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="23" id="GHE-zn-Acn"/>
+                <constraint firstItem="Anm-Ps-LxY" firstAttribute="height" secondItem="nFF-5c-8lb" secondAttribute="height" id="JM6-hY-l5X"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Cp4-wv-zxt" secondAttribute="trailing" constant="23" id="KFA-P7-R3r"/>
+                <constraint firstItem="Cp4-wv-zxt" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="1:3" id="LQp-81-2DL"/>
+                <constraint firstItem="TOd-0B-igd" firstAttribute="top" secondItem="GZE-si-AJv" secondAttribute="bottom" constant="25" id="NgS-BZ-2st"/>
+                <constraint firstItem="dv3-pW-7rQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="15" id="QC9-Fc-4IP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="urZ-yb-3Pf" secondAttribute="trailing" constant="9" id="TBL-Lx-y6h"/>
+                <constraint firstItem="nFF-5c-8lb" firstAttribute="leading" secondItem="Anm-Ps-LxY" secondAttribute="trailing" id="X8k-zK-CHr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TOd-0B-igd" secondAttribute="trailing" constant="23" id="aHy-jk-EtC"/>
+                <constraint firstItem="dv3-pW-7rQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="9" id="cab-2b-Jtn"/>
+                <constraint firstItem="UxP-ho-Znh" firstAttribute="leading" secondItem="GZE-si-AJv" secondAttribute="trailing" constant="8" symbolic="YES" id="dkK-y8-S9G"/>
+                <constraint firstItem="GZE-si-AJv" firstAttribute="top" secondItem="Anm-Ps-LxY" secondAttribute="bottom" constant="7.6666666666666856" id="fcQ-vs-EIi"/>
+                <constraint firstItem="Anm-Ps-LxY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="23" id="gY7-if-69t"/>
+                <constraint firstItem="TOd-0B-igd" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="1:4" id="iqX-Kh-Fcj"/>
+                <constraint firstItem="GZE-si-AJv" firstAttribute="leading" secondItem="Anm-Ps-LxY" secondAttribute="leading" id="l8v-Hb-hng"/>
+                <constraint firstItem="UxP-ho-Znh" firstAttribute="centerY" secondItem="GZE-si-AJv" secondAttribute="centerY" id="lDT-el-KtS"/>
+                <constraint firstItem="TOd-0B-igd" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="urP-2R-Cwr"/>
+            </constraints>
+            <point key="canvasLocation" x="130.43478260869566" y="-11.413043478260871"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="person.2" catalog="system" width="128" height="87"/>
+        <namedColor name="UIGreen">
+            <color red="0.77300000190734863" green="0.94999998807907104" blue="0.84700000286102295" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

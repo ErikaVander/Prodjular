@@ -28,6 +28,7 @@ protocol notificationServiceDelegate: AnyObject {
 	func notificationWasRemoved(at index: Int)
 	func notificationListDidLoad(_notifications: [ProjdularNotification])
 	func didReceiveError(_ error: Error)
+//	func didStopObserving()
 }
 
 final class notificationService {
@@ -44,20 +45,21 @@ final class notificationService {
 		
 		let valueObserver = userNotificationsRef.child("notifications").observe(.value) {[weak self] snapshot in
 			self?.handleInitialLoad(snapshot)
+			print("**Snapshot 1: \(snapshot)")
 		}
 		observers.append(valueObserver)
 		
-		let addedObserver = userNotificationsRef.observe(.childAdded) {[weak self] snapshot in
+		let addedObserver = userNotificationsRef.child("notifications").observe(.childAdded) {[weak self] snapshot in
 			self?.handleChildAdded(snapshot)
 		}
 		observers.append(addedObserver)
 		
-		let changedObserver = userNotificationsRef.observe(.childChanged) {[weak self] snapshot in
+		let changedObserver = userNotificationsRef.child("notifications").observe(.childChanged) {[weak self] snapshot in
 			self?.handleChildChanged(snapshot)
 		}
 		observers.append(changedObserver)
 		
-		let removedObserver = userNotificationsRef.observe(.childRemoved) {[weak self] snapshot in
+		let removedObserver = userNotificationsRef.child("notifications").observe(.childRemoved) {[weak self] snapshot in
 			self?.handleChildRemoved(snapshot)
 		}
 		observers.append(removedObserver)
@@ -65,10 +67,11 @@ final class notificationService {
 	
 	private func handleInitialLoad(_ snapshot: DataSnapshot) {
 		var notifications: [ProjdularNotification] = []
-		
+		print("**Snapshot: \(snapshot)")
 		for child in snapshot.children {
 			if let notification = parseNotification(from: child as? DataSnapshot) {
 				notifications.append(notification)
+				print("**\(notification)")
 			}
 		}
 		
@@ -120,12 +123,13 @@ final class notificationService {
 	private func parseNotification(from snapshot: DataSnapshot?) -> ProjdularNotification? {
 		guard let snapshot = snapshot,
 			  let notificationID = snapshot.key as String?,
-			  let data = snapshot.value as? [String: Any],
-			  let header = data["header"] as? String,
-			  let content = data["content"] as? String,
-			  let timestamp = data["timestamp"] as? String else {
+			  let data = snapshot.value as? [String: Any] else {
 			return nil
 		}
+		
+		let header = data["header"] as? String ?? ""
+		let content = data["content"] as? String ?? ""
+		let timestamp = data["timestamp"] as? String ?? "946684800.0"
 		
 		// For this example, we'll use placeholder data
 		// In reality, you'd fetch user profile data here
@@ -171,6 +175,18 @@ final class notificationService {
 				print("Data could not be saved: \(error).")
 			} else {
 				print("Data saved successfully at \(database.url).")
+			}
+		}
+	}
+	
+	///Deletes group
+	public func notificationDelete(with notification: ProjdularNotification, indexPath: IndexPath) {
+		database.child("users").child(Auth.auth().currentUser!.uid).child("notifications").child(String(describing: notification.id)).setValue(nil) { error, database in
+			if let error = error {
+				print("**Data could not be saved: \(error).")
+			} else {
+				self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
+				print("**Data saved successfully at \(database.url)")
 			}
 		}
 	}

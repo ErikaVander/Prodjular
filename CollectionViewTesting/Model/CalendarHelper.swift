@@ -30,6 +30,12 @@ func plusDay(date: Date) -> Date
 	return calendar.date(byAdding: .day, value: 1, to: date)!
 }
 
+///Finds the date one day before the given date
+func minusDay(date: Date) -> Date
+{
+	return calendar.date(byAdding: .day, value: -1, to: date)!
+}
+
 ///Finds the date one month before the given date
 func minusMonth(date: Date) -> Date
 {
@@ -200,4 +206,30 @@ func currentDateAndTime() -> Date {
 	let minute = calendar.component(.minute, from: Date())
 	
 	return calendar.date(from: .init(timeZone: TimeZone(abbreviation: "UTC"), year: year, month: month, day: day, hour: hour, minute: minute))!
+}
+
+func timeIntervalToDate(timeInterval: TimeInterval) -> Date {
+	return Date(timeIntervalSince1970: timeInterval)
+}
+
+func getHowLongAgoFromTimeInterval(date: Date) -> String {
+	if(calendar.isDateInToday(date)) {
+		let formatter = DateFormatter()
+		formatter.timeStyle = .short
+		formatter.dateStyle = .none
+//		formatter.timeZone = .current
+		return formatter.string(from: date)
+	} else if(calendar.isDateInYesterday(date)) {
+		return "Yesterday"
+	} else if(calendar.isDate(date, equalTo: Date(), toGranularity: .weekOfYear)) {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "EEEE"
+//		dateFormatter.timeZone = .current
+		return dateFormatter.string(from: date)
+	} else {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "M/d/yy"
+//		dateFormatter.timeZone = .current
+		return dateFormatter.string(from: date)
+	}
 }

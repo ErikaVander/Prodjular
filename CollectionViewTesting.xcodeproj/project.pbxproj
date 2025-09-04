@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		D6020EFB2CB7770C0090231D /* EmptyFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */; };
 		D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */; };
+		D61053702E5D0ABC00E439B1 /* userGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610536F2E5D0AB000E439B1 /* userGroup.swift */; };
+		D61053722E5E277300E439B1 /* userEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61053712E5E276E00E439B1 /* userEvent.swift */; };
+		D61053742E5E28BD00E439B1 /* groupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61053732E5E28A900E439B1 /* groupEvent.swift */; };
+		D61053772E5E2E4400E439B1 /* userFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61053762E5E2E4100E439B1 /* userFriend.swift */; };
+		D6105E922E693D0B009145AD /* GenericTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6105E8C2E693D0B009145AD /* GenericTable.swift */; };
+		D6105E932E693D0B009145AD /* GenericTableWithHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6105E8E2E693D0B009145AD /* GenericTableWithHeader.swift */; };
+		D6105E942E693D0B009145AD /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6105E902E693D0B009145AD /* GroupViewController.swift */; };
+		D6105E952E693D0B009145AD /* GenericTableWithHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6105E8F2E693D0B009145AD /* GenericTableWithHeader.xib */; };
+		D6105E962E693D0B009145AD /* GroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6105E912E693D0B009145AD /* GroupViewController.xib */; };
+		D6105E972E693D0B009145AD /* GenericTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6105E8D2E693D0B009145AD /* GenericTable.xib */; };
 		D61221632CB5E3720050B22C /* DatabaseManagerForSignUpandLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61221622CB5E3600050B22C /* DatabaseManagerForSignUpandLogin.swift */; };
 		D61221652CB5E9AA0050B22C /* UDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61221642CB5E9A60050B22C /* UDM.swift */; };
 		D612CC4C2CD05D71009B40C8 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D612CC4B2CD05D71009B40C8 /* Friend.swift */; };
@@ -48,6 +58,8 @@
 		D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB626C6D95200498ECB /* alertUser.swift */; };
 		D6BE7AB926C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB826C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift */; };
 		D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D23CFD2756C95C00B0F210 /* SettingsHelper.swift */; };
+		D6D928272E68192B0072390C /* NotificationTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6D928262E68192B0072390C /* NotificationTableCell.xib */; };
+		D6D928282E68192B0072390C /* NotificationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D928252E68192B0072390C /* NotificationTableCell.swift */; };
 		D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DAA77626951D55005B7D6B /* SignUpViewController.swift */; };
 		D6DB6643278F96970087550C /* CalendarViewController_Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DB6642278F96970087550C /* CalendarViewController_Navigation.swift */; };
 		D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DB6644278F96D40087550C /* CalendarViewController_Database.swift */; };
@@ -60,8 +72,6 @@
 		D6E35C0D285242AD00D8B327 /* EventDurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */; };
 		D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC825027470611002F7BA8 /* dotViewContainerReusableView.swift */; };
 		D6EC825327470611002F7BA8 /* dotViewContainerReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6EC825127470611002F7BA8 /* dotViewContainerReusableView.xib */; };
-		D6F2F56C2E5984900006E502 /* genericTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F2F56B2E5984900006E502 /* genericTable.xib */; };
-		D6F2F56D2E5984900006E502 /* genericTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F2F56A2E5984900006E502 /* genericTable.swift */; };
 		D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */; };
 		D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */; };
 		D6F9C69E273DB712003298E1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F9C69C273DB712003298E1 /* TableViewCell.swift */; };
@@ -79,6 +89,16 @@
 		987C9BF11BE1AB7FB4148C73 /* Pods-CollectionViewTesting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.debug.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.debug.xcconfig"; sourceTree = "<group>"; };
 		D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyFriendsTableViewCell.xib; sourceTree = "<group>"; };
+		D610536F2E5D0AB000E439B1 /* userGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userGroup.swift; sourceTree = "<group>"; };
+		D61053712E5E276E00E439B1 /* userEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userEvent.swift; sourceTree = "<group>"; };
+		D61053732E5E28A900E439B1 /* groupEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupEvent.swift; sourceTree = "<group>"; };
+		D61053762E5E2E4100E439B1 /* userFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userFriend.swift; sourceTree = "<group>"; };
+		D6105E8C2E693D0B009145AD /* GenericTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTable.swift; sourceTree = "<group>"; };
+		D6105E8D2E693D0B009145AD /* GenericTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTable.xib; sourceTree = "<group>"; };
+		D6105E8E2E693D0B009145AD /* GenericTableWithHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableWithHeader.swift; sourceTree = "<group>"; };
+		D6105E8F2E693D0B009145AD /* GenericTableWithHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTableWithHeader.xib; sourceTree = "<group>"; };
+		D6105E902E693D0B009145AD /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
+		D6105E912E693D0B009145AD /* GroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupViewController.xib; sourceTree = "<group>"; };
 		D61221622CB5E3600050B22C /* DatabaseManagerForSignUpandLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForSignUpandLogin.swift; sourceTree = "<group>"; };
 		D61221642CB5E9A60050B22C /* UDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDM.swift; sourceTree = "<group>"; };
 		D612CC4B2CD05D71009B40C8 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
@@ -121,6 +141,8 @@
 		D6BE7AB626C6D95200498ECB /* alertUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertUser.swift; sourceTree = "<group>"; };
 		D6BE7AB826C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForCollectionViewController.swift; sourceTree = "<group>"; };
 		D6D23CFD2756C95C00B0F210 /* SettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelper.swift; sourceTree = "<group>"; };
+		D6D928252E68192B0072390C /* NotificationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableCell.swift; sourceTree = "<group>"; };
+		D6D928262E68192B0072390C /* NotificationTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableCell.xib; sourceTree = "<group>"; };
 		D6DAA77626951D55005B7D6B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D6DB6642278F96970087550C /* CalendarViewController_Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController_Navigation.swift; sourceTree = "<group>"; };
 		D6DB6644278F96D40087550C /* CalendarViewController_Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController_Database.swift; sourceTree = "<group>"; };
@@ -133,8 +155,6 @@
 		D6E35C0C285242AD00D8B327 /* EventDurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDurationViewController.swift; sourceTree = "<group>"; };
 		D6EC825027470611002F7BA8 /* dotViewContainerReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dotViewContainerReusableView.swift; sourceTree = "<group>"; };
 		D6EC825127470611002F7BA8 /* dotViewContainerReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = dotViewContainerReusableView.xib; sourceTree = "<group>"; };
-		D6F2F56A2E5984900006E502 /* genericTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genericTable.swift; sourceTree = "<group>"; };
-		D6F2F56B2E5984900006E502 /* genericTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = genericTable.xib; sourceTree = "<group>"; };
 		D6F9C698273DB6D3003298E1 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		D6F9C699273DB6D3003298E1 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		D6F9C69C273DB712003298E1 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -172,6 +192,17 @@
 				7CF1FD251F2473728A7C1A73 /* Pods-CollectionViewTesting.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D6105E8B2E693CD0009145AD /* ReusableView */ = {
+			isa = PBXGroup;
+			children = (
+				D6105E8C2E693D0B009145AD /* GenericTable.swift */,
+				D6105E8D2E693D0B009145AD /* GenericTable.xib */,
+				D6105E8E2E693D0B009145AD /* GenericTableWithHeader.swift */,
+				D6105E8F2E693D0B009145AD /* GenericTableWithHeader.xib */,
+			);
+			path = ReusableView;
 			sourceTree = "<group>";
 		};
 		D61F04B125D3891C00A2BC05 = {
@@ -270,14 +301,17 @@
 		D69CDA4125E0755A001F03AF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D6105E8B2E693CD0009145AD /* ReusableView */,
 				D64566642C6FC8B200A8AF7B /* Maybe later */,
 				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
 				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
 				D627D4CF2E598C3A003E5E9A /* MonthView */,
 				D627D4D02E598C72003E5E9A /* WeekView */,
 				D627D4CE2E598C13003E5E9A /* Friends */,
-				D6F2F56A2E5984900006E502 /* genericTable.swift */,
-				D6F2F56B2E5984900006E502 /* genericTable.xib */,
+				D6D928252E68192B0072390C /* NotificationTableCell.swift */,
+				D6D928262E68192B0072390C /* NotificationTableCell.xib */,
+				D6105E902E693D0B009145AD /* GroupViewController.swift */,
+				D6105E912E693D0B009145AD /* GroupViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -302,6 +336,10 @@
 		D69CDA4425E07595001F03AF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D61053762E5E2E4100E439B1 /* userFriend.swift */,
+				D61053732E5E28A900E439B1 /* groupEvent.swift */,
+				D61053712E5E276E00E439B1 /* userEvent.swift */,
+				D610536F2E5D0AB000E439B1 /* userGroup.swift */,
 				D63F4F362E5AD1C7008304A6 /* Notification.swift */,
 				D63F4F322E5A5059008304A6 /* Group.swift */,
 				D61221642CB5E9A60050B22C /* UDM.swift */,
@@ -411,13 +449,16 @@
 				D61F04CA25D3891D00A2BC05 /* LaunchScreen.storyboard in Resources */,
 				D64566632C6FC10F00A8AF7B /* HeaderViewController.xib in Resources */,
 				D6B9A1472CD2948100946ACE /* PrivacyInfo.xcprivacy in Resources */,
-				D6F2F56C2E5984900006E502 /* genericTable.xib in Resources */,
 				D6F9C69F273DB712003298E1 /* TableViewCell.xib in Resources */,
 				D61F04C725D3891D00A2BC05 /* Assets.xcassets in Resources */,
 				D6E35C082852428D00D8B327 /* EventDurationTableViewCell.xib in Resources */,
 				D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */,
+				D6105E952E693D0B009145AD /* GenericTableWithHeader.xib in Resources */,
+				D6105E962E693D0B009145AD /* GroupViewController.xib in Resources */,
+				D6105E972E693D0B009145AD /* GenericTable.xib in Resources */,
 				D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
+				D6D928272E68192B0072390C /* NotificationTableCell.xib in Resources */,
 				D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */,
 				D64566682C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib in Resources */,
 				D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */,
@@ -517,10 +558,15 @@
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
 				D63F4F372E5AD1D1008304A6 /* Notification.swift in Sources */,
+				D61053722E5E277300E439B1 /* userEvent.swift in Sources */,
+				D61053772E5E2E4400E439B1 /* userFriend.swift in Sources */,
+				D61053742E5E28BD00E439B1 /* groupEvent.swift in Sources */,
 				D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */,
-				D6F2F56D2E5984900006E502 /* genericTable.swift in Sources */,
 				D6BE7AB926C6DCE700498ECB /* DatabaseManagerForCollectionViewController.swift in Sources */,
 				D64566622C6FC10F00A8AF7B /* HeaderViewController.swift in Sources */,
+				D6105E922E693D0B009145AD /* GenericTable.swift in Sources */,
+				D6105E932E693D0B009145AD /* GenericTableWithHeader.swift in Sources */,
+				D6105E942E693D0B009145AD /* GroupViewController.swift in Sources */,
 				D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */,
 				D645666C2C6FCBFF00A8AF7B /* User.swift in Sources */,
 				D6E35C0B285242A000D8B327 /* customGesture.swift in Sources */,
@@ -533,7 +579,9 @@
 				D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */,
 				D61221652CB5E9AA0050B22C /* UDM.swift in Sources */,
 				D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */,
+				D61053702E5D0ABC00E439B1 /* userGroup.swift in Sources */,
 				D6A12A432CB866FF00BF2E88 /* FriendRequestViewController.swift in Sources */,
+				D6D928282E68192B0072390C /* NotificationTableCell.swift in Sources */,
 				D61F04C025D3891D00A2BC05 /* SceneDelegate.swift in Sources */,
 				D6E35C092852428D00D8B327 /* EventDurationTableViewCell.swift in Sources */,
 			);

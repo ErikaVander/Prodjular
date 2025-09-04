@@ -65,8 +65,20 @@ extension CalendarViewController: UITableViewDataSource {
 
 //MARK: TableViewDelegate
 extension CalendarViewController: UITableViewDelegate, eventServiceDelegate {
+	func eventListDidLoad(events: [ProjdularEvent]) {
+		print("hello")
+	}
 	
-	func logicForDeletingTableViewCell(_ databaseManager: eventService, indexPath: IndexPath) {
+	func pendingEventListDidLoad(events: [ProjdularEvent]) {
+		print("hello")
+	}
+	
+	func didReceiveError(error: any Error) {
+		print("hello")
+	}
+	
+	
+	func logicForDeletingTableViewCell(databaseManager: eventService, indexPath: IndexPath) {
 		DispatchQueue.main.async {
 			
 			eventsForTableViewCell.remove(at: indexPath.row)
@@ -89,7 +101,7 @@ extension CalendarViewController: UITableViewDelegate, eventServiceDelegate {
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			eventService.shared.deleteEvent(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
+			eventService.shared.deleteEventFromUIView(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
 		}
 	}
 }

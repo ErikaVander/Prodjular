@@ -9,25 +9,26 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
-///An array of ProjdularEvents
+///An array storing user's groups
 var groupList = [ProjdularGroup]()
 
 ///The definition of a ProdjularEvent.
-struct ProjdularGroup : Equatable {
+struct ProjdularGroup {
 	var id: String
 	let nameOfGroup: String
 	var numOfMembers: Int
-	var members: [ProjdularUser]
-	var events: [ProjdularEvent]
+	var members: [GroupMember]
+	var events: [String:Any]
 	var description: String?
+}
+
+struct GroupMember {
+	var id: String
+	var isAdmin: Bool
 }
 
 protocol groupServiceDelegate: AnyObject {
 	func logicForDeletingTableViewCell(_ databaseManager: groupService, indexPath: IndexPath)
-	func groupWasAdded(_ group: ProjdularGroup, at index: Int)
-	func groupWasChanged(_ group: ProjdularGroup, at index: Int)
-	func groupNameWasChanged(_ group: ProjdularGroup, at index: Int)
-	func groupWasRemoved(at index: Int)
 	func groupListDidLoad(_groups: [ProjdularGroup])
 	func didReceiveError(_ error: Error)
 }
@@ -40,111 +41,60 @@ final class groupService {
 	private let database = Database.database().reference()
 	private var observers: [DatabaseHandle] = []
 	
-	func startObservingUserGroups(for userID: String) {
+	func startObservingGroups(for groupID: String) {
 		stopObserving()
-		let userGroupsRef = database.child("users").child(Auth.auth().currentUser!.uid)
+		let groupsRef = database.child("groups").child(groupID)
 		
-		let valueObserver = userGroupsRef.child("groups").observe(.value) {[weak self] snapshot in
-			self?.handleInitialLoad(snapshot)
+		let valueObserver = groupsRef.observe(.value) {[weak self] snapshot in
+			if(!snapshot.exists()) {
+				let existingIndex = groupList.firstIndex(where: {$0.id == snapshot.key})
+				print("\n\n**groupList before: \(groupList)\n\n")
+				groupList.remove(at: existingIndex!)
+				print("**groupList: \(groupList)\n\n")
+				self!.stopObserving()
+			} else {
+				self?.handleInitialLoad(snapshot)
+			}
 		}
 		observers.append(valueObserver)
-		
-		let addedObserver = userGroupsRef.observe(.childAdded) {[weak self] snapshot in
-			self?.handleChildAdded(snapshot)
-		}
-		observers.append(addedObserver)
-		
-		let changedObserver = userGroupsRef.observe(.childChanged) {[weak self] snapshot in
-			self?.handleChildChanged(snapshot)
-		}
-		observers.append(changedObserver)
-		
-		let removedObserver = userGroupsRef.observe(.childRemoved) {[weak self] snapshot in
-			self?.handleChildRemoved(snapshot)
-		}
-		observers.append(removedObserver)
 	}
 	
 	private func handleInitialLoad(_ snapshot: DataSnapshot) {
-		var groups: [ProjdularGroup] = []
-		
-		for child in snapshot.children {
-			if let group = parseGroup(from: child as? DataSnapshot) {
-				groups.append(group)
+		if let group = parseGroup(from: snapshot as? DataSnapshot) {
+			let existingIndex = groupList.firstIndex(where: {$0.id == snapshot.key})
+			if(existingIndex == nil) {
+				groupList.append(group)
+			} else {
+				groupList[existingIndex!] = group
 			}
 		}
 		
-		groups.sort{$0.nameOfGroup < $1.nameOfGroup}
-		groupList = groups
+		groupList.sort{$0.nameOfGroup < $1.nameOfGroup}
 		
 		DispatchQueue.main.async {
-			self.delegate?.groupListDidLoad(_groups: groups)
+			self.delegate?.groupListDidLoad(_groups: groupList)
 		}
-	}
-	
-	private func handleChildAdded(_ snapshot: DataSnapshot) {
-		guard let group = parseGroup(from: snapshot) else { return }
-
-		let insertIndex = groupList.firstIndex{$0.nameOfGroup > group.nameOfGroup} ?? groupList.count
-		groupList.insert(group, at: insertIndex)
-		
-		DispatchQueue.main.async {
-			self.delegate?.groupWasAdded(group, at: insertIndex)
-		}
-		
-		let notification = ProjdularNotification(id: "", header: "New group invite", content: "You have been invited to join \(group.nameOfGroup)", timestamp: Date().timeIntervalSince1970)
-		notificationService.shared.notificationUpdateAndWrite(with: notification, isWriteNotUpdate: true)
-	}
-	
-	private func handleChildChanged(_ snapshot: DataSnapshot) {
-		guard let updatedGroup = parseGroup(from: snapshot),
-			  let existingIndex = groupList.firstIndex(where: {$0.id == updatedGroup.id }) else {
-			return
-		}
-		
-		if(updatedGroup.nameOfGroup != groupList[existingIndex].nameOfGroup) {
-			let index = groupList.firstIndex{$0.nameOfGroup > updatedGroup.nameOfGroup} ?? groupList.count
-			groupList.remove(at: existingIndex)
-			// Update the friend in our local array
-			groupList.insert(updatedGroup, at: index)
-			DispatchQueue.main.async {
-				self.delegate?.groupNameWasChanged(updatedGroup, at: existingIndex)
-			}
-		} else {
-			// Update the friend in our local array
-			groupList[existingIndex] = updatedGroup
-			DispatchQueue.main.async {
-				self.delegate?.groupWasChanged(updatedGroup, at: existingIndex)
-			}
-		}
-	}
-	
-	private func handleChildRemoved(_ snapshot: DataSnapshot) {
-		guard let groupID = snapshot.key as String?,
-			  let existingIndex = groupList.firstIndex(where: { $0.id == groupID }) else {
-			return
-		}
-		
-		groupList.remove(at: existingIndex)
-		
-		DispatchQueue.main.async {
-			self.delegate?.groupWasRemoved(at: existingIndex)
-		}
-		
-		let notification = ProjdularNotification(id: "", header: "\(groupList[existingIndex].nameOfGroup) deleted", content: "This group has been dissolved by the Admin.", timestamp: Date().timeIntervalSince1970)
-		notificationService.shared.notificationUpdateAndWrite(with: notification, isWriteNotUpdate: true)
 	}
 	
 	private func parseGroup(from snapshot: DataSnapshot?) -> ProjdularGroup? {
 		guard let snapshot = snapshot,
 			  let groupID = snapshot.key as String?,
-			  let data = snapshot.value as? [String: Any],
-			  let name = data["name"] as? String,
-			  let numOfMembers = data["numOfMembers"] as? Int,
-			  let members = data["members"] as? [ProjdularUser],
-			  let events = data["events"] as? [ProjdularEvent],
-			  let description = data["description"] as? String else {
+			  let data = snapshot.value as? [String: Any] else {
 			return nil
+		}
+		
+		let name = data["name"] as? String ?? ""
+		let numOfMembers = data["numOfMembers"] as? Int ?? 0
+		let membersDict = data["members"] as? [String: Any] ?? [:]
+		let events = data["events"] as? [String:Any] ?? [:]
+		let description = data["description"] as? String ?? ""
+		
+		var members: [GroupMember] = []
+		for(userID, value) in membersDict {
+			if let memberData = value as? [String: Any],
+			   let isAdmin = memberData["isAdmin"] as? Bool {
+				members.append(GroupMember(id: userID, isAdmin: isAdmin))
+			}
 		}
 		
 		// For this example, we'll use placeholder data
@@ -165,6 +115,7 @@ final class groupService {
 		}
 		observers.removeAll()
 		groupList.removeAll()
+		print("\n\n**stop observing called\n\n")
 	}
 	
 	///Writes the new group or updates group into the firebase database.
@@ -186,20 +137,37 @@ final class groupService {
 					 "description": group.description] as [String:Any]
 		
 		//create a list of paths to update
-		let childUpdates = ["/groups/\(key)":group,
-							"/users/\(Auth.auth().currentUser!.uid)/groups/\(key)":group]
+		let childUpdates = ["/groups/\(key)":group]
 		
 		//update occurs here
 		database.updateChildValues(childUpdates) { error, database in
 			if let error = error {
-				print("Data could not be saved: \(error).")
+				print("\n\n**Data could not be saved: \(error).\n\n")
 			} else {
-				print("Data saved successfully at \(database.url).")
+				print("\n\n**Data saved successfully at \(database.url).\n\n")
 			}
 		}
 	}
 	
-	func observeUsersGroups() {
-		database.child("users").child(Auth.auth().currentUser!.uid).child("groups")
+	///Deletes group
+	public func groupDeleteFromUIView(with group: ProjdularGroup, indexPath: IndexPath) {
+		database.child("groups").child(String(describing: group.id)).setValue(nil) { error, database in
+			if let error = error {
+				print("\n\n**Data could not be saved: \(error).\n\n")
+			} else {
+				self.delegate?.logicForDeletingTableViewCell(self, indexPath: indexPath)
+				print("\n\n**Data saved successfully at \(database.url)\n\n")
+			}
+		}
+	}
+	
+	public func groupDelete(with groupID: String) {
+		database.child("groups").child(groupID).setValue(nil) { error, database in
+			if let error = error {
+				print("\n\n**Data could not be saved: \(error).\n\n")
+			} else {
+				print("\n\n**Data saved successfully at \(database.url)\n\n")
+			}
+		}
 	}
 }

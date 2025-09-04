@@ -70,7 +70,7 @@ class EventViewController: UIViewController
 		dateFormat.timeStyle = .full
 		dateFormat.dateStyle = .short
 		
-		eventService.shared.newEvent(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate, tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text))
+		eventService.shared.eventUpdateAndWrite(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate,tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text), isWriteNotUpdate: true)
 		selectedColorFromColorsArray = ColorsArray[0]
 	}
 	
