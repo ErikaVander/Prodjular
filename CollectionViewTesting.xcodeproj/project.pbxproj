@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D6020EFB2CB7770C0090231D /* EmptyFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */; };
 		D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */; };
+		D60EEE2E2E6F634400E113F5 /* userPendingGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */; };
 		D61053702E5D0ABC00E439B1 /* userGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D610536F2E5D0AB000E439B1 /* userGroup.swift */; };
 		D61053722E5E277300E439B1 /* userEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61053712E5E276E00E439B1 /* userEvent.swift */; };
 		D61053742E5E28BD00E439B1 /* groupEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61053732E5E28A900E439B1 /* groupEvent.swift */; };
@@ -38,6 +39,8 @@
 		D629397F27B2F87F00BF4FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */; };
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
 		D6301151267AA10800128ADA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6301150267AA10800128ADA /* Event.swift */; };
+		D63328CB2E6A30E300909A69 /* GroupsTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63328C92E6A30E300909A69 /* GroupsTC.swift */; };
+		D63328CC2E6A30E300909A69 /* GroupsTC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D63328CA2E6A30E300909A69 /* GroupsTC.xib */; };
 		D63F4F332E5A505D008304A6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63F4F322E5A5059008304A6 /* Group.swift */; };
 		D63F4F372E5AD1D1008304A6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63F4F362E5AD1C7008304A6 /* Notification.swift */; };
 		D64566622C6FC10F00A8AF7B /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64566602C6FC10F00A8AF7B /* HeaderViewController.swift */; };
@@ -89,6 +92,7 @@
 		987C9BF11BE1AB7FB4148C73 /* Pods-CollectionViewTesting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.debug.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.debug.xcconfig"; sourceTree = "<group>"; };
 		D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyFriendsTableViewCell.xib; sourceTree = "<group>"; };
+		D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userPendingGroups.swift; sourceTree = "<group>"; };
 		D610536F2E5D0AB000E439B1 /* userGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userGroup.swift; sourceTree = "<group>"; };
 		D61053712E5E276E00E439B1 /* userEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userEvent.swift; sourceTree = "<group>"; };
 		D61053732E5E28A900E439B1 /* groupEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupEvent.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		D63328C92E6A30E300909A69 /* GroupsTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTC.swift; sourceTree = "<group>"; };
+		D63328CA2E6A30E300909A69 /* GroupsTC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsTC.xib; sourceTree = "<group>"; };
 		D63F4F322E5A5059008304A6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		D63F4F362E5AD1C7008304A6 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		D64566602C6FC10F00A8AF7B /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
@@ -312,6 +318,8 @@
 				D6D928262E68192B0072390C /* NotificationTableCell.xib */,
 				D6105E902E693D0B009145AD /* GroupViewController.swift */,
 				D6105E912E693D0B009145AD /* GroupViewController.xib */,
+				D63328C92E6A30E300909A69 /* GroupsTC.swift */,
+				D63328CA2E6A30E300909A69 /* GroupsTC.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -336,6 +344,7 @@
 		D69CDA4425E07595001F03AF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */,
 				D61053762E5E2E4100E439B1 /* userFriend.swift */,
 				D61053732E5E28A900E439B1 /* groupEvent.swift */,
 				D61053712E5E276E00E439B1 /* userEvent.swift */,
@@ -455,6 +464,7 @@
 				D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */,
 				D6105E952E693D0B009145AD /* GenericTableWithHeader.xib in Resources */,
 				D6105E962E693D0B009145AD /* GroupViewController.xib in Resources */,
+				D63328CC2E6A30E300909A69 /* GroupsTC.xib in Resources */,
 				D6105E972E693D0B009145AD /* GenericTable.xib in Resources */,
 				D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
@@ -539,11 +549,13 @@
 				D6DB6643278F96970087550C /* CalendarViewController_Navigation.swift in Sources */,
 				D6DB664B278F97AB0087550C /* CalendarViewController_TableView.swift in Sources */,
 				D627D4D32E598CB4003E5E9A /* HomeViewController.swift in Sources */,
+				D63328CB2E6A30E300909A69 /* GroupsTC.swift in Sources */,
 				D64566672C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift in Sources */,
 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
 				D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */,
 				D6B9A1452CD1E6F200946ACE /* UploadPhotoViewController.swift in Sources */,
 				D61C37322B2BC10D00AB705A /* weekNumberForEventDuration.swift in Sources */,
+				D60EEE2E2E6F634400E113F5 /* userPendingGroups.swift in Sources */,
 				D6B46CC92C70186E0050EDFB /* AddFriendViewController.swift in Sources */,
 				D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */,
 				D6F9C6A5273EFF03003298E1 /* Color.swift in Sources */,

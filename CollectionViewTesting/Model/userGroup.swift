@@ -10,11 +10,14 @@ import FirebaseDatabase
 import FirebaseAuth
 
 ///An array storing group ids of all user's groups
-var userGroups = [userGroup]()
+var userGroupsList = [userGroup]()
 
-struct userGroup : Equatable {
+struct userGroup : Equatable, Hashable {
 	var id: String
-	var isMember: Bool
+	var name: String
+	var isAdmin: Bool
+	var adminName: String
+	var numOfMembers: Int
 }
 
 protocol userGroupServiceDelegate: AnyObject {
@@ -39,6 +42,7 @@ final class userGroupService {
 		
 		let addedObserver = userGroupsRef.child("groups").observe(.childAdded) {[weak self] snapshot in
 			self?.handleChildAddedUserGroups(snapshot)
+			print("**userGroup snapshot: \(snapshot)")
 		}
 		observers.append(addedObserver)
 		
@@ -54,9 +58,11 @@ final class userGroupService {
 	}
 	
 	private func handleChildAddedUserGroups(_ snapshot: DataSnapshot) {
-		guard let group = parseUserGroup(from: snapshot) else { return }
+		guard let group = parseUserGroup(from: snapshot) else {
+			print("ERROR: Colud not parse UserGroup")
+			return }
 		
-		userGroups.append(group)
+		userGroupsList.append(group)
 		
 		DispatchQueue.main.async {
 			self.delegate?.userGroupWasAdded(group)
@@ -65,12 +71,12 @@ final class userGroupService {
 	
 	private func handleChildChangedUserGroups(_ snapshot: DataSnapshot) {
 		guard let updatedUserGroup = parseUserGroup(from: snapshot),
-			  let existingIndex = userGroups.firstIndex(where: {$0.id == updatedUserGroup.id }) else {
+			  let existingIndex = userGroupsList.firstIndex(where: {$0.id == updatedUserGroup.id }) else {
 			return
 		}
 		
 		// Update the friend in our local array
-		userGroups[existingIndex] = updatedUserGroup
+		userGroupsList[existingIndex] = updatedUserGroup
 		DispatchQueue.main.async {
 			self.delegate?.userGroupWasChanged(updatedUserGroup, at: existingIndex)
 		}
@@ -78,11 +84,11 @@ final class userGroupService {
 	
 	private func handleChildRemovedUserGroups(_ snapshot: DataSnapshot) {
 		guard let groupID = snapshot.key as String?,
-			  let existingIndex = userGroups.firstIndex(where: {$0.id == groupID}) else {
+			  let existingIndex = userGroupsList.firstIndex(where: {$0.id == groupID}) else {
 			return
 		}
 		
-		userGroups.remove(at: existingIndex)
+		userGroupsList.remove(at: existingIndex)
 		
 		DispatchQueue.main.async {
 			self.delegate?.userGroupWasRemoved(at: existingIndex)
@@ -94,16 +100,23 @@ final class userGroupService {
 	private func parseUserGroup(from snapshot: DataSnapshot?) -> userGroup? {
 		guard let snapshot = snapshot,
 			  let groupID = snapshot.key as String?,
-			  let data = snapshot.value as? [String: Any],
-			  let isMember = data["isMember"] as? Bool else {
+			  let data = snapshot.value as? [String: Any] else {
 			return nil
 		}
+		
+		let name = data["name"] as? String ?? ""		
+		let isMember = data["isAdmin"] as? Bool ?? false
+		let adminName = data["adminName"] as? String ?? ""
+		let numOfMembers = data["numOfMembers"] as? Int ?? 0
 		
 		// For this example, we'll use placeholder data
 		// In reality, you'd fetch user profile data here
 		return userGroup(
 			id: groupID,
-			isMember: isMember // Fetch from users node
+			name: name,
+			isAdmin: isMember, // Fetch from users node
+			adminName: adminName,
+			numOfMembers: numOfMembers
 		)
 	}
 	
@@ -134,6 +147,6 @@ final class userGroupService {
 			database.removeObserver(withHandle: handle)
 		}
 		observers.removeAll()
-		groupList.removeAll()
+		userGroupsList.removeAll()
 	}
 }

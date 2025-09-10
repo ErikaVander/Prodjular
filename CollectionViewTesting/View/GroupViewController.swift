@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class GroupViewController: UIViewController {
+class GroupViewController: UIViewController, GenericTableWithHeaderDelegate {
+	var cellHeight = 79.0
+	private var groupInvitationsViewHeightConstraint: NSLayoutConstraint?
+	var groupsTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, userGroup>!
+	var invitationsTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, userPendingGroup>!
+	private var initialLoadOfGroups = true
+	private var initialLoadOfInvitations = true
+	
+	@IBOutlet weak var tableViewsContainerView: UIView!
 	@IBOutlet weak var homeButton: UIButton!
 	@IBOutlet weak var groupInvitationsView: GenericTableWithHeader!
 	@IBOutlet weak var groupsView: GenericTableWithHeader!
@@ -17,15 +26,22 @@ class GroupViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		setTableViewDelegateAndDataSource()
+		setTableViewInitialHeight()
 		setButtonViews()
+		configureTableViewDataSources()
     }
 	@IBAction func goBack(_ sender: Any) {
+		userGroupService.shared.stopObserving()
+		userPendingGroupService.shared.stopObserving()
 		self.dismiss(animated: true)
 	}
 	@IBAction func goHome(_ sender: Any) {
+		userGroupService.shared.stopObserving()
+		userPendingGroupService.shared.stopObserving()
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		guard let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else {
-			print("**Could not instantiate viewController")
+			print("**ERROR: Could not instantiate viewController")
 			return
 		}
 //		let vc = HomeViewController(name: "HomeViewController", bundle: nil)
@@ -54,5 +70,247 @@ class GroupViewController: UIViewController {
 		let numInvites = groupList.count
 		numInvitesButton.setTitle("\(numInvites) Invites", for: .normal)
 		numInvitesButton.setImage(UIImage(systemName: "bell"), for: .normal)
+	}
+	
+	func setGenericTableWithHeaderView() {
+		groupInvitationsView.tableView.beginUpdates()
+		groupsView.tableView.beginUpdates()
+		print("**Here here \(groupInvitationsView.hideButtonP?.title(for: .normal) == "hide")")
+		if(userPendingGroupsList.count <= 1 && groupInvitationsView.hideButtonP?.title(for: .normal) == "hide") {
+			self.groupInvitationsViewHeightConstraint?.constant = cellHeight
+			CATransaction.begin()
+			CATransaction.setDisableActions(true)
+			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height + cellHeight)
+			CATransaction.commit()
+		} else if (groupInvitationsView.hideButtonP?.title(for: .normal) == "hide") {
+			print("**Here 2")
+			self.groupInvitationsViewHeightConstraint?.constant = cellHeight+(cellHeight/2)
+			CATransaction.begin()
+			CATransaction.setDisableActions(true)
+			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height + cellHeight + (cellHeight/2))
+			CATransaction.commit()
+		} else {
+			self.groupInvitationsViewHeightConstraint?.constant = 0
+			CATransaction.begin()
+			CATransaction.setDisableActions(true)
+			self.groupsView.setContentViewWithInnerShadow(width: self.groupsView.contentView.bounds.width, height: self.groupsView.contentView.bounds.height + cellHeight)
+			CATransaction.commit()
+		}
+		print("**Subviews \(self.tableViewsContainerView.subviews)")
+		self.tableViewsContainerView.setNeedsLayout()
+//		self.groupInvitationsView.setContentViewConstraints()
+//		self.groupsView.setContentViewConstraints()
+//		self.groupInvitationsView.removeContentViewInnerShadowForAnimation()
+//		self.groupsView.removeContentViewInnerShadowForAnimation()
+		UIView.animate(withDuration: 0.3) {
+			self.tableViewsContainerView.layoutIfNeeded()
+		} completion: { _ in
+			self.groupsView.setContentViewWithInnerShadow(width: self.groupsView.contentView.bounds.width, height: self.groupsView.contentView.bounds.height)
+			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height)
+			self.groupInvitationsView.tableView.endUpdates()
+			self.groupsView.tableView.endUpdates()
+//			self.groupInvitationsView.setContentViewWithInnerShadow()
+//			self.groupsView.setContentViewWithInnerShadow()
+		}
+	}
+}
+
+extension GroupViewController {
+	enum Section {
+		case main
+	}
+	func configureTableViewDataSources() {
+		groupsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupsView.tableView) { (tableView, indexPath, group) -> UITableViewCell? in
+			let cellOne = self.groupsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
+			cellOne.nameLabel.text = group.name
+			cellOne.adminLabel.text = group.adminName
+			cellOne.numMembersLabel.text = "\(group.numOfMembers) Members"
+			self.cellHeight = cellOne.frame.height
+			cellOne.hideAcceptButtonView()
+			return cellOne
+		}
+		invitationsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupInvitationsView.tableView) { (tableView, indexPath, pendingGroup) -> UITableViewCell? in
+			let cellOne = self.groupInvitationsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
+			cellOne.nameLabel.text = pendingGroup.name
+			cellOne.adminLabel.text = pendingGroup.adminName
+			cellOne.numMembersLabel.text = "\(pendingGroup.numOfMembers) Members"
+			self.cellHeight = cellOne.frame.height
+			cellOne.showAcceptButtonView()
+			return cellOne
+		}
+	}
+	func setTableViewDelegateAndDataSource() {
+		userGroupService.shared.delegate = self
+		userGroupService.shared.startObservingUserGroups(for: Auth.auth().currentUser!.uid)
+		
+		userPendingGroupService.shared.delegate = self
+		userPendingGroupService.shared.startObservingUserPendingGroups(for: Auth.auth().currentUser!.uid)
+		
+		groupInvitationsView.delegate = self
+		
+//		groupsView.tableView.delegate = self
+//		groupsView.tableView.dataSource = self
+		groupsView.headerLabel.text = "Groups"
+		groupsView.tableView.register(UINib(nibName: "GroupsTC", bundle: nil), forCellReuseIdentifier: "groupsTC")
+		groupsView.addPlusAndSearchButton()
+		
+//		groupInvitationsView.tableView.delegate = self
+//		groupInvitationsView.tableView.dataSource = self
+		groupInvitationsView.headerLabel.text = "Group Invitations"
+		groupInvitationsView.tableView.register(UINib(nibName: "GroupsTC", bundle: nil), forCellReuseIdentifier: "groupsTC")
+		groupInvitationsView.addHideButton()
+	}
+	func setTableViewInitialHeight() {
+		let initialHeight = (userPendingGroupsList.count <= 1) ? cellHeight : cellHeight + (cellHeight / 2)
+		let newConstraint = groupInvitationsView.tableView.heightAnchor.constraint(equalToConstant: initialHeight)
+		newConstraint.identifier = "groupInvitationsViewHeightConstraint"
+		newConstraint.isActive = true
+		self.groupInvitationsViewHeightConstraint = newConstraint
+	}
+	func applyInvitationsSnapshotAndAdjustHeight() {
+		var snapshot = NSDiffableDataSourceSnapshot<Section, userPendingGroup>()
+		snapshot.appendSections([.main])
+		if(groupInvitationsView.hideButtonP.title(for: .normal) == "hide") {
+			snapshot.appendItems(userPendingGroupsList)
+		}
+		invitationsTableViewDiffableDataSource.apply(snapshot, animatingDifferences: !initialLoadOfInvitations) { [weak self] in
+			guard let self = self else {return}
+			
+			initialLoadOfInvitations = false
+			let rowCount = userPendingGroupsList.count
+			let newHeight: CGFloat
+			let widthForInnerShadowFunc = groupInvitationsView.contentView.bounds.width
+			let heightForInnerShadowFunc: CGFloat
+			
+			if (groupInvitationsView.hideButtonP.title(for: .normal) == "show") {
+				newHeight = 0
+				heightForInnerShadowFunc = groupsView.contentView.bounds.height + cellHeight
+			} else if rowCount <= 1 {
+				newHeight = self.cellHeight
+				heightForInnerShadowFunc = groupInvitationsView.contentView.bounds.height + cellHeight
+			} else {
+				newHeight = 1.5 * self.cellHeight
+				heightForInnerShadowFunc = groupInvitationsView.contentView.bounds.height + (cellHeight * 1.5)
+			}
+			
+			CATransaction.begin()
+			CATransaction.setCompletionBlock {
+				UIView.animate(withDuration: 0.3) {
+					self.groupInvitationsViewHeightConstraint?.constant = newHeight
+					self.tableViewsContainerView.layoutIfNeeded()
+				}
+			}
+			CATransaction.setDisableActions(true)
+			if (groupInvitationsView.hideButtonP.title(for: .normal) == "show") {
+				self.groupsView.setContentViewWithInnerShadow(width: widthForInnerShadowFunc, height: heightForInnerShadowFunc)
+			} else {
+				self.groupInvitationsView.setContentViewWithInnerShadow(width: widthForInnerShadowFunc, height: heightForInnerShadowFunc)
+			}
+			CATransaction.commit()
+			
+			self.groupInvitationsView.tableView.isScrollEnabled = rowCount > 1
+		}
+	}
+	func applyGroupsSnapshot() {
+		var snapshot = NSDiffableDataSourceSnapshot<Section, userGroup>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(userGroupsList)
+		groupsTableViewDiffableDataSource.apply(snapshot, animatingDifferences: !initialLoadOfGroups) { [weak self] in
+			guard let self = self else {return}
+			initialLoadOfGroups = false
+			let rowCount = userGroupsList.count
+
+//				self.tableViewsContainerView.layoutIfNeeded()
+			
+			self.groupInvitationsView.tableView.isScrollEnabled = rowCount > 1
+		}
+	}
+}
+
+//extension GroupViewController: UITableViewDelegate {
+//	
+//}
+//
+//extension GroupViewController: UITableViewDataSource {
+//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//		if(tableView == groupsView.tableView) {
+//			print("**userGorupsList.count \(userGroupsList.count)")
+//			return userGroupsList.count
+//		} else {
+//			print("**userPendingGorupsList.count \(userPendingGroupsList.count)")
+//			return userPendingGroupsList.count
+//		}
+//	}
+//	
+//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//		print("**Made it to here 1")
+//		if(tableView == groupsView.tableView) {
+//			print("**Made it to here 2")
+//			let cellOne = groupsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
+//			cellOne.nameLabel.text = userGroupsList[indexPath.item].name
+//			cellOne.adminLabel.text = userGroupsList[indexPath.item].adminName
+//			cellOne.numMembersLabel.text = "\(userGroupsList[indexPath.item].numOfMembers) Members"
+//			cellHeight = cellOne.frame.height
+//			cellOne.hideAcceptButtonView()
+//			
+//			return cellOne
+//		} else {
+//			print("**Made it to here 2")
+//			let cellOne = groupInvitationsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
+//			cellOne.nameLabel.text = userPendingGroupsList[indexPath.item].name
+//			cellOne.adminLabel.text = userPendingGroupsList[indexPath.item].adminName
+//			cellOne.numMembersLabel.text = "\(userPendingGroupsList[indexPath.item].numOfMembers) Members"
+//			cellHeight = cellOne.frame.height
+//			cellOne.showAcceptButtonView()
+//			setGenericTableWithHeaderView()
+//			
+//			return cellOne
+//		}
+//	}
+//}
+
+extension GroupViewController: userGroupServiceDelegate, userPendingGroupServiceDelegate {
+	func logicForDeletingTableViewCell(_ databaseManager: userPendingGroupService, indexPath: IndexPath) {
+		groupInvitationsView.tableView.reloadData()
+	}
+	
+	func userPendingGroupWasAdded(_ group: userPendingGroup) {
+		numInvitesButton.setTitle("\(userPendingGroupsList.count) Invites", for: .normal)
+		print("**ADDED: \(userPendingGroupsList.count)")
+		applyInvitationsSnapshotAndAdjustHeight()
+		print("**HERE: \(userPendingGroupsList.count)")
+	}
+	
+	func userPendingGroupWasChanged(_ group: userPendingGroup, at index: Int) {
+		numInvitesButton.setTitle("\(userPendingGroupsList.count) Invites", for: .normal)
+		applyInvitationsSnapshotAndAdjustHeight()
+	}
+	
+	func userPendingGroupWasRemoved(at index: Int) {
+		numInvitesButton.setTitle("\(userPendingGroupsList.count) Invites", for: .normal)
+		applyInvitationsSnapshotAndAdjustHeight()
+	}
+	
+	func logicForDeletingTableViewCell(_ databaseManager: userGroupService, indexPath: IndexPath) {
+		applyInvitationsSnapshotAndAdjustHeight()
+	}
+	
+	func userGroupWasAdded(_ group: userGroup) {
+		numGroupsButton.setTitle("\(userGroupsList.count) Groups", for: .normal)
+		applyGroupsSnapshot()
+	}
+	
+	func userGroupWasChanged(_ group: userGroup, at index: Int) {
+		numGroupsButton.setTitle("\(userGroupsList.count) Groups", for: .normal)
+		applyGroupsSnapshot()
+	}
+	
+	func userGroupWasRemoved(at index: Int) {
+		numGroupsButton.setTitle("\(userGroupsList.count) Groups", for: .normal)
+		applyGroupsSnapshot()
+	}
+	
+	func didReceiveError(_ error: any Error) {
+		print("**ERROR: \(error)")
 	}
 }

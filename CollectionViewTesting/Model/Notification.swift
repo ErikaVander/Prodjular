@@ -45,7 +45,6 @@ final class notificationService {
 		
 		let valueObserver = userNotificationsRef.child("notifications").observe(.value) {[weak self] snapshot in
 			self?.handleInitialLoad(snapshot)
-			print("**Snapshot 1: \(snapshot)")
 		}
 		observers.append(valueObserver)
 		
@@ -67,7 +66,6 @@ final class notificationService {
 	
 	private func handleInitialLoad(_ snapshot: DataSnapshot) {
 		var notifications: [ProjdularNotification] = []
-		print("**Snapshot: \(snapshot)")
 		for child in snapshot.children {
 			if let notification = parseNotification(from: child as? DataSnapshot) {
 				notifications.append(notification)

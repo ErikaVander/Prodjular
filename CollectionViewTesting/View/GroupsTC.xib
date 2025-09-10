@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupsTC" rowHeight="92" id="KGk-i7-Jjw" customClass="GroupsTC" customModule="CollectionViewTesting" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n94-27-iU9">
+                        <rect key="frame" x="15" y="10" width="48" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Admin:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kub-ZX-5DQ">
+                        <rect key="frame" x="15" y="31" width="53" height="17.666666666666671"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Members" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3N2-7M-SYg">
+                        <rect key="frame" x="15" y="48.666666666666664" width="72" height="20.333333333333336"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vyv-jN-a4f">
+                        <rect key="frame" x="228" y="22" width="78" height="35"/>
+                        <color key="backgroundColor" name="UIBlue"/>
+                        <color key="tintColor" systemColor="labelColor"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Accept"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="n94-27-iU9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Ngc-Ef-knf"/>
+                    <constraint firstItem="kub-ZX-5DQ" firstAttribute="top" secondItem="n94-27-iU9" secondAttribute="bottom" id="Uzm-zi-low"/>
+                    <constraint firstItem="3N2-7M-SYg" firstAttribute="leading" secondItem="n94-27-iU9" secondAttribute="leading" id="VTb-uL-Wzy"/>
+                    <constraint firstItem="kub-ZX-5DQ" firstAttribute="leading" secondItem="n94-27-iU9" secondAttribute="leading" id="cCX-Sf-H65"/>
+                    <constraint firstItem="n94-27-iU9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="fCQ-5N-2rC"/>
+                    <constraint firstAttribute="trailing" secondItem="Vyv-jN-a4f" secondAttribute="trailing" constant="14" id="fRL-En-ws5"/>
+                    <constraint firstAttribute="bottom" secondItem="3N2-7M-SYg" secondAttribute="bottom" constant="10" id="nFQ-vs-m3M"/>
+                    <constraint firstItem="3N2-7M-SYg" firstAttribute="top" secondItem="kub-ZX-5DQ" secondAttribute="bottom" id="r3h-ai-avz"/>
+                    <constraint firstItem="Vyv-jN-a4f" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="sbH-Li-Z79"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="acceptButton" destination="Vyv-jN-a4f" id="auR-fA-et5"/>
+                <outlet property="adminLabel" destination="kub-ZX-5DQ" id="xGr-yV-d3P"/>
+                <outlet property="nameLabel" destination="n94-27-iU9" id="aOb-ZR-89H"/>
+                <outlet property="numMembersLabel" destination="3N2-7M-SYg" id="YfO-4H-Aam"/>
+            </connections>
+            <point key="canvasLocation" x="19.847328244274809" y="-1.0563380281690142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="UIBlue">
+            <color red="0.7686274509803922" green="0.82745098039215681" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
