@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class GroupViewController: UIViewController, GenericTableWithHeaderDelegate {
+class GroupViewController: UIViewController {
 	var cellHeight = 79.0
 	private var groupInvitationsViewHeightConstraint: NSLayoutConstraint?
 	var groupsTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, userGroup>!
@@ -71,51 +71,9 @@ class GroupViewController: UIViewController, GenericTableWithHeaderDelegate {
 		numInvitesButton.setTitle("\(numInvites) Invites", for: .normal)
 		numInvitesButton.setImage(UIImage(systemName: "bell"), for: .normal)
 	}
-	
-	func setGenericTableWithHeaderView() {
-		groupInvitationsView.tableView.beginUpdates()
-		groupsView.tableView.beginUpdates()
-		print("**Here here \(groupInvitationsView.hideButtonP?.title(for: .normal) == "hide")")
-		if(userPendingGroupsList.count <= 1 && groupInvitationsView.hideButtonP?.title(for: .normal) == "hide") {
-			self.groupInvitationsViewHeightConstraint?.constant = cellHeight
-			CATransaction.begin()
-			CATransaction.setDisableActions(true)
-			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height + cellHeight)
-			CATransaction.commit()
-		} else if (groupInvitationsView.hideButtonP?.title(for: .normal) == "hide") {
-			print("**Here 2")
-			self.groupInvitationsViewHeightConstraint?.constant = cellHeight+(cellHeight/2)
-			CATransaction.begin()
-			CATransaction.setDisableActions(true)
-			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height + cellHeight + (cellHeight/2))
-			CATransaction.commit()
-		} else {
-			self.groupInvitationsViewHeightConstraint?.constant = 0
-			CATransaction.begin()
-			CATransaction.setDisableActions(true)
-			self.groupsView.setContentViewWithInnerShadow(width: self.groupsView.contentView.bounds.width, height: self.groupsView.contentView.bounds.height + cellHeight)
-			CATransaction.commit()
-		}
-		print("**Subviews \(self.tableViewsContainerView.subviews)")
-		self.tableViewsContainerView.setNeedsLayout()
-//		self.groupInvitationsView.setContentViewConstraints()
-//		self.groupsView.setContentViewConstraints()
-//		self.groupInvitationsView.removeContentViewInnerShadowForAnimation()
-//		self.groupsView.removeContentViewInnerShadowForAnimation()
-		UIView.animate(withDuration: 0.3) {
-			self.tableViewsContainerView.layoutIfNeeded()
-		} completion: { _ in
-			self.groupsView.setContentViewWithInnerShadow(width: self.groupsView.contentView.bounds.width, height: self.groupsView.contentView.bounds.height)
-			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height)
-			self.groupInvitationsView.tableView.endUpdates()
-			self.groupsView.tableView.endUpdates()
-//			self.groupInvitationsView.setContentViewWithInnerShadow()
-//			self.groupsView.setContentViewWithInnerShadow()
-		}
-	}
 }
 
-extension GroupViewController {
+extension GroupViewController: GenericTableWithHeaderDelegate, GroupsTCDelegate {
 	enum Section {
 		case main
 	}
@@ -127,6 +85,9 @@ extension GroupViewController {
 			cellOne.numMembersLabel.text = "\(group.numOfMembers) Members"
 			self.cellHeight = cellOne.frame.height
 			cellOne.hideAcceptButtonView()
+			cellOne.showRightArrowButton()
+			cellOne.groupID = group.id
+			cellOne.delegate = self
 			return cellOne
 		}
 		invitationsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupInvitationsView.tableView) { (tableView, indexPath, pendingGroup) -> UITableViewCell? in
@@ -136,6 +97,8 @@ extension GroupViewController {
 			cellOne.numMembersLabel.text = "\(pendingGroup.numOfMembers) Members"
 			self.cellHeight = cellOne.frame.height
 			cellOne.showAcceptButtonView()
+			cellOne.hideRightArrowButton()
+			cellOne.delegate = self
 			return cellOne
 		}
 	}
@@ -147,15 +110,12 @@ extension GroupViewController {
 		userPendingGroupService.shared.startObservingUserPendingGroups(for: Auth.auth().currentUser!.uid)
 		
 		groupInvitationsView.delegate = self
+		groupsView.delegate = self
 		
-//		groupsView.tableView.delegate = self
-//		groupsView.tableView.dataSource = self
 		groupsView.headerLabel.text = "Groups"
 		groupsView.tableView.register(UINib(nibName: "GroupsTC", bundle: nil), forCellReuseIdentifier: "groupsTC")
 		groupsView.addPlusAndSearchButton()
 		
-//		groupInvitationsView.tableView.delegate = self
-//		groupInvitationsView.tableView.dataSource = self
 		groupInvitationsView.headerLabel.text = "Group Invitations"
 		groupInvitationsView.tableView.register(UINib(nibName: "GroupsTC", bundle: nil), forCellReuseIdentifier: "groupsTC")
 		groupInvitationsView.addHideButton()
@@ -219,55 +179,76 @@ extension GroupViewController {
 			guard let self = self else {return}
 			initialLoadOfGroups = false
 			let rowCount = userGroupsList.count
-
-//				self.tableViewsContainerView.layoutIfNeeded()
 			
 			self.groupInvitationsView.tableView.isScrollEnabled = rowCount > 1
 		}
 	}
+	func setGenericTableWithHeaderView() {
+		groupInvitationsView.tableView.beginUpdates()
+		groupsView.tableView.beginUpdates()
+		print("**Here here \(groupInvitationsView.hideButtonP?.title(for: .normal) == "hide")")
+		if(userPendingGroupsList.count <= 1 && groupInvitationsView.hideButtonP?.title(for: .normal) == "hide") {
+			self.groupInvitationsViewHeightConstraint?.constant = cellHeight
+			CATransaction.begin()
+			CATransaction.setDisableActions(true)
+			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height + cellHeight)
+			CATransaction.commit()
+		} else if (groupInvitationsView.hideButtonP?.title(for: .normal) == "hide") {
+			print("**Here 2")
+			self.groupInvitationsViewHeightConstraint?.constant = cellHeight+(cellHeight/2)
+			CATransaction.begin()
+			CATransaction.setDisableActions(true)
+			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height + cellHeight + (cellHeight/2))
+			CATransaction.commit()
+		} else {
+			self.groupInvitationsViewHeightConstraint?.constant = 0
+			CATransaction.begin()
+			CATransaction.setDisableActions(true)
+			self.groupsView.setContentViewWithInnerShadow(width: self.groupsView.contentView.bounds.width, height: self.groupsView.contentView.bounds.height + cellHeight)
+			CATransaction.commit()
+		}
+		print("**Subviews \(self.tableViewsContainerView.subviews)")
+		self.tableViewsContainerView.setNeedsLayout()
+		
+		UIView.animate(withDuration: 0.3) {
+			self.tableViewsContainerView.layoutIfNeeded()
+		} completion: { _ in
+			self.groupsView.setContentViewWithInnerShadow(width: self.groupsView.contentView.bounds.width, height: self.groupsView.contentView.bounds.height)
+			self.groupInvitationsView.setContentViewWithInnerShadow(width: self.groupInvitationsView.contentView.bounds.width, height: self.groupInvitationsView.contentView.bounds.height)
+			self.groupInvitationsView.tableView.endUpdates()
+			self.groupsView.tableView.endUpdates()
+		}
+	}
+	func plusButtonTappedLogic() {
+		userGroupService.shared.stopObserving()
+		userPendingGroupService.shared.stopObserving()
+		let vc = NewGroupViewController(nibName: "NewGroupViewController", bundle: nil)
+		
+		vc.modalPresentationStyle = .fullScreen
+		
+		self.present(vc, animated: true, completion: nil)
+		
+		print("**plus button tapped logic")
+		
+	}
+	func searchButtonTappedLogic() {
+		print("**search button tapped logic")
+	}
+	func cellTappedLogic(groupID: String) {
+		userGroupService.shared.stopObserving()
+		userPendingGroupService.shared.stopObserving()
+		let vc = GroupEventsVC(nibName: "GroupEventsVC", bundle: nil)
+		
+		vc.modalPresentationStyle = .fullScreen
+		vc.groupID = groupID
+		
+		self.present(vc, animated: true, completion: nil)
+		print("**cell tapped logic")
+	}
+	func acceptButtonTappedLogic() {
+		print("**accept tapped logic")
+	}
 }
-
-//extension GroupViewController: UITableViewDelegate {
-//	
-//}
-//
-//extension GroupViewController: UITableViewDataSource {
-//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//		if(tableView == groupsView.tableView) {
-//			print("**userGorupsList.count \(userGroupsList.count)")
-//			return userGroupsList.count
-//		} else {
-//			print("**userPendingGorupsList.count \(userPendingGroupsList.count)")
-//			return userPendingGroupsList.count
-//		}
-//	}
-//	
-//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		print("**Made it to here 1")
-//		if(tableView == groupsView.tableView) {
-//			print("**Made it to here 2")
-//			let cellOne = groupsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
-//			cellOne.nameLabel.text = userGroupsList[indexPath.item].name
-//			cellOne.adminLabel.text = userGroupsList[indexPath.item].adminName
-//			cellOne.numMembersLabel.text = "\(userGroupsList[indexPath.item].numOfMembers) Members"
-//			cellHeight = cellOne.frame.height
-//			cellOne.hideAcceptButtonView()
-//			
-//			return cellOne
-//		} else {
-//			print("**Made it to here 2")
-//			let cellOne = groupInvitationsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
-//			cellOne.nameLabel.text = userPendingGroupsList[indexPath.item].name
-//			cellOne.adminLabel.text = userPendingGroupsList[indexPath.item].adminName
-//			cellOne.numMembersLabel.text = "\(userPendingGroupsList[indexPath.item].numOfMembers) Members"
-//			cellHeight = cellOne.frame.height
-//			cellOne.showAcceptButtonView()
-//			setGenericTableWithHeaderView()
-//			
-//			return cellOne
-//		}
-//	}
-//}
 
 extension GroupViewController: userGroupServiceDelegate, userPendingGroupServiceDelegate {
 	func logicForDeletingTableViewCell(_ databaseManager: userPendingGroupService, indexPath: IndexPath) {

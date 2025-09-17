@@ -14,7 +14,9 @@ var groupEvents = [groupEvent]()
 
 struct groupEvent : Equatable {
 	var id: String
-	var isAttending: Bool
+	var name: String
+	var startDate: Date!
+	var endDate: Date!
 }
 
 protocol groupEventServiceDelegate: AnyObject {
@@ -57,7 +59,11 @@ final class groupEventService {
 	}
 	
 	private func handleChildAddedGroupEvents(_ snapshot: DataSnapshot) {
-		guard let event = parseGroupEvent(from: snapshot) else { return }
+		print("**added \(snapshot)")
+		guard let event = parseGroupEvent(from: snapshot) else {
+				print("**ERROR: Could not parse groupEvent")
+			return
+		}
 		
 		groupEvents.append(event)
 		
@@ -97,16 +103,24 @@ final class groupEventService {
 	private func parseGroupEvent(from snapshot: DataSnapshot?) -> groupEvent? {
 		guard let snapshot = snapshot,
 			  let eventID = snapshot.key as String?,
-			  let data = snapshot.value as? [String: Any],
-			  let isAttending = data["isAttending"] as? Bool else {
+			  let data = snapshot.value as? [String: Any] else {
+			print("**ERROR: Could not parse snapshot")
 			return nil
 		}
 		
+		let name = data["name"] as? String ?? ""
+		let startDate = data["startDate"] as? String ?? "August 18, 2025 at 4:40:00 PM PDT"
+		let endDate = data["endDate"] as? String ?? "August 18, 2025 at 4:40:00 PM PDT"
+		
+		dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
+				
 		// For this example, we'll use placeholder data
 		// In reality, you'd fetch group profile data here
 		return groupEvent(
 			id: eventID,
-			isAttending: isAttending // Fetch from groups node
+			name: name,
+			startDate: dateFormatter.date(from: startDate)!,
+			endDate: dateFormatter.date(from: endDate)!
 		)
 	}
 	

@@ -8,10 +8,12 @@ import UIKit
 
 protocol GenericTableWithHeaderDelegate: AnyObject {
 	func setGenericTableWithHeaderView()
+	func plusButtonTappedLogic()
+	func searchButtonTappedLogic()
 }
 
 final class GenericTableWithHeader: UIView {
-	var delegate: GenericTableWithHeaderDelegate?
+	weak var delegate: GenericTableWithHeaderDelegate?
 	private var contentViewTopAnchor: NSLayoutConstraint?
 	private var contentViewBottomAnchor: NSLayoutConstraint?
 	private var contentViewLeadingAnchor: NSLayoutConstraint?
@@ -58,17 +60,6 @@ final class GenericTableWithHeader: UIView {
 	}
 	override func layoutSubviews() {
 		super.layoutSubviews()
-//		setContentViewWithInnerShadow()
-//		UIView.animate(withDuration: 0.3) {
-//			self.shadowView.layoutIfNeeded()
-//		}
-//		print("**layoutSubviews")
-//		self.innerShadowLayer.frame = self.bounds
-//		let shadowPath = CGMutablePath()
-//		let inset = -self.innerShadowLayer.shadowRadius * 2.0
-//		shadowPath.addRect(contentView.bounds.insetBy(dx: inset, dy: inset))
-//		shadowPath.addRect(contentView.bounds)
-//		self.innerShadowLayer.path = shadowPath
 		if(initialLoad) {
 			setContentViewWithInnerShadow(width: contentView.bounds.width, height: contentView.bounds.height)
 		}
@@ -82,6 +73,16 @@ final class GenericTableWithHeader: UIView {
 			print("**delegate \(String(describing: self.delegate))")
 			self.delegate?.setGenericTableWithHeaderView()
 		}
+	}
+	@objc func plusButtonTapped() {
+		print("**plusButtonTapped")
+		print("**delegate \(String(describing: self.delegate))")
+		self.delegate?.plusButtonTappedLogic()
+	}
+	@objc func searchButtonTapped() {
+		print("**searchButtonTapped")
+		print("**delegate \(String(describing: self.delegate))")
+		self.delegate?.searchButtonTappedLogic()
 	}
 //	Adding an outer shadow
 	func setContentViewWithOuterShadow() {
@@ -97,13 +98,6 @@ final class GenericTableWithHeader: UIView {
 		backgroundColor = UIColor.clear
 		layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 10).cgPath
 	}
-//	func setContentViewConstraints() {
-//		contentView.translatesAutoresizingMaskIntoConstraints = false
-//		contentView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-//		contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-//		contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-//		contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-//	}
 	func setContentViewConstraints() {
 		contentViewTopAnchor?.isActive = false
 		let newTopConstraint = contentView.topAnchor.constraint(equalTo: self.topAnchor)
@@ -128,25 +122,17 @@ final class GenericTableWithHeader: UIView {
 		newTrailingConstraint.identifier = "contentViewTrailingAnchor"
 		newTrailingConstraint.isActive = true
 		self.contentViewTrailingAnchor = newTrailingConstraint
-		
-//		self.contentView.setNeedsLayout()
-//		UIView.animate(withDuration: 0.3) {
-//			self.contentView.layoutIfNeeded()
-//		}
 	}
 	func setContentViewWithInnerShadow(width: CGFloat, height: CGFloat) {
-//		setContentViewConstraints()
 		contentView.clipsToBounds = true
-//		contentView.isHidden = false
 		
 		contentView.layer.cornerRadius = 12
 		contentView.layer.borderWidth = 1
 		contentView.layer.borderColor = newCGColor
 		
 		let shadowPath = CGMutablePath()
-//		innerShadowLayer.shadowRadius = 1.5
 		let inset = -self.innerShadowLayer.shadowRadius * 2.0
-		shadowPath.addRect(CGRect(x: inset, y: inset, width: CGFloat(Int(width) - Int(inset*2)), height: CGFloat(Int(height) - Int(inset*2))))/*(contentView.bounds.insetBy(dx: inset, dy: inset))*/
+		shadowPath.addRect(CGRect(x: inset, y: inset, width: CGFloat(Int(width) - Int(inset*2)), height: CGFloat(Int(height) - Int(inset*2))))
 		shadowPath.addRect(CGRect(x: 0, y: 0, width: contentView.bounds.width, height: height))
 		self.innerShadowLayer.path = shadowPath
 		if(initialLoad) {
@@ -170,9 +156,6 @@ final class GenericTableWithHeader: UIView {
 		hideButtonP.setTitleColor(UIColor.link, for: .normal)
 		hideButtonP.setTitleColor(UIColor.darkGray, for: .highlighted)
 		hideButtonP.backgroundColor = UIColor.clear
-//		hideButtonP.imageView?.contentMode = .scaleToFill
-//		hideButtonP.contentHorizontalAlignment = .fill
-//		hideButtonP.contentVerticalAlignment = .fill
 		
 		hideButtonP.translatesAutoresizingMaskIntoConstraints = false
 		
@@ -241,6 +224,9 @@ final class GenericTableWithHeader: UIView {
 		let searchButtonWidthConstraint: NSLayoutConstraint = searchButtonP.widthAnchor.constraint(equalTo: searchButtonP.heightAnchor)
 		searchButtonWidthConstraint.isActive = true
 		searchButtonWidthConstraint.identifier = "searchButtonWidthConstraint"
+		
+		plusButtonP.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+		searchButtonP.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
 	}
 	func addSearchButton() {
 		let searchButtonP = UIButton()
@@ -269,5 +255,6 @@ final class GenericTableWithHeader: UIView {
 		let searchButtonWidthConstraint: NSLayoutConstraint = searchButtonP.widthAnchor.constraint(equalTo: searchButtonP.heightAnchor)
 		searchButtonWidthConstraint.isActive = true
 		searchButtonWidthConstraint.identifier = "searchButtonWidthConstraint"
+		searchButtonP.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
 	}
 }

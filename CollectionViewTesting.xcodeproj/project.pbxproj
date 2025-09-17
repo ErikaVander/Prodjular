@@ -35,6 +35,8 @@
 		D61F04CA25D3891D00A2BC05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */; };
 		D62335592CBDE42500FEC65A /* FriendReqTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */; };
 		D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */; };
+		D62741732E7870E10057865F /* NewGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62741712E7870E10057865F /* NewGroupViewController.swift */; };
+		D62741742E7870E10057865F /* NewGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D62741722E7870E10057865F /* NewGroupViewController.xib */; };
 		D627D4D32E598CB4003E5E9A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627D4D22E598CA5003E5E9A /* HomeViewController.swift */; };
 		D629397F27B2F87F00BF4FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */; };
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
@@ -56,6 +58,8 @@
 		D6B46CCB2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */; };
 		D6B9A1452CD1E6F200946ACE /* UploadPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9A1442CD1E6F200946ACE /* UploadPhotoViewController.swift */; };
 		D6B9A1472CD2948100946ACE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D6B9A1462CD2948100946ACE /* PrivacyInfo.xcprivacy */; };
+		D6BA94A82E78965B00E3F765 /* GroupEventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6BA94A72E78965B00E3F765 /* GroupEventsVC.xib */; };
+		D6BA94A92E78965B00E3F765 /* GroupEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BA94A62E78965B00E3F765 /* GroupEventsVC.swift */; };
 		D6BE7AB126A6479000498ECB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB026A6479000498ECB /* LogInViewController.swift */; };
 		D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */; };
 		D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE7AB626C6D95200498ECB /* alertUser.swift */; };
@@ -120,6 +124,8 @@
 		D61F04CB25D3891D00A2BC05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D62335572CBDE42500FEC65A /* FriendReqTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendReqTableViewCell.swift; sourceTree = "<group>"; };
 		D62335582CBDE42500FEC65A /* FriendReqTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendReqTableViewCell.xib; sourceTree = "<group>"; };
+		D62741712E7870E10057865F /* NewGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupViewController.swift; sourceTree = "<group>"; };
+		D62741722E7870E10057865F /* NewGroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewGroupViewController.xib; sourceTree = "<group>"; };
 		D627D4D22E598CA5003E5E9A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +148,8 @@
 		D6B46CCA2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerForAddFriendViewController.swift; sourceTree = "<group>"; };
 		D6B9A1442CD1E6F200946ACE /* UploadPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPhotoViewController.swift; sourceTree = "<group>"; };
 		D6B9A1462CD2948100946ACE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D6BA94A62E78965B00E3F765 /* GroupEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEventsVC.swift; sourceTree = "<group>"; };
+		D6BA94A72E78965B00E3F765 /* GroupEventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupEventsVC.xib; sourceTree = "<group>"; };
 		D6BE7AB026A6479000498ECB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB226A8B54500498ECB /* AccountInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoViewController.swift; sourceTree = "<group>"; };
 		D6BE7AB626C6D95200498ECB /* alertUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertUser.swift; sourceTree = "<group>"; };
@@ -244,6 +252,21 @@
 			path = CollectionViewTesting;
 			sourceTree = "<group>";
 		};
+		D62741702E7870680057865F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
+				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
+				D6105E902E693D0B009145AD /* GroupViewController.swift */,
+				D6105E912E693D0B009145AD /* GroupViewController.xib */,
+				D62741712E7870E10057865F /* NewGroupViewController.swift */,
+				D62741722E7870E10057865F /* NewGroupViewController.xib */,
+				D6BA94A62E78965B00E3F765 /* GroupEventsVC.swift */,
+				D6BA94A72E78965B00E3F765 /* GroupEventsVC.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		D627D4CE2E598C13003E5E9A /* Friends */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,17 +330,14 @@
 		D69CDA4125E0755A001F03AF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D62741702E7870680057865F /* ViewControllers */,
 				D6105E8B2E693CD0009145AD /* ReusableView */,
 				D64566642C6FC8B200A8AF7B /* Maybe later */,
-				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
-				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
 				D627D4CF2E598C3A003E5E9A /* MonthView */,
 				D627D4D02E598C72003E5E9A /* WeekView */,
 				D627D4CE2E598C13003E5E9A /* Friends */,
 				D6D928252E68192B0072390C /* NotificationTableCell.swift */,
 				D6D928262E68192B0072390C /* NotificationTableCell.xib */,
-				D6105E902E693D0B009145AD /* GroupViewController.swift */,
-				D6105E912E693D0B009145AD /* GroupViewController.xib */,
 				D63328C92E6A30E300909A69 /* GroupsTC.swift */,
 				D63328CA2E6A30E300909A69 /* GroupsTC.xib */,
 			);
@@ -462,6 +482,7 @@
 				D61F04C725D3891D00A2BC05 /* Assets.xcassets in Resources */,
 				D6E35C082852428D00D8B327 /* EventDurationTableViewCell.xib in Resources */,
 				D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */,
+				D6BA94A82E78965B00E3F765 /* GroupEventsVC.xib in Resources */,
 				D6105E952E693D0B009145AD /* GenericTableWithHeader.xib in Resources */,
 				D6105E962E693D0B009145AD /* GroupViewController.xib in Resources */,
 				D63328CC2E6A30E300909A69 /* GroupsTC.xib in Resources */,
@@ -472,6 +493,7 @@
 				D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */,
 				D64566682C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib in Resources */,
 				D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */,
+				D62741742E7870E10057865F /* NewGroupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +592,7 @@
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
 				D63F4F372E5AD1D1008304A6 /* Notification.swift in Sources */,
+				D62741732E7870E10057865F /* NewGroupViewController.swift in Sources */,
 				D61053722E5E277300E439B1 /* userEvent.swift in Sources */,
 				D61053772E5E2E4400E439B1 /* userFriend.swift in Sources */,
 				D61053742E5E28BD00E439B1 /* groupEvent.swift in Sources */,
@@ -587,6 +610,7 @@
 				D6DB6647278F970C0087550C /* CalendarViewController_ads.swift in Sources */,
 				D630114E267A978C00128ADA /* EventViewController.swift in Sources */,
 				D61221632CB5E3720050B22C /* DatabaseManagerForSignUpandLogin.swift in Sources */,
+				D6BA94A92E78965B00E3F765 /* GroupEventsVC.swift in Sources */,
 				D61F04BE25D3891D00A2BC05 /* AppDelegate.swift in Sources */,
 				D6EC825227470611002F7BA8 /* dotViewContainerReusableView.swift in Sources */,
 				D61221652CB5E9AA0050B22C /* UDM.swift in Sources */,
