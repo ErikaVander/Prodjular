@@ -28,10 +28,16 @@ protocol userGroupServiceDelegate: AnyObject {
 	func didReceiveError(_ error: Error)
 }
 
+protocol userGroupServiceDelegateB: AnyObject {
+	func numMembersWasRetreived(_ numMembers: Int)
+}
+
 final class userGroupService {
 	static let shared = userGroupService()
 	
 	var delegate: userGroupServiceDelegate?
+	var delegateB:
+	userGroupServiceDelegateB?
 	
 	private let database = Database.database().reference()
 	private var observers: [DatabaseHandle] = []
@@ -118,6 +124,20 @@ final class userGroupService {
 			adminName: adminName,
 			numOfMembers: numOfMembers
 		)
+	}
+	
+	public func observeNumMembers(groupID: String) {
+		var numMembers = 0
+		database.child("users").child(Auth.auth().currentUser!.uid).child("groups").child(groupID).observeSingleEvent(of: .value, with: { snapshot in
+			let value = snapshot.value as? NSDictionary
+			numMembers = value?["numOfMembers"] as? Int ?? 0
+			
+			DispatchQueue.main.async {
+				self.delegateB?.numMembersWasRetreived(numMembers)
+			}
+		}) {error in
+			print("**ERROR: \(error.localizedDescription)")
+		}
 	}
 	
 	///Deletes group

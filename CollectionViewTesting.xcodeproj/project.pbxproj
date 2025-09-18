@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D601AF412E7B540400DC774A /* GenericTCB.swift in Sources */ = {isa = PBXBuildFile; fileRef = D601AF3F2E7B540400DC774A /* GenericTCB.swift */; };
+		D601AF422E7B540400DC774A /* GenericTCB.xib in Resources */ = {isa = PBXBuildFile; fileRef = D601AF402E7B540400DC774A /* GenericTCB.xib */; };
+		D601AF442E7B8F6000DC774A /* groupPendingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D601AF432E7B8F5800DC774A /* groupPendingEvent.swift */; };
 		D6020EFB2CB7770C0090231D /* EmptyFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */; };
 		D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */; };
 		D60EEE2E2E6F634400E113F5 /* userPendingGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */; };
@@ -41,8 +44,8 @@
 		D629397F27B2F87F00BF4FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */; };
 		D630114E267A978C00128ADA /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630114D267A978C00128ADA /* EventViewController.swift */; };
 		D6301151267AA10800128ADA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6301150267AA10800128ADA /* Event.swift */; };
-		D63328CB2E6A30E300909A69 /* GroupsTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63328C92E6A30E300909A69 /* GroupsTC.swift */; };
-		D63328CC2E6A30E300909A69 /* GroupsTC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D63328CA2E6A30E300909A69 /* GroupsTC.xib */; };
+		D63328CB2E6A30E300909A69 /* GenericTCA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63328C92E6A30E300909A69 /* GenericTCA.swift */; };
+		D63328CC2E6A30E300909A69 /* GenericTCA.xib in Resources */ = {isa = PBXBuildFile; fileRef = D63328CA2E6A30E300909A69 /* GenericTCA.xib */; };
 		D63F4F332E5A505D008304A6 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63F4F322E5A5059008304A6 /* Group.swift */; };
 		D63F4F372E5AD1D1008304A6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63F4F362E5AD1C7008304A6 /* Notification.swift */; };
 		D64566622C6FC10F00A8AF7B /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64566602C6FC10F00A8AF7B /* HeaderViewController.swift */; };
@@ -94,6 +97,9 @@
 		735B5D7DCACE5380F7718CDC /* Pods_CollectionViewTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollectionViewTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF1FD251F2473728A7C1A73 /* Pods-CollectionViewTesting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.release.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.release.xcconfig"; sourceTree = "<group>"; };
 		987C9BF11BE1AB7FB4148C73 /* Pods-CollectionViewTesting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollectionViewTesting.debug.xcconfig"; path = "Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting.debug.xcconfig"; sourceTree = "<group>"; };
+		D601AF3F2E7B540400DC774A /* GenericTCB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTCB.swift; sourceTree = "<group>"; };
+		D601AF402E7B540400DC774A /* GenericTCB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTCB.xib; sourceTree = "<group>"; };
+		D601AF432E7B8F5800DC774A /* groupPendingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupPendingEvent.swift; sourceTree = "<group>"; };
 		D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyFriendsTableViewCell.xib; sourceTree = "<group>"; };
 		D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userPendingGroups.swift; sourceTree = "<group>"; };
@@ -130,8 +136,8 @@
 		D629397E27B2F87F00BF4FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D630114D267A978C00128ADA /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		D6301150267AA10800128ADA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		D63328C92E6A30E300909A69 /* GroupsTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTC.swift; sourceTree = "<group>"; };
-		D63328CA2E6A30E300909A69 /* GroupsTC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsTC.xib; sourceTree = "<group>"; };
+		D63328C92E6A30E300909A69 /* GenericTCA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTCA.swift; sourceTree = "<group>"; };
+		D63328CA2E6A30E300909A69 /* GenericTCA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTCA.xib; sourceTree = "<group>"; };
 		D63F4F322E5A5059008304A6 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		D63F4F362E5AD1C7008304A6 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		D64566602C6FC10F00A8AF7B /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +221,10 @@
 				D6105E8D2E693D0B009145AD /* GenericTable.xib */,
 				D6105E8E2E693D0B009145AD /* GenericTableWithHeader.swift */,
 				D6105E8F2E693D0B009145AD /* GenericTableWithHeader.xib */,
+				D63328C92E6A30E300909A69 /* GenericTCA.swift */,
+				D63328CA2E6A30E300909A69 /* GenericTCA.xib */,
+				D601AF3F2E7B540400DC774A /* GenericTCB.swift */,
+				D601AF402E7B540400DC774A /* GenericTCB.xib */,
 			);
 			path = ReusableView;
 			sourceTree = "<group>";
@@ -338,8 +348,6 @@
 				D627D4CE2E598C13003E5E9A /* Friends */,
 				D6D928252E68192B0072390C /* NotificationTableCell.swift */,
 				D6D928262E68192B0072390C /* NotificationTableCell.xib */,
-				D63328C92E6A30E300909A69 /* GroupsTC.swift */,
-				D63328CA2E6A30E300909A69 /* GroupsTC.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -364,6 +372,7 @@
 		D69CDA4425E07595001F03AF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D601AF432E7B8F5800DC774A /* groupPendingEvent.swift */,
 				D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */,
 				D61053762E5E2E4100E439B1 /* userFriend.swift */,
 				D61053732E5E28A900E439B1 /* groupEvent.swift */,
@@ -485,13 +494,14 @@
 				D6BA94A82E78965B00E3F765 /* GroupEventsVC.xib in Resources */,
 				D6105E952E693D0B009145AD /* GenericTableWithHeader.xib in Resources */,
 				D6105E962E693D0B009145AD /* GroupViewController.xib in Resources */,
-				D63328CC2E6A30E300909A69 /* GroupsTC.xib in Resources */,
+				D63328CC2E6A30E300909A69 /* GenericTCA.xib in Resources */,
 				D6105E972E693D0B009145AD /* GenericTable.xib in Resources */,
 				D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
 				D6D928272E68192B0072390C /* NotificationTableCell.xib in Resources */,
 				D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */,
 				D64566682C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib in Resources */,
+				D601AF422E7B540400DC774A /* GenericTCB.xib in Resources */,
 				D6F9C69B273DB6D3003298E1 /* CollectionViewCell.xib in Resources */,
 				D62741742E7870E10057865F /* NewGroupViewController.xib in Resources */,
 			);
@@ -571,10 +581,11 @@
 				D6DB6643278F96970087550C /* CalendarViewController_Navigation.swift in Sources */,
 				D6DB664B278F97AB0087550C /* CalendarViewController_TableView.swift in Sources */,
 				D627D4D32E598CB4003E5E9A /* HomeViewController.swift in Sources */,
-				D63328CB2E6A30E300909A69 /* GroupsTC.swift in Sources */,
+				D63328CB2E6A30E300909A69 /* GenericTCA.swift in Sources */,
 				D64566672C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.swift in Sources */,
 				D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */,
 				D6BE7AB326A8B54500498ECB /* AccountInfoViewController.swift in Sources */,
+				D601AF442E7B8F6000DC774A /* groupPendingEvent.swift in Sources */,
 				D6B9A1452CD1E6F200946ACE /* UploadPhotoViewController.swift in Sources */,
 				D61C37322B2BC10D00AB705A /* weekNumberForEventDuration.swift in Sources */,
 				D60EEE2E2E6F634400E113F5 /* userPendingGroups.swift in Sources */,
@@ -584,6 +595,7 @@
 				D612CC4C2CD05D71009B40C8 /* Friend.swift in Sources */,
 				D615A04E2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift in Sources */,
 				D63F4F332E5A505D008304A6 /* Group.swift in Sources */,
+				D601AF412E7B540400DC774A /* GenericTCB.swift in Sources */,
 				D6F9C6A2273DFD4B003298E1 /* ColorPickerCell.swift in Sources */,
 				D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */,
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,

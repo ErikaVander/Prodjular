@@ -10,9 +10,9 @@ import FirebaseDatabase
 import FirebaseAuth
 
 ///An array storing event ids of all group's events
-var groupEvents = [groupEvent]()
+var groupEventList = [groupEvent]()
 
-struct groupEvent : Equatable {
+struct groupEvent : Equatable, Hashable {
 	var id: String
 	var name: String
 	var startDate: Date!
@@ -65,7 +65,7 @@ final class groupEventService {
 			return
 		}
 		
-		groupEvents.append(event)
+		groupEventList.append(event)
 		
 		DispatchQueue.main.async {
 			self.delegate?.groupEventWasAdded(event)
@@ -74,12 +74,12 @@ final class groupEventService {
 	
 	private func handleChildChangedGroupEvents(_ snapshot: DataSnapshot) {
 		guard let updatedGroupEvent = parseGroupEvent(from: snapshot),
-			  let existingIndex = groupEvents.firstIndex(where: {$0.id == updatedGroupEvent.id }) else {
+			  let existingIndex = groupEventList.firstIndex(where: {$0.id == updatedGroupEvent.id }) else {
 			return
 		}
 		
 		// Update the friend in our local array
-		groupEvents[existingIndex] = updatedGroupEvent
+		groupEventList[existingIndex] = updatedGroupEvent
 		DispatchQueue.main.async {
 			self.delegate?.groupEventWasChanged(updatedGroupEvent, at: existingIndex)
 		}
@@ -87,11 +87,11 @@ final class groupEventService {
 	
 	private func handleChildRemovedGroupEvents(_ snapshot: DataSnapshot) {
 		guard let eventID = snapshot.key as String?,
-			  let existingIndex = groupEvents.firstIndex(where: {$0.id == eventID}) else {
+			  let existingIndex = groupEventList.firstIndex(where: {$0.id == eventID}) else {
 			return
 		}
 		
-		groupEvents.remove(at: existingIndex)
+		groupEventList.remove(at: existingIndex)
 		
 		DispatchQueue.main.async {
 			self.delegate?.groupEventWasRemoved(at: existingIndex)
@@ -101,6 +101,7 @@ final class groupEventService {
 	}
 	
 	private func parseGroupEvent(from snapshot: DataSnapshot?) -> groupEvent? {
+		let dateFormatter = DateFormatter()
 		guard let snapshot = snapshot,
 			  let eventID = snapshot.key as String?,
 			  let data = snapshot.value as? [String: Any] else {
@@ -152,5 +153,6 @@ final class groupEventService {
 		}
 		observers.removeAll()
 		eventList.removeAll()
+		groupEventList.removeAll()
 	}
 }

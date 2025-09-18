@@ -78,6 +78,7 @@ final class eventService {
 	}
 	
 	private func handleInitialLoad(_ snapshot: DataSnapshot) {
+		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 		dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
 		let impossibleStartDate = dateFormatter.date(from: "January 1, 2000 at 12:00:00 AM PDT")

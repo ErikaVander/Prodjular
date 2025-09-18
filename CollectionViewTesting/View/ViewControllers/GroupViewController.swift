@@ -29,6 +29,7 @@ class GroupViewController: UIViewController {
 		setTableViewDelegateAndDataSource()
 		setTableViewInitialHeight()
 		setButtonViews()
+		setTableViews()
 		configureTableViewDataSources()
     }
 	@IBAction func goBack(_ sender: Any) {
@@ -73,34 +74,9 @@ class GroupViewController: UIViewController {
 	}
 }
 
-extension GroupViewController: GenericTableWithHeaderDelegate, GroupsTCDelegate {
+extension GroupViewController: GenericTableWithHeaderDelegate, GenericTCADelegate {
 	enum Section {
 		case main
-	}
-	func configureTableViewDataSources() {
-		groupsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupsView.tableView) { (tableView, indexPath, group) -> UITableViewCell? in
-			let cellOne = self.groupsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
-			cellOne.nameLabel.text = group.name
-			cellOne.adminLabel.text = group.adminName
-			cellOne.numMembersLabel.text = "\(group.numOfMembers) Members"
-			self.cellHeight = cellOne.frame.height
-			cellOne.hideAcceptButtonView()
-			cellOne.showRightArrowButton()
-			cellOne.groupID = group.id
-			cellOne.delegate = self
-			return cellOne
-		}
-		invitationsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupInvitationsView.tableView) { (tableView, indexPath, pendingGroup) -> UITableViewCell? in
-			let cellOne = self.groupInvitationsView.tableView.dequeueReusableCell(withIdentifier: "groupsTC", for: indexPath) as! GroupsTC
-			cellOne.nameLabel.text = pendingGroup.name
-			cellOne.adminLabel.text = pendingGroup.adminName
-			cellOne.numMembersLabel.text = "\(pendingGroup.numOfMembers) Members"
-			self.cellHeight = cellOne.frame.height
-			cellOne.showAcceptButtonView()
-			cellOne.hideRightArrowButton()
-			cellOne.delegate = self
-			return cellOne
-		}
 	}
 	func setTableViewDelegateAndDataSource() {
 		userGroupService.shared.delegate = self
@@ -112,13 +88,40 @@ extension GroupViewController: GenericTableWithHeaderDelegate, GroupsTCDelegate 
 		groupInvitationsView.delegate = self
 		groupsView.delegate = self
 		
+		groupsView.tableView.register(UINib(nibName: "GenericTCA", bundle: nil), forCellReuseIdentifier: "genericTCA")
+	}
+	func setTableViews() {
 		groupsView.headerLabel.text = "Groups"
-		groupsView.tableView.register(UINib(nibName: "GroupsTC", bundle: nil), forCellReuseIdentifier: "groupsTC")
 		groupsView.addPlusAndSearchButton()
 		
 		groupInvitationsView.headerLabel.text = "Group Invitations"
-		groupInvitationsView.tableView.register(UINib(nibName: "GroupsTC", bundle: nil), forCellReuseIdentifier: "groupsTC")
+		groupInvitationsView.tableView.register(UINib(nibName: "GenericTCA", bundle: nil), forCellReuseIdentifier: "genericTCA")
 		groupInvitationsView.addHideButton()
+	}
+	func configureTableViewDataSources() {
+		groupsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupsView.tableView) { (tableView, indexPath, group) -> UITableViewCell? in
+			let cellOne = self.groupsView.tableView.dequeueReusableCell(withIdentifier: "genericTCA", for: indexPath) as! GenericTCA
+			cellOne.nameLabel.text = group.name
+			cellOne.labelA.text = group.adminName
+			cellOne.labelB.text = "\(group.numOfMembers) Members"
+			self.cellHeight = cellOne.frame.height
+			cellOne.hideButtonView()
+			cellOne.showRightArrowButton()
+			cellOne.objectID = group.id
+			cellOne.delegate = self
+			return cellOne
+		}
+		invitationsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: groupInvitationsView.tableView) { (tableView, indexPath, pendingGroup) -> UITableViewCell? in
+			let cellOne = self.groupInvitationsView.tableView.dequeueReusableCell(withIdentifier: "genericTCA", for: indexPath) as! GenericTCA
+			cellOne.nameLabel.text = pendingGroup.name
+			cellOne.labelA.text = pendingGroup.adminName
+			cellOne.labelB.text = "\(pendingGroup.numOfMembers) Members"
+			self.cellHeight = cellOne.frame.height
+			cellOne.showButtonView()
+			cellOne.hideRightArrowButton()
+			cellOne.delegate = self
+			return cellOne
+		}
 	}
 	func setTableViewInitialHeight() {
 		let initialHeight = (userPendingGroupsList.count <= 1) ? cellHeight : cellHeight + (cellHeight / 2)
@@ -220,11 +223,12 @@ extension GroupViewController: GenericTableWithHeaderDelegate, GroupsTCDelegate 
 		}
 	}
 	func plusButtonTappedLogic() {
-		userGroupService.shared.stopObserving()
-		userPendingGroupService.shared.stopObserving()
 		let vc = NewGroupViewController(nibName: "NewGroupViewController", bundle: nil)
 		
 		vc.modalPresentationStyle = .fullScreen
+		
+		userGroupService.shared.stopObserving()
+		userPendingGroupService.shared.stopObserving()
 		
 		self.present(vc, animated: true, completion: nil)
 		
@@ -234,18 +238,21 @@ extension GroupViewController: GenericTableWithHeaderDelegate, GroupsTCDelegate 
 	func searchButtonTappedLogic() {
 		print("**search button tapped logic")
 	}
-	func cellTappedLogic(groupID: String) {
-		userGroupService.shared.stopObserving()
-		userPendingGroupService.shared.stopObserving()
+	func cellTappedLogic(objectID: String) {
 		let vc = GroupEventsVC(nibName: "GroupEventsVC", bundle: nil)
 		
 		vc.modalPresentationStyle = .fullScreen
-		vc.groupID = groupID
+		vc.groupID = objectID
+//		vc.numMembers = userGroupsList.first(where: {$0.id == objectID})?.numOfMembers
+//		print("**numMembers: \(String(describing: userGroupsList.first(where: {$0.id == objectID})?.numOfMembers))")
+		
+		userGroupService.shared.stopObserving()
+		userPendingGroupService.shared.stopObserving()
 		
 		self.present(vc, animated: true, completion: nil)
 		print("**cell tapped logic")
 	}
-	func acceptButtonTappedLogic() {
+	func buttonTappedLogic() {
 		print("**accept tapped logic")
 	}
 }

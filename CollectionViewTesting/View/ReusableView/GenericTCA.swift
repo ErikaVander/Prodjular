@@ -1,5 +1,5 @@
 //
-//  GroupsTC.swift
+//  GenericTCA.swift
 //  CollectionViewTesting
 //
 //  Created by Vanderhoff on 9/4/25.
@@ -7,20 +7,20 @@
 
 import UIKit
 
-protocol GroupsTCDelegate: AnyObject {
-	func cellTappedLogic(groupID: String)
-	func acceptButtonTappedLogic()
+protocol GenericTCADelegate: AnyObject {
+	func cellTappedLogic(objectID: String)
+	func buttonTappedLogic()
 }
 
-class GroupsTC: UITableViewCell {
-	weak var delegate: GroupsTCDelegate?
-	var groupID: String?
+class GenericTCA: UITableViewCell {
+	weak var delegate: GenericTCADelegate?
+	var objectID: String?
 	@IBOutlet weak var rightArrow: UIButton!
-	@IBOutlet weak var acceptButton: UIButton!
-	@IBOutlet weak var numMembersLabel: UILabel!
-	@IBOutlet weak var adminLabel: UILabel!
+	@IBOutlet weak var button: UIButton!
 	@IBOutlet weak var nameLabel: UILabel!
-	
+	@IBOutlet weak var labelA: UILabel!
+	@IBOutlet weak var labelB: UILabel!
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Initialization code
@@ -32,18 +32,18 @@ class GroupsTC: UITableViewCell {
 		// Configure the view for the selected state
 	}
 	@IBAction func cellTapped(_ sender: Any) {
-		delegate?.cellTappedLogic(groupID: groupID!)
+		delegate?.cellTappedLogic(objectID: objectID!)
 	}
-	@IBAction func acceptTapped(_ sender: Any) {
-		delegate?.acceptButtonTappedLogic()
+	@IBAction func buttonTapped(_ sender: Any) {
+		delegate?.buttonTappedLogic()
 	}
 	
-	func hideAcceptButtonView() {
-		acceptButton.isHidden = true
+	func hideButtonView() {
+		button.isHidden = true
 	}
-	func showAcceptButtonView() {
-		acceptButton.isHidden = false
-		acceptButton.layer.cornerRadius = 12
+	func showButtonView() {
+		button.isHidden = false
+		button.layer.cornerRadius = 12
 	}
 	func showRightArrowButton() {
 		rightArrow.isHidden = false

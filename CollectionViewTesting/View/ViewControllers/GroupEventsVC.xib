@@ -13,7 +13,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroupEventsVC" customModule="CollectionViewTesting" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="lU2-mM-ENe" id="Uvf-j5-ZVI"/>
+                <outlet property="eventsView" destination="IDN-S1-jdU" id="NRe-GR-xvr"/>
                 <outlet property="homeButton" destination="G1v-mV-Omt" id="aVy-Tm-Ea8"/>
+                <outlet property="numMembersButton" destination="Z6i-K9-TIh" id="Hsv-LD-1KB"/>
+                <outlet property="pendingEventsView" destination="OaH-bc-v4z" id="ZWp-NM-Nfr"/>
                 <outlet property="settingsButton" destination="9TW-vr-aqc" id="yhg-Dh-flD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

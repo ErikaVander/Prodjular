@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="groupsTC" rowHeight="92" id="KGk-i7-Jjw" customClass="GroupsTC" customModule="CollectionViewTesting" customModuleProvider="target">
+        <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="genericTCA" rowHeight="92" id="KGk-i7-Jjw" customClass="GenericTCA" customModule="CollectionViewTesting" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -25,14 +25,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Admin:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kub-ZX-5DQ">
-                        <rect key="frame" x="15" y="31" width="53" height="17.666666666666671"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="LabelA" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kub-ZX-5DQ">
+                        <rect key="frame" x="14.999999999999996" y="31" width="52.666666666666657" height="17.666666666666671"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Members" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3N2-7M-SYg">
-                        <rect key="frame" x="15" y="48.666666666666664" width="72" height="20.333333333333336"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="LabelB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3N2-7M-SYg">
+                        <rect key="frame" x="15.000000000000004" y="48.666666666666664" width="52.333333333333343" height="20.333333333333336"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -44,7 +44,7 @@
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="Accept"/>
                         <connections>
-                            <action selector="acceptTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FRT-AU-7rc"/>
+                            <action selector="buttonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FRT-AU-7rc"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lv3-1m-7ZZ">
@@ -72,10 +72,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="acceptButton" destination="Vyv-jN-a4f" id="auR-fA-et5"/>
-                <outlet property="adminLabel" destination="kub-ZX-5DQ" id="xGr-yV-d3P"/>
+                <outlet property="button" destination="Vyv-jN-a4f" id="auR-fA-et5"/>
+                <outlet property="labelA" destination="kub-ZX-5DQ" id="UcG-pX-xif"/>
+                <outlet property="labelB" destination="3N2-7M-SYg" id="SIh-IA-icn"/>
                 <outlet property="nameLabel" destination="n94-27-iU9" id="aOb-ZR-89H"/>
-                <outlet property="numMembersLabel" destination="3N2-7M-SYg" id="YfO-4H-Aam"/>
                 <outlet property="rightArrow" destination="Lv3-1m-7ZZ" id="hOc-z0-D2w"/>
             </connections>
             <point key="canvasLocation" x="19.847328244274809" y="-1.0563380281690142"/>

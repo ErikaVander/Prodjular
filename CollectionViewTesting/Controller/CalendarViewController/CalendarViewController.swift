@@ -12,7 +12,7 @@ import FirebaseDatabase
 import FirebaseCore
 
 var selectedDate = currentDateAndTime()
-let dateFormatter = DateFormatter()
+private let dateFormatter = DateFormatter()
 var eventsForTableViewCell = [ProjdularEvent]()
 var initialLoadingOfData = true
 var previouslySelectedCellIndexPath: IndexPath?
