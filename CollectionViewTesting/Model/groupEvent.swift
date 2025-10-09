@@ -17,6 +17,7 @@ struct groupEvent : Equatable, Hashable {
 	var name: String
 	var startDate: Date!
 	var endDate: Date!
+	var attendingUsers: [String]
 }
 
 protocol groupEventServiceDelegate: AnyObject {
@@ -112,16 +113,16 @@ final class groupEventService {
 		let name = data["name"] as? String ?? ""
 		let startDate = data["startDate"] as? String ?? "August 18, 2025 at 4:40:00 PM PDT"
 		let endDate = data["endDate"] as? String ?? "August 18, 2025 at 4:40:00 PM PDT"
+		let attendingUsers = data["attendingUsers"] as? [String: Any]
 		
 		dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
-				
-		// For this example, we'll use placeholder data
-		// In reality, you'd fetch group profile data here
+		
 		return groupEvent(
 			id: eventID,
 			name: name,
 			startDate: dateFormatter.date(from: startDate)!,
-			endDate: dateFormatter.date(from: endDate)!
+			endDate: dateFormatter.date(from: endDate)!,
+			attendingUsers: (Array(attendingUsers!.values) as? [String] ?? [])!
 		)
 	}
 	
@@ -152,7 +153,6 @@ final class groupEventService {
 			database.removeObserver(withHandle: handle)
 		}
 		observers.removeAll()
-		eventList.removeAll()
 		groupEventList.removeAll()
 	}
 }

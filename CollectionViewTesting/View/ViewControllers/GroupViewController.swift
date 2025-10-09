@@ -40,16 +40,7 @@ class GroupViewController: UIViewController {
 	@IBAction func goHome(_ sender: Any) {
 		userGroupService.shared.stopObserving()
 		userPendingGroupService.shared.stopObserving()
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		guard let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else {
-			print("**ERROR: Could not instantiate viewController")
-			return
-		}
-//		let vc = HomeViewController(name: "HomeViewController", bundle: nil)
-		
-		vc.modalPresentationStyle = .fullScreen
-		
-		self.present(vc, animated: true, completion: nil)
+		self.view.window?.rootViewController?.dismiss(animated: true)
 	}
 	func setButtonViews() {
 		backButton.setTitle("", for: .normal)

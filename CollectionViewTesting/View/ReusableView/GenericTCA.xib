@@ -55,6 +55,15 @@
                             <action selector="cellTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7eT-7X-y5T"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdN-59-Dcj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title=""/>
+                        <connections>
+                            <action selector="cellTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Vcz-jy-Pdj"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Lv3-1m-7ZZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Eaf-N7-BB4"/>
@@ -73,6 +82,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="button" destination="Vyv-jN-a4f" id="auR-fA-et5"/>
+                <outlet property="cellTappedButton" destination="sdN-59-Dcj" id="irV-qi-MWd"/>
                 <outlet property="labelA" destination="kub-ZX-5DQ" id="UcG-pX-xif"/>
                 <outlet property="labelB" destination="3N2-7M-SYg" id="SIh-IA-icn"/>
                 <outlet property="nameLabel" destination="n94-27-iU9" id="aOb-ZR-89H"/>

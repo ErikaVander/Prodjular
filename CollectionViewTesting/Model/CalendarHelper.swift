@@ -43,9 +43,9 @@ func minusMonth(date: Date) -> Date
 }
 
 ///Finds the date one week before the given date
-func minusWeek(date: Date) -> Date
+func minusNumWeek(date: Date, num: Int) -> Date
 {
-	return calendar.date(byAdding: .weekOfMonth, value: -1, to: date)!
+	return calendar.date(byAdding: .weekOfMonth, value: num, to: date)!
 }
 
 ///Returns the number of days in the month of the date given
@@ -117,7 +117,7 @@ func lastDayOfWeek(date: Date) -> Date
 }
 
 ///Filling the array numsMonth[]
-func fillMonth(parDate: Date) {
+func fillMonthForInfiniteScroll(parDate: Date) {
 	numMonth.removeAll()
 	var x: Int = 0
 	var startDate = minusMonth(date: parDate)
@@ -156,13 +156,53 @@ func fillMonth(parDate: Date) {
 //	print("--done with fillMonth")
 }
 
+///Filling the array numsMonth[]
+func fillMonth(parDate: Date) {
+	numMonth.removeAll()
+	var x: Int = 0
+	var startDate = parDate
+	while x < 2 {
+		//print("x in loop: \(x)")
+		let daysInMonth = numDaysInMonth(date: startDate)
+		let firstDayMonth = firstDayOfMonth(date: startDate)
+		let startingSpaces = weekDay(date: firstDayMonth)
+		
+		numMonth.append("SU")
+		numMonth.append("MO")
+		numMonth.append("TU")
+		numMonth.append("WE")
+		numMonth.append("TH")
+		numMonth.append("FR")
+		numMonth.append("SA")
+		
+		var count: Int = 1
+		
+		while (count < 43)
+		{
+		if (count <= startingSpaces || count - startingSpaces > daysInMonth)
+		{
+		numMonth.append("")
+		}
+		else
+		{
+		numMonth.append(String(count - startingSpaces))
+		}
+		count += 1
+		}
+		x  += 1
+		startDate = plusmonth(date: startDate)
+	}
+	
+	//	print("--done with fillMonth")
+}
+
 ///Filling the array numWeek[]
 func fillWeek(parDate: Date) {
 	numWeek.removeAll()
 	
 //	print("--Just filled Week")
 
-	let startDate = minusWeek(date: parDate)
+	let startDate = minusNumWeek(date: parDate, num: -1)
 	let firstDayWeek = firstDayOfWeek(date: startDate)
 	
 	var date: Date = firstDayWeek

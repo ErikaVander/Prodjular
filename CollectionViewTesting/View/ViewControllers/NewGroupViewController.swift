@@ -21,14 +21,7 @@ class NewGroupViewController: UIViewController {
 		self.dismiss(animated: true)
 	}
 	@IBAction func goHome(_ sender: Any) {
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		guard let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else {
-			return
-		}
-		
-		vc.modalPresentationStyle = .fullScreen
-		
-		self.present(vc, animated: true, completion: nil)
+		self.view.window?.rootViewController?.dismiss(animated: true)
 	}
 	func setButtonViews() {
 		backButton.setTitle("", for: .normal)

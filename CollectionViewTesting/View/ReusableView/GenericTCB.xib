@@ -40,9 +40,6 @@
                         <rect key="frame" x="265.33333333333331" y="24.000000000000004" width="39.666666666666686" height="34.333333333333343"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system"/>
-                        <connections>
-                            <action selector="cellTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IWe-UP-0b8"/>
-                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="745" text="LabelC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWt-ck-YLc">
                         <rect key="frame" x="14.999999999999996" y="81.666666666666671" width="56.666666666666657" height="15.333333333333329"/>
@@ -50,23 +47,36 @@
                         <color key="textColor" name="MyRed"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4U-P6-6zG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="107"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                        <connections>
+                            <action selector="cellTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="E6R-Kl-RgZ"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8D2-Xp-CyN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="14D-tn-NnU"/>
                     <constraint firstAttribute="trailing" secondItem="UxF-Mn-H8H" secondAttribute="trailing" constant="15" id="7YJ-ie-tj1"/>
                     <constraint firstItem="fWt-ck-YLc" firstAttribute="top" secondItem="tgi-mj-vLc" secondAttribute="bottom" constant="10" id="KDo-Gl-sM0"/>
+                    <constraint firstItem="a4U-P6-6zG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Nrb-8g-uNO"/>
                     <constraint firstItem="8D2-Xp-CyN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="RxE-9l-x2U"/>
                     <constraint firstItem="dTC-F2-LHD" firstAttribute="top" secondItem="8D2-Xp-CyN" secondAttribute="bottom" id="ZSl-lp-tAL"/>
                     <constraint firstItem="tgi-mj-vLc" firstAttribute="leading" secondItem="8D2-Xp-CyN" secondAttribute="leading" id="aeE-IC-toP"/>
                     <constraint firstAttribute="bottom" secondItem="fWt-ck-YLc" secondAttribute="bottom" constant="10" id="cId-Kp-gSV"/>
                     <constraint firstItem="UxF-Mn-H8H" firstAttribute="centerY" secondItem="dTC-F2-LHD" secondAttribute="centerY" id="dnr-Xi-tqb"/>
+                    <constraint firstItem="a4U-P6-6zG" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="gH0-20-rkN"/>
                     <constraint firstItem="fWt-ck-YLc" firstAttribute="leading" secondItem="8D2-Xp-CyN" secondAttribute="leading" id="h6F-3q-ZGu"/>
                     <constraint firstItem="tgi-mj-vLc" firstAttribute="top" secondItem="dTC-F2-LHD" secondAttribute="bottom" id="lib-Ul-aTj"/>
+                    <constraint firstItem="a4U-P6-6zG" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="okl-vR-Ysj"/>
+                    <constraint firstItem="a4U-P6-6zG" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="vgv-bk-5hy"/>
                     <constraint firstItem="dTC-F2-LHD" firstAttribute="leading" secondItem="8D2-Xp-CyN" secondAttribute="leading" id="yAb-31-7Q4"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cellTappedButton" destination="a4U-P6-6zG" id="cab-SH-0kd"/>
                 <outlet property="labelA" destination="dTC-F2-LHD" id="fXL-wa-Umj"/>
                 <outlet property="labelB" destination="tgi-mj-vLc" id="NEj-PU-CM5"/>
                 <outlet property="labelC" destination="fWt-ck-YLc" id="47f-nI-uUu"/>

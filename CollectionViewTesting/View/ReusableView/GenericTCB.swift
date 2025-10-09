@@ -15,6 +15,7 @@ protocol GenericTCBDelegate: AnyObject {
 class GenericTCB: UITableViewCell {
 	weak var delegate: GenericTCBDelegate?
 	var objectID: String?
+	@IBOutlet weak var cellTappedButton: UIButton!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var labelA: UILabel!
 	@IBOutlet weak var labelB: UILabel!
@@ -35,6 +36,7 @@ class GenericTCB: UITableViewCell {
 	
 	func setButtonView() {
 		rightArrowButton.setTitle("", for: .normal)
+		cellTappedButton.setTitle("", for: .normal)
 	}
     
 	@IBAction func cellTapped(_ sender: Any) {

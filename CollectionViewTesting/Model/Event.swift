@@ -19,34 +19,35 @@ struct ProjdularEvent : Equatable {
 	let nameOfEvent: String
 	var startDate: Date!
 	var endDate: Date!
-	var tagName: String
+//	var tagName: String
 	var tagColor: String?
-//	var type: String?
-//	var scheduleRange: Int?
-//	var scheduleRangeStartDate: Date!
+	var type: String?
+	var scheduleRange: Int?
+	var scheduleRangeStartDate: Date!
 	var description: String?
-//	var location: String
-//	var eventMembers: [EventMember]
+	var location: String
+	var eventMembers: [EventMember]
 }
 
 struct EventMember : Equatable {
 	var userID: String
 	let isAttending: Bool
 	let profilePhotoURL: String
-	let submittedTimesID: String
+	let didSubmitTimes: Bool
+	let submittedTimes: [String: String]
 }
 
-protocol eventServiceDelegate {
-	func logicForDeletingTableViewCell(databaseManager: eventService, indexPath: IndexPath)
-	func eventListDidLoad(events: [ProjdularEvent])
+protocol EventServiceDelegate {
+	func logicForDeletingTableViewCell(databaseManager: EventService, indexPath: IndexPath)
+	func eventDidLoad(event: ProjdularEvent)
 	func pendingEventListDidLoad(events: [ProjdularEvent])
 	func didReceiveError(error: Error)
 }
 
-final class eventService {
-	static let shared = eventService()
+final class EventService {
+	static let shared = EventService()
 	
-	var delegate: eventServiceDelegate?
+	var delegate: EventServiceDelegate?
 	
 	private let database = Database.database().reference()
 	private var observers: [DatabaseHandle] = []
@@ -56,23 +57,7 @@ final class eventService {
 		let eventsRef = database.child("events").child(eventID)
 		
 		let valueObserver = eventsRef.observe(.value) {[weak self] snapshot in
-			if(!snapshot.exists()) {
-				let existingIndex = eventList.firstIndex(where: {$0.id == snapshot.key})
-				let pendingExistingIndex = pendingEventList.firstIndex(where: {$0.id == snapshot.key})
-				if(existingIndex != nil) {
-					print("\n\n**eventList before: \(eventList)\n\n")
-					eventList.remove(at: existingIndex!)
-					print("**eventList: \(eventList)\n\n")
-				}
-				if (pendingExistingIndex != nil) {
-					print("\n\n**pendingEventList before: \(pendingEventList)\n\n")
-					pendingEventList.remove(at: existingIndex!)
-					print("**pendingEventList: \(pendingEventList)\n\n")
-				}
-				self!.stopObserving()
-			} else {
-				self?.handleInitialLoad(snapshot)
-			}
+			self?.handleInitialLoad(snapshot)
 		}
 		observers.append(valueObserver)
 	}
@@ -83,76 +68,71 @@ final class eventService {
 		dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
 		let impossibleStartDate = dateFormatter.date(from: "January 1, 2000 at 12:00:00 AM PDT")
 		
-//		if let event = parseEvent(from: snapshot as? DataSnapshot) {
-//			if(event.startDate == impossibleStartDate) {
-//				let existingIndex = pendingEventList.firstIndex(where: {$0.id == snapshot.key})
-//				if(existingIndex == nil) {
-//					pendingEventList.append(event)
-//				} else {
-//					pendingEventList[existingIndex!] = event
-//				}
-//				pendingEventList.sort{$0.startDate < $1.startDate}
-//				DispatchQueue.main.async {
-//					self.delegate?.pendingEventListDidLoad(events: eventList)
-//				}
-//			} else {
-//				let existingIndex = eventList.firstIndex(where: {$0.id == snapshot.key})
-//				if(existingIndex == nil) {
-//					eventList.append(event)
-//				} else {
-//					eventList[existingIndex!] = event
-//				}
-//				eventList.sort{$0.startDate < $1.startDate}
-//				DispatchQueue.main.async {
-//					self.delegate?.eventListDidLoad(events: eventList)
-//				}
-//			}
-//		}
+		if let event = parseEvent(from: snapshot as? DataSnapshot) {
+			DispatchQueue.main.async {
+				self.delegate?.eventDidLoad(event: event)
+			}
+		}
 	}
 	
-//	private func parseEvent(from snapshot: DataSnapshot?) -> ProjdularEvent? {
-//		guard let snapshot = snapshot,
-//			  let eventID = snapshot.key as String?,
-//			  let data = snapshot.value as? [String: Any] else {
-//			return nil
-//		}
-//		
-//		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//		dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
-//		
-//		let nameOfEvent = data["name"] as? String ?? ""
-//		let startDate = data["startDate"] as? String ?? "January 1, 2000 at 12:00:00 AM PDT"
-//		let endDate = data["endDate"] as? String ?? "January 1, 2000 at 12:00:00 AM PDT"
-//		let type = data["type"] as? String ?? "week"
-//		let scheduleRange = data["scheduleRange"] as? Int ?? 1
-//		let scheduleRangeStartDate = data["scheduleRangeStartDate"] as? String ?? dateFormatter.string(from: Date())
-//		let description = data["description"] as? String ?? ""
+	private func parseEvent(from snapshot: DataSnapshot?) -> ProjdularEvent? {
+		guard let snapshot = snapshot,
+			  let eventID = snapshot.key as String?,
+			  let data = snapshot.value as? [String: Any] else {
+			return nil
+		}
+		let dateFormatter = DateFormatter()
+		
+		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+		dateFormatter.locale = .current
+		dateFormatter.timeZone = .current
+		dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
+		
+		let nameOfEvent = data["name"] as? String ?? ""
+		let startDate = data["startDate"] as? String ?? "January 1, 2000 at 12:00:00 AM UTC"
+		let endDate = data["endDate"] as? String ?? "January 1, 2000 at 12:00:00 AM UTC"
+		let tagColor = data["tagColor"] as? String ?? ""
+		let type = data["type"] as? String ?? "week"
+		let scheduleRange = data["scheduleRange"] as? Int ?? 1
+		let scheduleRangeStartDate = data["scheduleRangeStartDate"] as? String ?? dateFormatter.string(from: Date())
+		let description = data["description"] as? String ?? ""
 //		let location = data["location"] as? String ?? ""
-//		let eventMembers = data["members"] as? [String:Any] ?? [:]
-//		
-//		var members: [EventMember] = []
-//		for(userID, value) in eventMembers {
-//			if let memberData = value as? [String: Any],
-//			   let isAttending = memberData["isAttending"] as? Bool,
-//			   let profilePhotoURL = memberData["profilePhotoURL"] as? String,
-//			   let submittedTimesID = memberData["submittedTimesID"] as? String {
-//				members.append(EventMember(userID: userID, isAttending: isAttending, profilePhotoURL: profilePhotoURL, submittedTimesID: submittedTimesID))
-//			}
-//		}
-//		
-//		return ProjdularEvent(
-//			id: eventID,
-//			nameOfEvent: nameOfEvent,
-//			startDate: dateFormatter.date(from: startDate), // Fetch from users node
-//			endDate: dateFormatter.date(from: endDate),
-//			type: type,
-//			scheduleRange: scheduleRange,
-//			scheduleRangeStartDate: dateFormatter.date(from: scheduleRangeStartDate),
-//			description: description,
-//			location: location,
-//			eventMembers: members
-//		)
-//	}
+		let address = data["address"] as? String ?? ""
+		let city = data["city"] as? String ?? ""
+		let state = data["state"] as? String ?? ""
+		let zip = data["zip"] as? Int ?? 0
+		let eventMembers = data["members"] as? [String:Any] ?? [:]
+		let submittedTimes = data["submittedTimes"] as? [String: Any] ?? [:]
+		
+		var didSubmitTimes = false
+		if(submittedTimes[Auth.auth().currentUser!.uid] != nil) {
+			didSubmitTimes = true
+		}
+		print("**submittedTimes 1: \(submittedTimes) \(didSubmitTimes)")
+		
+		var members: [EventMember] = []
+		for(userID, value) in eventMembers {
+			if let memberData = value as? [String: Any],
+			   let isAttending = memberData["isAttending"] as? Bool,
+			   let profilePhotoURL = memberData["profilePhoto"] as? String {
+				members.append(EventMember(userID: userID, isAttending: isAttending, profilePhotoURL: profilePhotoURL, didSubmitTimes: didSubmitTimes, submittedTimes: submittedTimes[userID] as? [String : String] ?? ["":""]))
+			}
+		}
+		
+		return ProjdularEvent(
+			id: eventID,
+			nameOfEvent: nameOfEvent,
+			startDate: dateFormatter.date(from: startDate), // Fetch from users node
+			endDate: dateFormatter.date(from: endDate),
+			tagColor: tagColor,
+			type: type,
+			scheduleRange: scheduleRange,
+			scheduleRangeStartDate: dateFormatter.date(from: scheduleRangeStartDate),
+			description: description,
+			location: "\(address)\n\(city) \(state) \(zip)",
+			eventMembers: members
+		)
+	}
 	
 	func stopObserving() {
 		observers.forEach { handle in
@@ -195,7 +175,6 @@ final class eventService {
 		let event = ["name": event.nameOfEvent,
 					 "startDate": dateformat.string(from: event.startDate),
 					 "endDate": dateformat.string(from: event.endDate),
-					 "tagName": event.tagName,
 					 "tagColor": event.tagColor,
 //					 "type": event.type,
 //					 "scheduleRange": event.scheduleRange,

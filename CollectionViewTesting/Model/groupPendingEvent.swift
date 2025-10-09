@@ -156,7 +156,6 @@ final class groupPendingEventService {
 			database.removeObserver(withHandle: handle)
 		}
 		observers.removeAll()
-		eventList.removeAll()
 		groupPendingEventList.removeAll()
 	}
 }

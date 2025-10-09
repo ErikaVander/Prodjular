@@ -11,7 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseCore
 
-var selectedDate = currentDateAndTime()
+var selectedDateCalendarViewController = currentDateAndTime()
 private let dateFormatter = DateFormatter()
 var eventsForTableViewCell = [ProjdularEvent]()
 var initialLoadingOfData = true
@@ -77,7 +77,7 @@ class CalendarViewController: UIViewController {
 			}
 		}
 		
-		eventService.shared.delegate = self
+		EventService.shared.delegate = self
 		
 		///bannerAd view setup
 		bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
@@ -95,11 +95,11 @@ class CalendarViewController: UIViewController {
 		tableView.dataSource = self
 		
 		///Setting the month and year label
-		monthLabel.text = monthString(date: selectedDate)
-		yearLabel.text = yearString(date: selectedDate)
+		monthLabel.text = monthString(date: selectedDateCalendarViewController)
+		yearLabel.text = yearString(date: selectedDateCalendarViewController)
 		
         setCollectionViewLayout()
-		fillMonth(parDate: selectedDate)
+		fillMonthForInfiniteScroll(parDate: selectedDateCalendarViewController)
 		selectCellAfterScroll()
     }
 	

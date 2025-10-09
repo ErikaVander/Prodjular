@@ -39,15 +39,7 @@ class GroupEventsVC: UIViewController {
 	@IBAction func goHome(_ sender: Any) {
 		groupEventService.shared.stopObserving()
 		groupPendingEventService.shared.stopObserving()
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		guard let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else {
-			print("**ERROR: Could not instantiate viewController")
-			return
-		}
-		
-		vc.modalPresentationStyle = .fullScreen
-		
-		self.present(vc, animated: true, completion: nil)
+		self.view.window?.rootViewController?.dismiss(animated: true)
 	}
 	
 	func setButtonViews() {
@@ -66,7 +58,24 @@ class GroupEventsVC: UIViewController {
 //		numMembersButton.setTitle("\(await String(describing: userGroupService.shared.getNumMembers(groupID: groupID!))) Members", for: .normal)
 	}
 }
-extension GroupEventsVC: GenericTableWithHeaderDelegate {
+extension GroupEventsVC: GenericTableWithHeaderDelegate, GenericTCADelegate, GenericTCBDelegate {
+	func cellTappedLogic(objectID: String) {
+		let vc = EventVC(nibName: "EventVC", bundle: nil)
+		
+		vc.modalPresentationStyle = .fullScreen
+		vc.eventID = objectID
+		
+		groupEventService.shared.stopObserving()
+		groupPendingEventService.shared.stopObserving()
+		
+		self.present(vc, animated: true, completion: nil)
+		print("**GroupEventVC-cellTappedLogic")
+	}
+	
+	func buttonTappedLogic() {
+		print("Hello")
+	}
+	
 	enum Section {
 		case main
 	}
@@ -80,6 +89,7 @@ extension GroupEventsVC: GenericTableWithHeaderDelegate {
 		eventsView.delegate = self
 		
 		eventsView.tableView.register(UINib(nibName: "GenericTCA", bundle: nil), forCellReuseIdentifier: "genericTCA")
+		eventsView.tableView.register(UINib(nibName: "GenericTCB", bundle: nil), forCellReuseIdentifier: "genericTCB")
 		
 		groupPendingEventService.shared.startObservingGroupPendingEvents(for: groupID!)
 		print("**GroupID: \(groupID!)")
@@ -103,14 +113,30 @@ extension GroupEventsVC: GenericTableWithHeaderDelegate {
 		let dateFormatterSecond = DateFormatter()
 		dateFormatterSecond.dateFormat = "h:mm a"
 		eventsTableViewDiffableDataSource = UITableViewDiffableDataSource(tableView: eventsView.tableView) { (tableView, indexPath, event) -> UITableViewCell? in
-			print("**event: \(event)")
-			let cellOne = self.eventsView.tableView.dequeueReusableCell(withIdentifier: "genericTCA", for: indexPath) as! GenericTCA
-			cellOne.nameLabel.text = event.name
-			cellOne.labelA.text = dateFormatterFirst.string(from: event.startDate)
-			cellOne.labelB.text = "\(dateFormatterSecond.string(from: event.startDate)) - \(dateFormatterSecond.string(from: event.endDate))"
-			cellOne.hideButtonView()
-			cellOne.showRightArrowButton()
-			return cellOne
+			if(event.attendingUsers.contains(where: {$0 == Auth.auth().currentUser?.uid})) {
+				print("**event: \(event)")
+				let cellOne = self.eventsView.tableView.dequeueReusableCell(withIdentifier: "genericTCA", for: indexPath) as! GenericTCA
+				cellOne.nameLabel.text = event.name
+				cellOne.labelA.text = dateFormatterFirst.string(from: event.startDate)
+				cellOne.labelB.text = "\(dateFormatterSecond.string(from: event.startDate)) - \(dateFormatterSecond.string(from: event.endDate))"
+				cellOne.hideButtonView()
+				cellOne.showRightArrowButton()
+				cellOne.objectID = event.id
+				cellOne.delegate = self
+				return cellOne
+			} else {
+				print("**attendingUsers: \(event.attendingUsers)")
+				print("**attendingUsers True: \(event.attendingUsers.contains(where: {$0 == Auth.auth().currentUser?.uid}))")
+				let cellOne = self.eventsView.tableView.dequeueReusableCell(withIdentifier: "genericTCB", for: indexPath) as! GenericTCB
+				cellOne.nameLabel.text = event.name
+				cellOne.labelA.text = dateFormatterFirst.string(from: event.startDate)
+				cellOne.labelB.text = "\(dateFormatterSecond.string(from: event.startDate)) - \(dateFormatterSecond.string(from: event.endDate))"
+				cellOne.labelC.text = "PLEASE RSVP"
+				cellOne.objectID = event.id
+				cellOne.delegate = self
+				return cellOne
+
+			}
 		}
 		let dateFormatterThird = DateFormatter()
 		dateFormatterThird.dateFormat = "M/d/yy"
@@ -126,6 +152,8 @@ extension GroupEventsVC: GenericTableWithHeaderDelegate {
 				cellOne.labelC.text = "Pending Admin Approval"
 				cellOne.labelC.textColor = .lightGray
 			}
+			cellOne.objectID = event.id
+			cellOne.delegate = self
 			return cellOne
 		}
 	}

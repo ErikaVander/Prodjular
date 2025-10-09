@@ -23,24 +23,39 @@ extension CalendarViewController {
 			for child in snapshot.children {
 				if let childSnapshot = child as? DataSnapshot,
 				   let id = childSnapshot.key as? String,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let startDate = dict["startDate"] as? String,
-				   let endDate = dict["endDate"] as? String,
-				   let nameOfEvent = dict["name"] as? String,
-				   let tagName = dict["tagName"] as? String,
-				   let tagColor = dict["tagColor"] as? String,
-				   let description = dict["description"] as? String
+				   let dict = childSnapshot.value as? [String: Any]
 				{
+					let nameOfEvent = dict["name"] as? String ?? ""
+					let startDate = dict["startDate"] as? String ?? "January 1, 2000 at 12:00:00 AM PDT"
+					let endDate = dict["endDate"] as? String ?? "January 1, 2000 at 12:00:00 AM PDT"
+//					let tagName = dict["tagName"] as? String ?? ""
+					let tagColor = dict["tagColor"] as? String ?? ""
+					let type = dict["type"] as? String ?? ""
+					let scheduleRage = dict["scheduleRange"] as? Int ?? 1
+					let scheduleRangeStartDate = dict["scheduleRangeStartDate"] as? String ?? ""
+					let description = dict["description"] as? String
+					let location = dict["location"] as? String ?? ""
+					let eventMembers = dict["members"] as? [String:Any] ?? [:]
+				
 					let dateFormatter = DateFormatter()
 					dateFormatter.dateFormat = "MMMM d, yyyy 'at' h:mm:ss a zzz"
+				
+					var members: [EventMember] = []
+					for(userID, value) in eventMembers {
+						if let memberData = value as? [String: Any],
+						   let isAttending = memberData["isAttending"] as? Bool,
+						   let profilePhotoURL = memberData["profilePhotoURL"] as? String,
+						   let submittedTimesID = memberData["submittedTimesID"] as? String {
+							members.append(EventMember(userID: userID, isAttending: isAttending, profilePhotoURL: profilePhotoURL, didSubmitTimes: true, submittedTimes: ["":""]))
+						}
+					}
 					
-					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagName: tagName, tagColor: tagColor, description: description)
+					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagColor: tagColor, type: type, scheduleRange: scheduleRage, scheduleRangeStartDate: dateFormatter.date(from: scheduleRangeStartDate), description: description, location: location, eventMembers: members)
 					
 					tempEvents.append(event)
 				}
 			}
 			eventList = tempEvents
-			//print("--eventsForDate: \(eventsForDate(parDate: selectedDate)) selectedDate: \(selectedDate))")
 			if(initialLoadingOfData == true) {
 				self.tableView.reloadData()
 				initialLoadingOfData = false
@@ -48,7 +63,7 @@ extension CalendarViewController {
 			
 			self.collectionView.reloadData()
 			
-			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDate))+dayOfMonth(date: selectedDate)
+			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDateCalendarViewController))+dayOfMonth(date: selectedDateCalendarViewController)
 			
 			self.collectionView.selectItem(at: IndexPath(item: (49+dateToSelectPlusSeven-1), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
 			

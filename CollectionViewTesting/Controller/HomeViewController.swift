@@ -52,6 +52,13 @@ class HomeViewController: UIViewController {
 		showGroupViewController()
 	}
 	
+	@IBAction func freindButtonTapped(_ sender: Any) {
+		let vc = storyboard?.instantiateViewController(identifier: "CalendarViewController")
+		
+		vc!.modalPresentationStyle = .fullScreen
+		
+		present(vc!, animated: true, completion: nil)
+	}
 	
 	func showGroupViewController() {
 		let vc = GroupViewController(nibName: "GroupViewController", bundle: nil)

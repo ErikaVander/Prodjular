@@ -49,9 +49,9 @@ class EventViewController: UIViewController
 
 	///The event that occurs after the user creates an event. The new event is made into a Prodular Event and added to the database using the function newEvent defined in the file DatabaseManager.swift.
 	@IBAction func saveEvent(_ sender: Any) {
-		let month = calendar.component(.month, from: selectedDate)
-		let day = calendar.component(.day, from: selectedDate)
-		let year = calendar.component(.year, from: selectedDate)
+		let month = calendar.component(.month, from: selectedDateCalendarViewController)
+		let day = calendar.component(.day, from: selectedDateCalendarViewController)
+		let year = calendar.component(.year, from: selectedDateCalendarViewController)
 		
 		let startHour = calendar.component(.hour, from: StartDatePicker.date)
 		let startMinute = calendar.component(.minute, from: StartDatePicker.date)
@@ -70,7 +70,7 @@ class EventViewController: UIViewController
 		dateFormat.timeStyle = .full
 		dateFormat.dateStyle = .short
 		
-		eventService.shared.eventUpdateAndWrite(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate,tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text), isWriteNotUpdate: true)
+//		EventService.shared.eventUpdateAndWrite(with: ProjdularEvent(id: "NotYetFound", nameOfEvent: NameOfEvent.text!, startDate: startDate, endDate: endDate,tagName: "optional", tagColor: selectedColorFromColorsArray.name, description: descriptionTextView.text), isWriteNotUpdate: true)
 		selectedColorFromColorsArray = ColorsArray[0]
 	}
 	

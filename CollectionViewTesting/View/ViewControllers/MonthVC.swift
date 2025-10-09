@@ -1,14 +1,56 @@
 //
-//  CalendarViewController_CollectionView.swift
+//  monthVC.swift
 //  CollectionViewTesting
 //
-//  Created by Vanderhoff on 1/12/22.
+//  Created by Vanderhoff on 10/7/25.
 //
 
 import UIKit
 
-//MARK: CollectionViewDataSource
-extension CalendarViewController: UICollectionViewDataSource {
+class MonthVC: UIViewController {
+	var selectedDate = plusDay(date: currentDateAndTime())
+	var eventID: String?
+	var event: ProjdularEvent?
+	@IBOutlet weak var eventNameLabel: UILabel!
+	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var monthLabel: UILabel!
+	@IBOutlet weak var yearLabel: UILabel!
+	@IBOutlet weak var backButton: UIButton!
+	@IBOutlet weak var submitButton: UIButton!
+	override func viewDidLoad() {
+        super.viewDidLoad()
+		collectionView.allowsMultipleSelection = true
+		collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+		//Setting up the collectionView delegate and datasource
+		collectionView.delegate = self
+		collectionView.dataSource = self
+		setCollectionViewLayout()
+		fillMonth(parDate: event!.startDate!)
+		setViews()
+    }
+	
+	@IBAction func goBack(_ sender: Any) {
+		EventService.shared.stopObserving()
+		self.dismiss(animated: true)
+	}
+	@IBAction func goHome(_ sender: Any) {
+		EventService.shared.stopObserving()
+		self.view.window?.rootViewController?.dismiss(animated: true)
+	}
+	
+	func setViews() {
+		backButton.setTitle("", for: .normal)
+		///Setting the month and year label
+		print("**event.startdate: \(String(describing: event!.startDate!))")
+		monthLabel.text = monthString(date: event!.startDate!)
+		yearLabel.text = yearString(date: event!.startDate!)
+		////Setting Event Name
+		eventNameLabel.text = event?.nameOfEvent
+		submitButton.layer.cornerRadius = 10
+	}
+}
+
+extension MonthVC: UICollectionViewDataSource {
 	///The number of sections in the month collectionView calendar
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
@@ -16,7 +58,7 @@ extension CalendarViewController: UICollectionViewDataSource {
 	
 	///The number of items in each section is determined by the lengthe of nums[] which keeps track of the content that will be added to the collectionView
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		//print("--num.count = ", numMonth.count)
+		print("--num.count = ", numMonth.count)
 		return numMonth.count
 	}
 	
@@ -42,19 +84,32 @@ extension CalendarViewController: UICollectionViewDataSource {
 			let formatterTwo = DateFormatter()
 			formatterTwo.dateFormat = "yyyy-MMM-dd"
 			
-			let firstPartOfDate = "\(String(describing: yearLabel.text!))-\(String(describing: monthLabel.text!))"
+			let firstPartOfDate = formatter.string(from: event!.startDate!)
 			let dateString = "\(firstPartOfDate)-\(numMonth[indexPath.item])"
 			
 			let theDate = formatterTwo.date(from: dateString) ?? formatterTwo.date(from: "2020-August-21")!
 			
 			if indexPath.item <= 49 {
-				cellOne.cellDate = minusMonth(date: theDate)
-			} else if indexPath.item <= 98 {
 				cellOne.cellDate = theDate
-				
-				if(formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())){
+				if(formatterTwo.string(from: cellOne.cellDate!) == formatterTwo.string(from: currentDateAndTime())){
+					if formatterTwo.string(from: cellOne.cellDate!) == formatterTwo.string(from: selectedDate) {
+						cellOne.currentDateIndicatorView.layer.borderColor = UIColor.white.cgColor
+					} else {
+						
+						if self.traitCollection.userInterfaceStyle == .light {
+							
+							cellOne.currentDateIndicatorView.layer.borderColor = UIColor.darkGray.cgColor
+						}
+					}
+					cellOne.currentDateIndicatorView.layer.borderWidth = 2
+					cellOne.currentDateIndicatorView.layer.cornerRadius = 5
+					cellOne.currentDateIndicatorView.isHidden = false
+				}
+			} else if indexPath.item <= 98 {
+				cellOne.cellDate = plusmonth(date: theDate)
+				if(formatterTwo.string(from: cellOne.cellDate!) == formatterTwo.string(from: currentDateAndTime())) {
 					
-					if formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDateCalendarViewController) {
+					if formatterTwo.string(from: cellOne.cellDate!) != formatterTwo.string(from: selectedDate) {
 						
 						cellOne.currentDateIndicatorView.layer.borderColor = UIColor.white.cgColor
 					} else {
@@ -68,8 +123,6 @@ extension CalendarViewController: UICollectionViewDataSource {
 					cellOne.currentDateIndicatorView.layer.cornerRadius = 5
 					cellOne.currentDateIndicatorView.isHidden = false
 				}
-			} else {
-				cellOne.cellDate = plusmonth(date: theDate)
 			}
 			
 			if(EventService.shared.eventsForDate(parDate: theDate).count != 0 && cellOne.cellDate == theDate) {
@@ -90,8 +143,8 @@ extension CalendarViewController: UICollectionViewDataSource {
 					cellOne.theDotViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 					dotView.translatesAutoresizingMaskIntoConstraints = false
 					
-					///Changes the background based on whether or not the cell is selected, and whether or not it is the current date. If it isn't the current date, theDotViewBackgroundView will not have a background, if it is the current date, theDotViewBackgroundView will have background so that it is not hidden from the currentDateIndicator.
-					if (formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDateCalendarViewController) && formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())) {
+					//Changes the background based on whether or not the cell is selected, and whether or not it is the current date. If it isn't the current date, theDotViewBackgroundView will not have a background, if it is the current date, theDotViewBackgroundView will have background so that it is not hidden from the currentDateIndicator.
+					if (formatterTwo.string(from: theDate) == formatterTwo.string(from: selectedDate) && formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime())) {
 						cellOne.changeBackgroundDarkGrey()
 					} else if formatterTwo.string(from: theDate) == formatterTwo.string(from: currentDateAndTime()) {
 						cellOne.changeBackgroundBlack()
@@ -197,7 +250,6 @@ extension CalendarViewController: UICollectionViewDataSource {
 			}()
 			
 			cellOne.selectedBackgroundView!.frame = CGRect(x: (cellOne.frame.width-cellOne.frame.height)/2, y: 0, width: cellOne.frame.height, height: cellOne.frame.height)
-			
 		}
 		
 		cellOne.label.text = numMonth[indexPath.item]
@@ -207,38 +259,29 @@ extension CalendarViewController: UICollectionViewDataSource {
 }
 
 //MARK: ColectionViewDelegate
-extension CalendarViewController: UICollectionViewDelegate {
-	///The logic for enabling infinite scrolling.
-	func scroll() {
-		collectionView.scrollToItem(at: IndexPath(item: 50, section: 0), at: .top, animated: false)
-		collectionView.reloadData()
-	}
-	
+extension MonthVC: UICollectionViewDelegate {
 	///enabling infinite scroll by calling the scroll() function.
-	func updateViewAterScroll() {
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 		if(collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
-			selectedDateCalendarViewController = minusMonth(date: selectedDateCalendarViewController)
-			fillMonthForInfiniteScroll(parDate: selectedDateCalendarViewController)
-			scroll()
-			yearLabel.text = yearString(date: selectedDateCalendarViewController)
-			monthLabel.text = monthString(date: selectedDateCalendarViewController)
-			selectCellAfterScroll()
+			yearLabel.text = yearString(date: event!.startDate!)
+			monthLabel.text = monthString(date: event!.startDate!)
 			
-		} else if collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 105, section: 0){
-			selectedDateCalendarViewController = plusmonth(date: selectedDateCalendarViewController)
-			fillMonthForInfiniteScroll(parDate: selectedDateCalendarViewController)
-			scroll()
-			yearLabel.text = yearString(date: selectedDateCalendarViewController)
-			monthLabel.text = monthString(date: selectedDateCalendarViewController)
-			selectCellAfterScroll()
+		} else if collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 49, section: 0){
+			yearLabel.text = yearString(date: plusmonth(date: event!.startDate!))
+			monthLabel.text = monthString(date: plusmonth(date: event!.startDate!))
 		}
 	}
-	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		updateViewAterScroll()
-	}
+	
 	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		if (!decelerate) {
-			updateViewAterScroll()
+			if(collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 0, section: 0)) {
+				yearLabel.text = yearString(date: event!.startDate!)
+				monthLabel.text = monthString(date: event!.startDate!)
+				
+			} else if collectionView.indexPathsForVisibleItems[0] == IndexPath.init(item: 49, section: 0){
+				yearLabel.text = yearString(date: plusmonth(date: event!.startDate!))
+				monthLabel.text = monthString(date: plusmonth(date: event!.startDate!))
+			}
 		}
 	}
 	
@@ -256,7 +299,6 @@ extension CalendarViewController: UICollectionViewDelegate {
 		flowLayout.minimumLineSpacing = 0
 		flowLayout.minimumInteritemSpacing = 0
 		
-		collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: collectionView.frame.size.height)
 		collectionView.layer.cornerRadius = 5
 		collectionView.isPagingEnabled = true
 		
@@ -267,11 +309,8 @@ extension CalendarViewController: UICollectionViewDelegate {
 		let cellOne = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 		
 		if(Int(cellOne.label.text!) != nil) {
-			previouslySelectedCellIndexPath = collectionView.indexPathsForSelectedItems?.first!
 			selectCell(indexPath: indexPath)
-			//updates previouslySelectedCell and newely selected cell by calling reloadItems
-			collectionView.reloadItems(at: [indexPath, previouslySelectedCellIndexPath!])
-			//collectionView.reloadItems(at: [previouslySelectedCellIndexPath!])
+			collectionView.reloadItems(at: [indexPath])
 			return true
 			
 		} else {
@@ -280,34 +319,17 @@ extension CalendarViewController: UICollectionViewDelegate {
 		}
 	}
 	
-	///Logic for updating userselectedDateCalendarViewController after a new cell is selected by user. This method then reloads the tableView data if data exists, otherwise it informs the user that no events are scheduled for the newly selected date.
-	func selectCell(indexPath: IndexPath) {
-		if Int(numMonth[indexPath.item]) != nil {
-			selectedDateCalendarViewController = dateFromNumbers(date: "\(monthString(date: selectedDateCalendarViewController)) \(numMonth[indexPath.item]), \(yearString(date: selectedDateCalendarViewController))")
-			
-		}
-		
-		tableView.reloadData()
-		if(tableView.numberOfRows(inSection: 0) == 0) {
-			noEventsScheduledLabel.text = "no events scheduled"
-			
-		}
+	func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+		selectedDate = dateFromNumbers(date: "\(monthString(date: minusMonth(date: event!.startDate))) \(numMonth[indexPath.item]), \(yearString(date: event!.startDate))")
+		collectionView.reloadItems(at: [indexPath])
+		return true
 	}
 	
-	///selects the required cell. if the selectedDateCalendarViewController is within the current month, the current date is selected using currentDateAndTime(). Otherwise the first day of the currently displayed month is selected. This method then calls selectCell() to update the selectedDateCalendarViewController and reload the tableView data or show that there are no events scheduled on the newly selected date.
-	func selectCellAfterScroll() {
-		if firstDayOfMonth(date: selectedDateCalendarViewController) == firstDayOfMonth(date: currentDateAndTime()) {
-			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: currentDateAndTime()))+dayOfMonth(date: currentDateAndTime())
+	///Logic for updating userSelectedDate after a new cell is selected by user. This method then reloads the tableView data if data exists, otherwise it informs the user that no events are scheduled for the newly selected date.
+	func selectCell(indexPath: IndexPath) {
+		if Int(numMonth[indexPath.item]) != nil {
+			selectedDate = dateFromNumbers(date: "\(monthString(date: event!.startDate)) \(numMonth[indexPath.item]), \(yearString(date: event!.startDate))")
 			
-			collectionView.selectItem(at: IndexPath(item: 49+dateToSelectPlusSeven-1, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
-			
-			selectCell(indexPath: (IndexPath(item: 49+dateToSelectPlusSeven-1, section: 0)))
-		} else {
-			let dateToSelectPlusSeven = 7+weekDay(date: firstDayOfMonth(date: selectedDateCalendarViewController))
-			
-			collectionView.selectItem(at: IndexPath(item: (49+dateToSelectPlusSeven), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.init(rawValue: UInt(dateToSelectPlusSeven)))
-			
-			selectCell(indexPath: (collectionView.indexPathsForSelectedItems?.first)!)
 		}
 	}
 }

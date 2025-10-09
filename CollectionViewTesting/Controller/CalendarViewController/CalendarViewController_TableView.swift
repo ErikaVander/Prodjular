@@ -11,9 +11,9 @@ import UIKit
 extension CalendarViewController: UITableViewDataSource {
 	///Determines the number of rows in each section of the tableView which is 	determined by the function eventsForDate which returns all the events that are associated with any givin date.
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		eventsForTableViewCell = eventService.shared.eventsForDate(parDate: selectedDate)
+		eventsForTableViewCell = EventService.shared.eventsForDate(parDate: selectedDateCalendarViewController)
 		
-		if eventService.shared.eventsForDate(parDate: selectedDate).isEmpty == false {
+		if EventService.shared.eventsForDate(parDate: selectedDateCalendarViewController).isEmpty == false {
 			return eventsForTableViewCell.count
 		} else {
 			return 0
@@ -30,7 +30,7 @@ extension CalendarViewController: UITableViewDataSource {
 		//		majorStackViewConstraint.isActive = true
 		//		majorStackViewConstraint.identifier = "majorStackViewConstraint-width"
 		
-		eventsForTableViewCell = eventService.shared.eventsForDate(parDate: selectedDate)
+		eventsForTableViewCell = EventService.shared.eventsForDate(parDate: selectedDateCalendarViewController)
 		
 		if tableView.numberOfRows(inSection: 0) == 0 {
 			
@@ -64,8 +64,8 @@ extension CalendarViewController: UITableViewDataSource {
 }
 
 //MARK: TableViewDelegate
-extension CalendarViewController: UITableViewDelegate, eventServiceDelegate {
-	func eventListDidLoad(events: [ProjdularEvent]) {
+extension CalendarViewController: UITableViewDelegate, EventServiceDelegate {
+	func eventDidLoad(event: ProjdularEvent) {
 		print("hello")
 	}
 	
@@ -78,7 +78,7 @@ extension CalendarViewController: UITableViewDelegate, eventServiceDelegate {
 	}
 	
 	
-	func logicForDeletingTableViewCell(databaseManager: eventService, indexPath: IndexPath) {
+	func logicForDeletingTableViewCell(databaseManager: EventService, indexPath: IndexPath) {
 		DispatchQueue.main.async {
 			
 			eventsForTableViewCell.remove(at: indexPath.row)
@@ -101,7 +101,7 @@ extension CalendarViewController: UITableViewDelegate, eventServiceDelegate {
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			eventService.shared.deleteEventFromUIView(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
+			EventService.shared.deleteEventFromUIView(with: eventsForTableViewCell[indexPath.item], indexPath: indexPath)
 		}
 	}
 }

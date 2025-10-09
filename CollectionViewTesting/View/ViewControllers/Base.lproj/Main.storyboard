@@ -47,6 +47,9 @@
                                         <buttonConfiguration key="configuration" style="filled">
                                             <color key="baseBackgroundColor" name="UIBlue"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="freindButtonTapped:" destination="GBd-sh-Bcu" eventType="touchUpInside" id="Iey-Tr-TRN"/>
+                                        </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="s06-hA-Gne">
                                         <rect key="frame" x="132.33333333333334" y="30" width="22.666666666666657" height="17"/>
@@ -839,7 +842,7 @@
         <!--month view-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CalendarViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalendarViewController" id="BYZ-38-t0r" customClass="CalendarViewController" customModule="CollectionViewTesting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -926,6 +929,7 @@
                                     </tableView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="LEj-lO-UGD" firstAttribute="top" secondItem="1kj-p1-7gV" secondAttribute="bottom" id="4S5-L2-hrw"/>
                                     <constraint firstAttribute="width" constant="295" identifier="CalendarViewTable" id="pcr-FC-Px7"/>
                                 </constraints>
                             </stackView>

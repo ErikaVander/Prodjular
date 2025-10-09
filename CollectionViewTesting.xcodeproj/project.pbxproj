@@ -10,6 +10,8 @@
 		D601AF412E7B540400DC774A /* GenericTCB.swift in Sources */ = {isa = PBXBuildFile; fileRef = D601AF3F2E7B540400DC774A /* GenericTCB.swift */; };
 		D601AF422E7B540400DC774A /* GenericTCB.xib in Resources */ = {isa = PBXBuildFile; fileRef = D601AF402E7B540400DC774A /* GenericTCB.xib */; };
 		D601AF442E7B8F6000DC774A /* groupPendingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D601AF432E7B8F5800DC774A /* groupPendingEvent.swift */; };
+		D601AF472E7CB63500DC774A /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D601AF452E7CB63500DC774A /* EventVC.swift */; };
+		D601AF482E7CB63500DC774A /* EventVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D601AF462E7CB63500DC774A /* EventVC.xib */; };
 		D6020EFB2CB7770C0090231D /* EmptyFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */; };
 		D6020EFC2CB7770C0090231D /* EmptyFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */; };
 		D60EEE2E2E6F634400E113F5 /* userPendingGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */; };
@@ -55,6 +57,8 @@
 		D645666C2C6FCBFF00A8AF7B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D645666B2C6FCBFF00A8AF7B /* User.swift */; };
 		D668826D2B6E156B00DE1726 /* EventDurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668826C2B6E156B00DE1726 /* EventDurationHelper.swift */; };
 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
+		D67ADB952E95A068000E4F58 /* MonthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67ADB932E95A068000E4F58 /* MonthVC.swift */; };
+		D67ADB962E95A068000E4F58 /* MonthVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D67ADB942E95A068000E4F58 /* MonthVC.xib */; };
 		D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */; };
 		D6A12A432CB866FF00BF2E88 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */; };
 		D6B46CC92C70186E0050EDFB /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */; };
@@ -100,6 +104,8 @@
 		D601AF3F2E7B540400DC774A /* GenericTCB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTCB.swift; sourceTree = "<group>"; };
 		D601AF402E7B540400DC774A /* GenericTCB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTCB.xib; sourceTree = "<group>"; };
 		D601AF432E7B8F5800DC774A /* groupPendingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupPendingEvent.swift; sourceTree = "<group>"; };
+		D601AF452E7CB63500DC774A /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
+		D601AF462E7CB63500DC774A /* EventVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventVC.xib; sourceTree = "<group>"; };
 		D6020EF92CB7770C0090231D /* EmptyFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		D6020EFA2CB7770C0090231D /* EmptyFriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyFriendsTableViewCell.xib; sourceTree = "<group>"; };
 		D60EEE2D2E6F633F00E113F5 /* userPendingGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userPendingGroups.swift; sourceTree = "<group>"; };
@@ -148,6 +154,8 @@
 		D668826C2B6E156B00DE1726 /* EventDurationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDurationHelper.swift; sourceTree = "<group>"; };
 		D66C32B827B44E4E00B0F5A8 /* CollectionViewTesting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollectionViewTesting.entitlements; sourceTree = "<group>"; };
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		D67ADB932E95A068000E4F58 /* MonthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthVC.swift; sourceTree = "<group>"; };
+		D67ADB942E95A068000E4F58 /* MonthVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonthVC.xib; sourceTree = "<group>"; };
 		D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +281,10 @@
 				D62741722E7870E10057865F /* NewGroupViewController.xib */,
 				D6BA94A62E78965B00E3F765 /* GroupEventsVC.swift */,
 				D6BA94A72E78965B00E3F765 /* GroupEventsVC.xib */,
+				D601AF452E7CB63500DC774A /* EventVC.swift */,
+				D601AF462E7CB63500DC774A /* EventVC.xib */,
+				D67ADB932E95A068000E4F58 /* MonthVC.swift */,
+				D67ADB942E95A068000E4F58 /* MonthVC.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -493,11 +505,13 @@
 				D6F9C6A3273DFD4B003298E1 /* ColorPickerCell.xib in Resources */,
 				D6BA94A82E78965B00E3F765 /* GroupEventsVC.xib in Resources */,
 				D6105E952E693D0B009145AD /* GenericTableWithHeader.xib in Resources */,
+				D67ADB962E95A068000E4F58 /* MonthVC.xib in Resources */,
 				D6105E962E693D0B009145AD /* GroupViewController.xib in Resources */,
 				D63328CC2E6A30E300909A69 /* GenericTCA.xib in Resources */,
 				D6105E972E693D0B009145AD /* GenericTable.xib in Resources */,
 				D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
+				D601AF482E7CB63500DC774A /* EventVC.xib in Resources */,
 				D6D928272E68192B0072390C /* NotificationTableCell.xib in Resources */,
 				D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */,
 				D64566682C6FC8E000A8AF7B /* FriendsTableViewTableViewCell.xib in Resources */,
@@ -600,6 +614,7 @@
 				D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */,
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,
 				D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */,
+				D601AF472E7CB63500DC774A /* EventVC.swift in Sources */,
 				D6B46CCB2C7050E30050EDFB /* DatabaseManagerForAddFriendViewController.swift in Sources */,
 				D6DB6649278F975C0087550C /* CalendarViewController_CollectionView.swift in Sources */,
 				D6D23CFE2756C95C00B0F210 /* SettingsHelper.swift in Sources */,
@@ -618,6 +633,7 @@
 				D645666C2C6FCBFF00A8AF7B /* User.swift in Sources */,
 				D6E35C0B285242A000D8B327 /* customGesture.swift in Sources */,
 				D62335592CBDE42500FEC65A /* FriendReqTableViewCell.swift in Sources */,
+				D67ADB952E95A068000E4F58 /* MonthVC.swift in Sources */,
 				D61F04C225D3891D00A2BC05 /* CalendarViewController.swift in Sources */,
 				D6DB6647278F970C0087550C /* CalendarViewController_ads.swift in Sources */,
 				D630114E267A978C00128ADA /* EventViewController.swift in Sources */,

@@ -17,12 +17,14 @@ class GenericTCA: UITableViewCell {
 	var objectID: String?
 	@IBOutlet weak var rightArrow: UIButton!
 	@IBOutlet weak var button: UIButton!
+	@IBOutlet weak var cellTappedButton: UIButton!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var labelA: UILabel!
 	@IBOutlet weak var labelB: UILabel!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
+		cellTappedButton.setTitle("", for: .normal)
 		// Initialization code
 	}
 	
@@ -33,6 +35,7 @@ class GenericTCA: UITableViewCell {
 	}
 	@IBAction func cellTapped(_ sender: Any) {
 		delegate?.cellTappedLogic(objectID: objectID!)
+		print("**cellTapped \(delegate)")
 	}
 	@IBAction func buttonTapped(_ sender: Any) {
 		delegate?.buttonTappedLogic()

@@ -36,13 +36,13 @@ class EventDurationViewController: UIViewController {
 		selectGroupButton.menu = selectGroupMenu
 		selectGroupButton.showsMenuAsPrimaryAction = true
 		
-		fillWeek(parDate: selectedDate)
+		fillWeek(parDate: selectedDateCalendarViewController)
 		
 		//Change month string to match current viewed month
-		monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
+		monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDateCalendarViewController))
 		//If the month changes in the middle of the week, add the other month to the string also
-		if(monthString(date: firstDayOfWeek(date: selectedDate)) != monthString(date: lastDayOfWeek(date: selectedDate))) {
-			monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDate))
+		if(monthString(date: firstDayOfWeek(date: selectedDateCalendarViewController)) != monthString(date: lastDayOfWeek(date: selectedDateCalendarViewController))) {
+			monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDateCalendarViewController))
 		}
 	}
 	
@@ -86,26 +86,26 @@ extension EventDurationViewController : UIGestureRecognizerDelegate {
 		//If the index that is at the end of the array midIndexPath2 is [0, 2], then it will scroll to the right, otherwise it will scroll to the left.
 		if(midIndexPath == IndexPath.init(item: 2, section: 0)) {
 			//plus a week on selected date
-			selectedDate = plusWeek(date: selectedDate)
-			fillWeek(parDate: selectedDate)
+			selectedDateCalendarViewController = plusWeek(date: selectedDateCalendarViewController)
+			fillWeek(parDate: selectedDateCalendarViewController)
 			reloadData()
 			//Change month string to match current viewed month
-			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
+			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDateCalendarViewController))
 			//If the month changes in the middle of the week, add the other month to the string also
-			if(monthString(date: firstDayOfWeek(date: selectedDate)) != monthString(date: lastDayOfWeek(date: selectedDate))) {
-				monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDate))
+			if(monthString(date: firstDayOfWeek(date: selectedDateCalendarViewController)) != monthString(date: lastDayOfWeek(date: selectedDateCalendarViewController))) {
+				monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDateCalendarViewController))
 			}
 			scroll()
 		} else if (midIndexPath == IndexPath.init(item: 0, section: 0)) {
 			//minus a week on selected date
-			selectedDate = minusWeek(date: selectedDate)
-			fillWeek(parDate: selectedDate)
+			selectedDateCalendarViewController = minusNumWeek(date: selectedDateCalendarViewController, num: -1)
+			fillWeek(parDate: selectedDateCalendarViewController)
 			reloadData()
 			//Change month string to match current viewed month
-			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDate))
+			monthLabel.text = monthString(date: firstDayOfWeek(date: selectedDateCalendarViewController))
 			//If the month changes in the middle of the week, add the other month to the string also
-			if(monthString(date: firstDayOfWeek(date: selectedDate)) != monthString(date: lastDayOfWeek(date: selectedDate))) {
-				monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDate))
+			if(monthString(date: firstDayOfWeek(date: selectedDateCalendarViewController)) != monthString(date: lastDayOfWeek(date: selectedDateCalendarViewController))) {
+				monthLabel.text = monthLabel.text! + " - " +  monthString(date: lastDayOfWeek(date: selectedDateCalendarViewController))
 			}
 			scroll()
 		}
