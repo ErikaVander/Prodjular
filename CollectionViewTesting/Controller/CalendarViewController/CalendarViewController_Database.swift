@@ -34,7 +34,10 @@ extension CalendarViewController {
 					let scheduleRage = dict["scheduleRange"] as? Int ?? 1
 					let scheduleRangeStartDate = dict["scheduleRangeStartDate"] as? String ?? ""
 					let description = dict["description"] as? String
-					let location = dict["location"] as? String ?? ""
+					let address = dict["address"] as? String ?? ""
+					let city = dict["city"] as? String ?? ""
+					let state = dict["state"] as? String ?? ""
+					let zip = dict["zip"] as? Int ?? 00000
 					let eventMembers = dict["members"] as? [String:Any] ?? [:]
 				
 					let dateFormatter = DateFormatter()
@@ -50,7 +53,7 @@ extension CalendarViewController {
 						}
 					}
 					
-					let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagColor: tagColor, type: type, scheduleRange: scheduleRage, scheduleRangeStartDate: dateFormatter.date(from: scheduleRangeStartDate), description: description, location: location, eventMembers: members)
+				let event = ProjdularEvent(id: id, nameOfEvent: nameOfEvent, startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), tagColor: tagColor, type: type, scheduleRange: scheduleRage, scheduleRangeStartDate: dateFormatter.date(from: scheduleRangeStartDate), description: description, address: address, city: city, state: state, zip: String(zip), eventMembers: members)
 					
 					tempEvents.append(event)
 				}

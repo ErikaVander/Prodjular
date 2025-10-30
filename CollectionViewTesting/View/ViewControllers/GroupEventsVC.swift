@@ -187,7 +187,19 @@ extension GroupEventsVC: GenericTableWithHeaderDelegate, GenericTCADelegate, Gen
 	}
 	
 	func plusButtonTappedLogic() {
-		print("**Hello 2")
+		let vc = NewEventVC(nibName: "NewEventVC", bundle: nil)
+		
+		vc.modalPresentationStyle = .fullScreen
+		
+		vc.groupID = groupID ?? ""
+		
+		groupEventService.shared.stopObserving()
+		groupPendingEventService.shared.stopObserving()
+		
+		self.present(vc, animated: true, completion: nil)
+		
+		print("**plus button tapped logic")
+		
 	}
 	
 	func searchButtonTappedLogic() {

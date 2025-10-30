@@ -16,7 +16,7 @@ var friendReqReceived = [Friend]()
 var friendReqSent = [Friend]()
 
 ///The definition of a Friend.
-struct Friend : Equatable {
+struct Friend : Equatable, Hashable {
 	let id: String
 	var userName: String
 	let email: String
@@ -28,6 +28,7 @@ struct Friend : Equatable {
 
 protocol friendServiceDelegate {
 	func logicForDeletingFriendTableViewCell(_ databaseManager: friendService, indexPath: IndexPath)
+	func friendWasFetched()
 }
 
 final class friendService {
@@ -35,6 +36,7 @@ final class friendService {
 	var delegate: friendServiceDelegate?
 	
 	private let database = Database.database().reference()
+	private var observers: [DatabaseHandle] = []
 	
 	///Writes a new Friend into the firebase database.
 	func newFriend(with friend: Friend, location: String) {
@@ -236,43 +238,135 @@ final class friendService {
 		}
 	}
 	
-	func fetchFriendsData(completionSuccess: @escaping (String) -> Void) {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
+	func startObservingFriends(for userID: String) {
+		stopObserving()
+		let userEventsRef = database.child("users").child(Auth.auth().currentUser!.uid)
 		
-		friendRef.observeSingleEvent(of: .value, with: { [weak self] snapshot in
-			//			var tempFriendList = [Friend]()
-			//			var tempFriendReqSent = [Friend]()
-			//			var tempFriendReqReceived = [Friend]()
-			
-			var tempFriendList = [Friend]()
-			var tempFriendReqReceived = [Friend]()
-			var tempFriendReqSent = [Friend]()
-			
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let id = childSnapshot.key as? String,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let userName = dict["userName"] as? String,
-				   let email = dict["email"] as? String,
-				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String,
-				   let profilePhotoURL = dict["profilePhotoURL"] as? String
-				{
-				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: profilePhotoURL)
-				print("--friend got from database: ", status)
-				if(status == "accepted") {
-					print("--here")
-					tempFriendList.append(friend)
-				} else if(status == "sent") {
-					tempFriendReqSent.append(friend)
-				} else if(status == "received") {
-					tempFriendReqReceived.append(friend)
-				}
-				}
-			}
-			friendList = tempFriendList
-			friendReqReceived = tempFriendReqReceived
-			friendReqSent = tempFriendReqSent
-		})
+		let addedObserver = userEventsRef.child("friends").observe(.childAdded) {[weak self] snapshot in
+			self?.handleChildAddedFriend(snapshot)
+		}
+		observers.append(addedObserver)
+		
+		//		let changedObserver = userEventsRef.child("friends").observe(.childChanged) {[weak self] snapshot in
+		//			self?.handleChildChangedFriend(snapshot)
+		//		}
+		//		observers.append(changedObserver)
+		//		
+		//		let removedObserver = userEventsRef.child("friends").observe(.childRemoved) {[weak self] snapshot in
+		//			self?.handleChildRemovedFriend(snapshot)
+		//		}
+		//		observers.append(removedObserver)
+	}
+	
+	private func handleChildAddedFriend(_ snapshot: DataSnapshot) {
+		guard let friend = parseFriend(from: snapshot) else { return }
+		
+		if(friend.status == "accepted") {
+			print("--here \(friend)")
+			friendList.append(friend)
+		} else if(friend.status == "sent") {
+			friendReqSent.append(friend)
+		} else if(friend.status == "received") {
+			friendReqReceived.append(friend)
+		}
+		
+		print("**Inside handle: \(friendList)")
+		
+		DispatchQueue.main.async {
+			self.delegate?.friendWasFetched()
+		}
+	}
+	
+	//	private func handleChildRemovedUserEvents(_ snapshot: DataSnapshot) {
+	//		guard let friendID = snapshot.key as String?,
+	//			  let existingIndex = friendList.firstIndex(where: {$0.id == friendID}) else {
+	//			return
+	//		}
+	//		
+	//		friendList.remove(at: existingIndex)
+	//		
+	//		DispatchQueue.main.async {
+	//			self.delegate?.(at: existingIndex)
+	//		}
+	//		
+	//		stopObserving()
+	//	}
+	
+	private func parseFriend(from snapshot: DataSnapshot?) -> Friend? {
+		guard let snapshot = snapshot,
+			  let id = snapshot.key as? String,
+			  let data = snapshot.value as? [String: Any] else {
+			return nil
+		}
+		
+		let userName = data["userName"] as? String ?? ""
+		let email = data["email"] as? String ?? ""
+		let tagName = data["tagName"] as? String ?? ""
+		let status = data["status"] as? String ?? ""
+		let profilePhotoURL = data["profilePhotoURL"] as? String ?? ""
+		
+		// For this example, we'll use placeholder data
+		// In reality, you'd fetch user profile data here
+		return Friend(
+			id: id,
+			userName: userName,
+			email: email,
+			tagName: tagName,
+			status: status,
+			profilePhotoURL: profilePhotoURL// Fetch from users node
+		)
+	}
+	
+	//	func fetchFriendsData(completionSuccess: @escaping (String) -> Void) {
+	//		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
+	//		
+	//		friendRef.observeSingleEvent(of: .value, with: { [weak self] snapshot in
+	//			//			var tempFriendList = [Friend]()
+	//			//			var tempFriendReqSent = [Friend]()
+	//			//			var tempFriendReqReceived = [Friend]()
+	//			
+	//			var tempFriendList = [Friend]()
+	//			var tempFriendReqReceived = [Friend]()
+	//			var tempFriendReqSent = [Friend]()
+	//			
+	//			for child in snapshot.children {
+	//				if let childSnapshot = child as? DataSnapshot,
+	//				   let id = childSnapshot.key as? String,
+	//				   let dict = childSnapshot.value as? [String: Any],
+	//				   let userName = dict["userName"] as? String,
+	//				   let email = dict["email"] as? String,
+	//				   let tagName = dict["tagName"] as? String,
+	//				   let status = dict["status"] as? String,
+	//				   let profilePhotoURL = dict["profilePhotoURL"] as? String
+	//				{
+	//				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: profilePhotoURL)
+	//				print("--friend got from database: ", status)
+	//				if(status == "accepted") {
+	//					print("--here \(friend)")
+	//					tempFriendList.append(friend)
+	//				} else if(status == "sent") {
+	//					tempFriendReqSent.append(friend)
+	//				} else if(status == "received") {
+	//					tempFriendReqReceived.append(friend)
+	//				}
+	//				}
+	//			}
+	//			friendList = tempFriendList
+	//			friendReqReceived = tempFriendReqReceived
+	//			friendReqSent = tempFriendReqSent
+	//			DispatchQueue.main.async {
+	//				self?.delegate?.friendWasFetched()
+	//			}
+	//		})
+	//	}
+	
+	func stopObserving() {
+		observers.forEach { handle in
+			database.removeObserver(withHandle: handle)
+		}
+		observers.removeAll()
+		friendList.removeAll()
+		friendReqReceived.removeAll()
+		friendReqSent.removeAll()
 	}
 }

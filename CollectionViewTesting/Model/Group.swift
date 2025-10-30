@@ -22,6 +22,17 @@ struct ProjdularGroup {
 	var description: String?
 }
 
+///The definition of a databaseGroup
+struct ProjdularGroupDB {
+	var id: String
+	var adminName: String
+	var adminID: String
+	var nameOfGroup: String
+	var members: [String:[String:String]]
+	var pendingMembers: [String:[String:String]]
+	var description: String
+}
+
 struct GroupMember {
 	var id: String
 	var isAdmin: Bool
@@ -33,10 +44,15 @@ protocol groupServiceDelegate: AnyObject {
 	func didReceiveError(_ error: Error)
 }
 
+protocol groupServiceWriteDelegate: AnyObject {
+	func groupWasWritten(_success: Bool)
+}
+
 final class groupService {
 	static let shared = groupService()
 	
 	var delegate: groupServiceDelegate?
+	var writeDelegate: groupServiceWriteDelegate?
 	
 	private let database = Database.database().reference()
 	private var observers: [DatabaseHandle] = []
@@ -119,7 +135,7 @@ final class groupService {
 	}
 	
 	///Writes the new group or updates group into the firebase database.
-	public func groupUpdateAndWrite(with group: ProjdularGroup, isWriteNotUpdate: Bool) {
+	public func groupUpdateAndWrite(with group: ProjdularGroupDB, isWriteNotUpdate: Bool) {
 		var key: String
 		if(isWriteNotUpdate == true) {
 			//create a key in .child("groups") to ensure the key is not a duplicate key. This line of code does not determine where the updates occur.
@@ -131,9 +147,9 @@ final class groupService {
 		}
 		//create a group object that will be written to the database
 		let group = ["name": group.nameOfGroup,
-					 "numOfMembers": group.numOfMembers,
-					 "members": group.members,
-					 "events": group.events,
+					 "admin": ["name":group.adminName, "userID": group.adminID],
+					 "members": [group.adminID: ["name":group.adminName]],
+					 "pendingMembers": group.pendingMembers,
 					 "description": group.description] as [String:Any]
 		
 		//create a list of paths to update
@@ -143,8 +159,14 @@ final class groupService {
 		database.updateChildValues(childUpdates) { error, database in
 			if let error = error {
 				print("\n\n**Data could not be saved: \(error).\n\n")
+				DispatchQueue.main.async {
+					self.writeDelegate?.groupWasWritten(_success: false)
+				}
 			} else {
 				print("\n\n**Data saved successfully at \(database.url).\n\n")
+				DispatchQueue.main.async {
+					self.writeDelegate?.groupWasWritten(_success: true)
+				}
 			}
 		}
 	}

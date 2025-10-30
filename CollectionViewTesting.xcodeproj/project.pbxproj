@@ -30,6 +30,7 @@
 		D612CC4C2CD05D71009B40C8 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D612CC4B2CD05D71009B40C8 /* Friend.swift */; };
 		D615A04E2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */; };
 		D615A04F2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */; };
+		D619BC4E2EA6E3340067CDDA /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D619BC4D2EA6E3340067CDDA /* PaddedTextField.swift */; };
 		D61C37322B2BC10D00AB705A /* weekNumberForEventDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C37302B2BC10D00AB705A /* weekNumberForEventDuration.swift */; };
 		D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = D61C37312B2BC10D00AB705A /* weekNumberForEventDuration.xib */; };
 		D61F04BE25D3891D00A2BC05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61F04BD25D3891D00A2BC05 /* AppDelegate.swift */; };
@@ -59,6 +60,8 @@
 		D673DA0525D486AA009C56EF /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673DA0425D486AA009C56EF /* CalendarHelper.swift */; };
 		D67ADB952E95A068000E4F58 /* MonthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67ADB932E95A068000E4F58 /* MonthVC.swift */; };
 		D67ADB962E95A068000E4F58 /* MonthVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D67ADB942E95A068000E4F58 /* MonthVC.xib */; };
+		D68F2C242EAFEC2A0077B806 /* NewEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68F2C222EAFEC2A0077B806 /* NewEventVC.swift */; };
+		D68F2C252EAFEC2A0077B806 /* NewEventVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D68F2C232EAFEC2A0077B806 /* NewEventVC.xib */; };
 		D6981F2C2B2A55EF00FB823F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */; };
 		D6A12A432CB866FF00BF2E88 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */; };
 		D6B46CC92C70186E0050EDFB /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */; };
@@ -124,6 +127,7 @@
 		D612CC4B2CD05D71009B40C8 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		D615A04C2B6C43F5006C0822 /* CollectionViewCellForEventDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellForEventDuration.swift; sourceTree = "<group>"; };
 		D615A04D2B6C43F5006C0822 /* CollectionViewCellForEventDuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCellForEventDuration.xib; sourceTree = "<group>"; };
+		D619BC4D2EA6E3340067CDDA /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		D61C37302B2BC10D00AB705A /* weekNumberForEventDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weekNumberForEventDuration.swift; sourceTree = "<group>"; };
 		D61C37312B2BC10D00AB705A /* weekNumberForEventDuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = weekNumberForEventDuration.xib; sourceTree = "<group>"; };
 		D61F04BA25D3891D00A2BC05 /* CollectionViewTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollectionViewTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +160,8 @@
 		D673DA0425D486AA009C56EF /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		D67ADB932E95A068000E4F58 /* MonthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthVC.swift; sourceTree = "<group>"; };
 		D67ADB942E95A068000E4F58 /* MonthVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonthVC.xib; sourceTree = "<group>"; };
+		D68F2C222EAFEC2A0077B806 /* NewEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEventVC.swift; sourceTree = "<group>"; };
+		D68F2C232EAFEC2A0077B806 /* NewEventVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEventVC.xib; sourceTree = "<group>"; };
 		D6981F2B2B2A55EF00FB823F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D6A12A422CB866FF00BF2E88 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		D6B46CC82C70186E0050EDFB /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +231,7 @@
 		D6105E8B2E693CD0009145AD /* ReusableView */ = {
 			isa = PBXGroup;
 			children = (
+				D619BC4D2EA6E3340067CDDA /* PaddedTextField.swift */,
 				D6105E8C2E693D0B009145AD /* GenericTable.swift */,
 				D6105E8D2E693D0B009145AD /* GenericTable.xib */,
 				D6105E8E2E693D0B009145AD /* GenericTableWithHeader.swift */,
@@ -273,6 +280,8 @@
 		D62741702E7870680057865F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D68F2C222EAFEC2A0077B806 /* NewEventVC.swift */,
+				D68F2C232EAFEC2A0077B806 /* NewEventVC.xib */,
 				D61F04C325D3891D00A2BC05 /* Main.storyboard */,
 				D61F04C825D3891D00A2BC05 /* LaunchScreen.storyboard */,
 				D6105E902E693D0B009145AD /* GroupViewController.swift */,
@@ -511,6 +520,7 @@
 				D6105E972E693D0B009145AD /* GenericTable.xib in Resources */,
 				D61C37332B2BC10D00AB705A /* weekNumberForEventDuration.xib in Resources */,
 				D61F04C525D3891D00A2BC05 /* Main.storyboard in Resources */,
+				D68F2C252EAFEC2A0077B806 /* NewEventVC.xib in Resources */,
 				D601AF482E7CB63500DC774A /* EventVC.xib in Resources */,
 				D6D928272E68192B0072390C /* NotificationTableCell.xib in Resources */,
 				D623355A2CBDE42500FEC65A /* FriendReqTableViewCell.xib in Resources */,
@@ -532,9 +542,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -549,9 +563,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CollectionViewTesting/Pods-CollectionViewTesting-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -612,6 +630,7 @@
 				D601AF412E7B540400DC774A /* GenericTCB.swift in Sources */,
 				D6F9C6A2273DFD4B003298E1 /* ColorPickerCell.swift in Sources */,
 				D6BE7AB726C6D95200498ECB /* alertUser.swift in Sources */,
+				D619BC4E2EA6E3340067CDDA /* PaddedTextField.swift in Sources */,
 				D6F9C69A273DB6D3003298E1 /* CollectionViewCell.swift in Sources */,
 				D6DAA77726951D55005B7D6B /* SignUpViewController.swift in Sources */,
 				D601AF472E7CB63500DC774A /* EventVC.swift in Sources */,
@@ -629,6 +648,7 @@
 				D6105E922E693D0B009145AD /* GenericTable.swift in Sources */,
 				D6105E932E693D0B009145AD /* GenericTableWithHeader.swift in Sources */,
 				D6105E942E693D0B009145AD /* GroupViewController.swift in Sources */,
+				D68F2C242EAFEC2A0077B806 /* NewEventVC.swift in Sources */,
 				D6DB6645278F96D40087550C /* CalendarViewController_Database.swift in Sources */,
 				D645666C2C6FCBFF00A8AF7B /* User.swift in Sources */,
 				D6E35C0B285242A000D8B327 /* customGesture.swift in Sources */,

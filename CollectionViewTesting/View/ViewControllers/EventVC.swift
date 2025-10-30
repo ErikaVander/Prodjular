@@ -126,7 +126,7 @@ extension EventVC: EventServiceDelegate {
 			labelAA.text = "Time"
 			labelAB.text = "\(dateFormatterOne.string(from: event.startDate)) \n\(dateFormatterTwo.string(from: event.startDate)) - \(dateFormatterTwo.string(from: event.endDate))"
 			labelBA.text = "Location"
-			labelBB.text = event.location
+			labelBB.text = "\(event.address)\n\(event.city) \(event.state) \(event.zip)"
 			labelCA.text = "Description"
 			labelCB.text = event.description!
 		} else if (dateFormatter.string(from: event.endDate) != "January 1, 2000 at 12:00:00 AM GMT" && event.eventMembers.first(where: {$0.userID == Auth.auth().currentUser?.uid})?.isAttending == false) {
@@ -145,7 +145,7 @@ extension EventVC: EventServiceDelegate {
 			labelAA.text = "Time"
 			labelAB.text = "\(dateFormatterOne.string(from: event.startDate)) \n\(dateFormatterTwo.string(from: event.startDate)) - \(dateFormatterTwo.string(from: event.endDate))"
 			labelBA.text = "Location"
-			labelBB.text = event.location
+			labelBB.text = "\(event.address)\n\(event.city) \(event.state) \(event.zip)"
 			labelCA.text = "Description"
 			labelCB.text = event.description!
 		} else if (event.eventMembers.first(where: {$0.userID == Auth.auth().currentUser?.uid})?.didSubmitTimes != false) {
@@ -160,7 +160,7 @@ extension EventVC: EventServiceDelegate {
 			labelAA.text = "Scheduling Within Range"
 			labelAB.text = "\(dateFormatterOne.string(from: event.startDate)) - \(dateFormatterTwo.string(from: minusNumWeek(date: event.startDate, num: 2)))"
 			labelBA.text = "Location"
-			labelBB.text = event.location
+			labelBB.text = "\(event.address)\n\(event.city) \(event.state) \(event.zip)"
 			labelCA.text = "Description"
 			labelCB.text = event.description!
 		} else {
@@ -175,7 +175,7 @@ extension EventVC: EventServiceDelegate {
 			labelAA.text = "Scheduling Within Range"
 			labelAB.text = "\(dateFormatterOne.string(from: event.startDate)) - \(dateFormatterTwo.string(from: minusNumWeek(date: event.startDate, num: 2)))"
 			labelBA.text = "Location"
-			labelBB.text = event.location
+			labelBB.text = "\(event.address)\n\(event.city) \(event.state) \(event.zip)"
 			labelCA.text = "Description"
 			labelCB.text = event.description!
 		}

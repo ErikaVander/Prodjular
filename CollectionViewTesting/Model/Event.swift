@@ -25,8 +25,13 @@ struct ProjdularEvent : Equatable {
 	var scheduleRange: Int?
 	var scheduleRangeStartDate: Date!
 	var description: String?
-	var location: String
+//	var location: String
+	var address: String
+	var city: String
+	var state: String
+	var zip: String
 	var eventMembers: [EventMember]
+	var groupID: String?
 }
 
 struct EventMember : Equatable {
@@ -44,10 +49,15 @@ protocol EventServiceDelegate {
 	func didReceiveError(error: Error)
 }
 
+protocol eventServiceWriteDelegate: AnyObject {
+	func eventWasWritten(_success: Bool)
+}
+
 final class EventService {
 	static let shared = EventService()
 	
 	var delegate: EventServiceDelegate?
+	var writeDelegate: eventServiceWriteDelegate?
 	
 	private let database = Database.database().reference()
 	private var observers: [DatabaseHandle] = []
@@ -129,7 +139,11 @@ final class EventService {
 			scheduleRange: scheduleRange,
 			scheduleRangeStartDate: dateFormatter.date(from: scheduleRangeStartDate),
 			description: description,
-			location: "\(address)\n\(city) \(state) \(zip)",
+			address: address,
+			city: city,
+			state: state,
+			zip: String(zip),
+//			location: "\(address)\n\(city) \(state) \(zip)",
 			eventMembers: members
 		)
 	}
@@ -174,12 +188,16 @@ final class EventService {
 		//create a group object that will be written to the database
 		let event = ["name": event.nameOfEvent,
 					 "startDate": dateformat.string(from: event.startDate),
-					 "endDate": dateformat.string(from: event.endDate),
-					 "tagColor": event.tagColor,
+//					 "endDate": dateformat.string(from: event.endDate),
+//					 "tagColor": event.tagColor,
 //					 "type": event.type,
 //					 "scheduleRange": event.scheduleRange,
 //					 "schedulerangeStartDate": dateformat.string(from: event.scheduleRangeStartDate),
 					 "description": event.description,
+					 "address": event.address,
+					 "city": event.city,
+					 "state": event.state,
+					 "zip": event.zip
 //					 "location": event.location,
 //					 "members": event.eventMembers] as [String:Any]
 					 ]
@@ -191,8 +209,14 @@ final class EventService {
 		database.updateChildValues(childUpdates) { error, database in
 			if let error = error {
 				print("\n\n**Data could not be saved: \(error).\n\n")
+				DispatchQueue.main.async {
+					self.writeDelegate?.eventWasWritten(_success: false)
+				}
 			} else {
 				print("\n\n**Data saved successfully at \(database.url).\n\n")
+				DispatchQueue.main.async {
+					self.writeDelegate?.eventWasWritten(_success: true)
+				}
 			}
 		}
 	}

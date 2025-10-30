@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,9 +12,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewGroupViewController" customModule="CollectionViewTesting" customModuleProvider="target">
             <connections>
+                <outlet property="addFriendsTable" destination="LLr-hO-QQa" id="KY9-oa-8UQ"/>
                 <outlet property="backButton" destination="as4-RX-BEX" id="54H-yU-6Za"/>
-                <outlet property="doneButton" destination="WjT-Xm-Mgc" id="ZBQ-fJ-OSH"/>
+                <outlet property="descriptionTF" destination="oUX-xO-X7h" id="EEx-lg-2th"/>
+                <outlet property="doneB" destination="WjT-Xm-Mgc" id="E24-u4-lb6"/>
                 <outlet property="homeButton" destination="8vC-Yo-Qy4" id="D6R-kZ-Su2"/>
+                <outlet property="nameTF" destination="4Pk-bO-VNu" id="raF-Mg-beQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -59,10 +62,10 @@
                         <constraint firstAttribute="height" constant="40" id="8IR-Xe-kar"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" spellCheckingType="yes"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LLr-hO-QQa" customClass="GenericTableWithHeader" customModule="CollectionViewTesting" customModuleProvider="target">
-                    <rect key="frame" x="23" y="195" width="368" height="436"/>
+                    <rect key="frame" x="23" y="340" width="368" height="291"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjT-Xm-Mgc">
@@ -74,14 +77,27 @@
                     <color key="tintColor" systemColor="labelColor"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                    <connections>
+                        <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="SjH-VJ-CfK"/>
+                    </connections>
                 </button>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="leading" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Description:" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oUX-xO-X7h" customClass="PaddedTextField" customModule="CollectionViewTesting" customModuleProvider="target">
+                    <rect key="frame" x="23" y="195" width="368" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="JJm-Fx-a7r"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" spellCheckingType="yes"/>
+                </textField>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LLr-hO-QQa" secondAttribute="trailing" constant="23" id="0zd-M7-P1h"/>
+                <constraint firstItem="oUX-xO-X7h" firstAttribute="top" secondItem="4Pk-bO-VNu" secondAttribute="bottom" constant="25" id="2rO-Jx-JWp"/>
                 <constraint firstItem="4Pk-bO-VNu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="23" id="6YC-Hj-hVa"/>
                 <constraint firstItem="8vC-Yo-Qy4" firstAttribute="centerY" secondItem="as4-RX-BEX" secondAttribute="centerY" id="PDT-L3-aih"/>
+                <constraint firstItem="oUX-xO-X7h" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="23" id="PpV-3X-7uV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4Pk-bO-VNu" secondAttribute="trailing" constant="23" id="QZR-AV-ntf"/>
                 <constraint firstItem="LLr-hO-QQa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="23" id="RIV-fB-RHx"/>
                 <constraint firstItem="6mv-qt-vTn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="SJS-Ec-wFZ"/>
@@ -92,9 +108,10 @@
                 <constraint firstItem="as4-RX-BEX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="9" id="fv5-R7-PPp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="WjT-Xm-Mgc" secondAttribute="bottom" constant="35" id="gCd-SK-Vky"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WjT-Xm-Mgc" secondAttribute="trailing" constant="23" id="hXr-rs-Oav"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oUX-xO-X7h" secondAttribute="trailing" constant="23" id="kDl-Ve-Ygh"/>
                 <constraint firstItem="4Pk-bO-VNu" firstAttribute="top" secondItem="6mv-qt-vTn" secondAttribute="bottom" constant="8" symbolic="YES" id="mKw-pv-BI0"/>
                 <constraint firstItem="as4-RX-BEX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="15" id="oKO-XB-VRu"/>
-                <constraint firstItem="LLr-hO-QQa" firstAttribute="top" secondItem="4Pk-bO-VNu" secondAttribute="bottom" constant="25" id="zvr-Xm-gOz"/>
+                <constraint firstItem="LLr-hO-QQa" firstAttribute="top" secondItem="oUX-xO-X7h" secondAttribute="bottom" constant="25" id="zvr-Xm-gOz"/>
             </constraints>
             <point key="canvasLocation" x="28.985507246376812" y="-12.228260869565219"/>
         </view>

@@ -32,9 +32,6 @@ class YourFriendsViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.observeAddedFriends()
-		self.observeChangedFriends()
-		
 		setHeaderContainerViewLook()
 		setFooterContainerViewLook()
 		
@@ -50,7 +47,6 @@ class YourFriendsViewController: UIViewController {
 		friendService.shared.delegate = self
 		
 		friendsTableView.translatesAutoresizingMaskIntoConstraints = false
-		setupPullToRefresh()
 		
 	}
 	
@@ -61,19 +57,13 @@ class YourFriendsViewController: UIViewController {
 		friendsTableView.rowHeight = UITableView.automaticDimension
 		friendsTableView.reloadData()
 		
-		friendService.shared.fetchFriendsData { result in
-			print("--hello")
-		}
+		friendService.shared.startObservingFriends(for: Auth.auth().currentUser!.uid)
 	}
 	
 	///Goes back to the settings page
 	@IBAction func backToSettings(_ sender: Any) {
 		self.dismiss(animated: true, completion: nil)
 	}
-	
-//	func setupPullToRefresh() {
-//		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-//	}
 	
 	func setHeaderContainerViewLook() {
 		headerContainerView.layer.shadowOffset = .zero
@@ -139,6 +129,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		print("**friends: \(friendList)")
 		let cellOne = friendsTableView.dequeueReusableCell(withIdentifier: "friendsTableCell", for: indexPath) as! FriendsTableViewTableViewCell
 		let cellTwo = friendsTableView.dequeueReusableCell(withIdentifier: "emptyFriendsTableViewCell", for: indexPath) as! EmptyFriendsTableViewCell
 		if (tableView.numberOfRows(inSection: 0) == 0 && tableView.numberOfRows(inSection: 1) == 0 && tableView.numberOfRows(inSection: 2) == 0) {
@@ -197,9 +188,7 @@ extension YourFriendsViewController: UITableViewDataSource {
 								}
 							})
 						}
-//						friendProfilePhotos[friendReqSent[indexPath.item].id]
 						cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendsTableView.frame.width/5.5)/2
-//						cellOne.friendProfilePhoto.image = friendReqSent[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 						cellOne.setFriend(friend: friendReqSent[indexPath.item])
 					}
 				}
@@ -257,7 +246,6 @@ extension YourFriendsViewController: UITableViewDataSource {
 							print("--initialLoadingOfDataForFriendTableView == false")
 						}
 						cellOne.friendProfilePhoto.layer.cornerRadius = (self.friendsTableView.frame.width/5.5)/2
-//						cellOne.friendProfilePhoto.image = friendList[indexPath.item].profilePhoto ?? UIImage(systemName: "person.circle.fill")
 						cellOne.setFriend(friend: friendList[indexPath.item])
 					}
 				}
@@ -281,32 +269,9 @@ extension YourFriendsViewController: UITableViewDataSource {
 
 //MARK: TableViewDelegate
 extension YourFriendsViewController: UITableViewDelegate, friendServiceDelegate {
-	
-	private func setupPullToRefresh() {
-		// Configure refresh control
-		let attributes: [NSAttributedString.Key: Any] = [
-			.foregroundColor: UIColor.placeholderText,
-			.font: UIFont.systemFont(ofSize: 12)
-		]
-		
-		refreshControl.attributedTitle = NSAttributedString(string: "")
-		let attributedText = NSAttributedString(
-			string: "refreshing",
-			attributes: attributes
-		)
-		
-		refreshControl.attributedTitle = attributedText
-		refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-		
-		// Add refresh control to table view
-		friendsTableView.refreshControl = refreshControl
-	}
-	
-	@objc private func refreshData() {
-		refreshControl.beginRefreshing()
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-			self?.fetchData()
-		}
+	func friendWasFetched() {
+		friendsTableView.reloadData()
+		print("**friendWasFetched: \(friendList)")
 	}
 	
 	func logicForDeletingFriendTableViewCell(_ databaseManager: friendService, indexPath: IndexPath) {
@@ -347,148 +312,5 @@ extension YourFriendsViewController: UITableViewDelegate, friendServiceDelegate 
 				
 			}
 		}
-	}
-}
-
-//MARK: FirebaseRealtimeDatabase
-extension YourFriendsViewController {
-	///Getting all the events created by the user and storing them in eventList so that the table view can display them.
-	func observeAddedFriends() {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
-		
-		friendRef.observe(.childAdded, with: { [weak self] snapshot in
-			guard let self = self else {return}
-			
-			var tempFriendList = [Friend]()
-			var tempFriendReqSent = [Friend]()
-			var tempFriendReqReceived = [Friend]()
-			
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let id = childSnapshot.key as? String,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let userName = dict["userName"] as? String,
-				   let email = dict["email"] as? String,
-				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String,
-				   let photoURL = dict["profilePhotoURL"] as? String
-				{
-					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
-					if(status == "accepted") {
-						tempFriendList.append(friend)
-					} else if(status == "sent") {
-						tempFriendReqSent.append(friend)
-					} else if(status == "received") {
-						tempFriendReqReceived.append(friend)
-					}
-				}
-			}
-			
-			friendList = tempFriendList
-			friendReqReceived = tempFriendReqReceived
-			friendReqSent = tempFriendReqSent
-			
-//			print("--friendList: ", friendList)
-//			print("--friendReqReceived: ", friendReqReceived)
-//			print("--friendReqSent: ", friendReqSent)
-			
-			if (friendReqReceived.count != 0) {
-				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
-			} else {
-				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
-			}
-		})
-	}
-	func observeChangedFriends() {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid)
-		//The .childChanged makes it so you don't have to add .child("friends") to the end of friendRef I think.
-		friendRef.observe(.childChanged, with: { [weak self] snapshot in
-			guard let self = self else {return}
-			
-			var tempFriendList = [Friend]()
-			var tempFriendReqSent = [Friend]()
-			var tempFriendReqReceived = [Friend]()
-			
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let id = childSnapshot.key as? String,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let userName = dict["userName"] as? String,
-				   let email = dict["email"] as? String,
-				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String,
-				   let photoURL = dict["profilePhotoURL"] as? String
-				{
-					let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
-					if(status == "accepted") {
-						tempFriendList.append(friend)
-					} else if(status == "sent") {
-						tempFriendReqSent.append(friend)
-					} else if(status == "received") {
-						tempFriendReqReceived.append(friend)
-					}
-				}
-			}
-			
-			friendList = tempFriendList
-			friendReqReceived = tempFriendReqReceived
-			friendReqSent = tempFriendReqSent
-			
-//			print("--friendList: ", friendList)
-//			print("--friendReqReceived: ", friendReqReceived)
-//			print("--friendReqSent: ", friendReqSent)
-			
-			if (friendReqReceived.count != 0) {
-				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
-			} else {
-				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
-			}
-		})
-	}
-	func fetchData() {
-		let friendRef = Database.database().reference().child("users").child(Auth.auth().currentUser!.uid).child("friends")
-		
-		friendRef.observeSingleEvent(of: .value, with: { [weak self] snapshot in
-			guard let self = self else {return}
-			
-			var tempFriendList = [Friend]()
-			var tempFriendReqSent = [Friend]()
-			var tempFriendReqReceived = [Friend]()
-			
-			print("snapshot: ", snapshot)
-			
-			for child in snapshot.children {
-				if let childSnapshot = child as? DataSnapshot,
-				   let id = childSnapshot.key as? String,
-				   let dict = childSnapshot.value as? [String: Any],
-				   let userName = dict["userName"] as? String,
-				   let email = dict["email"] as? String,
-				   let tagName = dict["tagName"] as? String,
-				   let status = dict["status"] as? String,
-				   let photoURL = dict["profilePhotoURL"] as? String
-				{
-				let friend = Friend(id: id, userName: userName, email: email, tagName: tagName, status: status, profilePhotoURL: photoURL)
-				print("--friend got from database: ", status)
-				if(status == "accepted") {
-					tempFriendList.append(friend)
-				} else if(status == "sent") {
-					tempFriendReqSent.append(friend)
-				} else if(status == "received") {
-					tempFriendReqReceived.append(friend)
-				}
-				}
-			}
-			
-			friendList = tempFriendList
-			friendReqReceived = tempFriendReqReceived
-			friendReqSent = tempFriendReqSent
-			
-			if (friendReqReceived.count != 0) {
-				self.friendReqButton.setImage(UIImage(systemName: "envelope.badge"), for: .normal)
-			} else {
-				self.friendReqButton.setImage(UIImage(systemName: "envelope"), for: .normal)
-			}
-			refreshControl.endRefreshing()
-		})
 	}
 }

@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
 		tableViewContainer.tableView.register(UINib(nibName: "FriendsTableViewTableViewCell", bundle: nil), forCellReuseIdentifier: "friendsTableCell")
 		notificationService.shared.delegate = self
 		
+		
 //		groupService.shared.delegate = self
 //		userGroupService.shared.delegate = self
 		notificationService.shared.startObservingUserNotifications(for: Auth.auth().currentUser!.uid)
@@ -33,6 +34,10 @@ class HomeViewController: UIViewController {
 		containerView.addSearchButton()
 		
 		setButtonView()
+		
+		userService.shared.findUser(emailToFind: Auth.auth().currentUser!.email!) { user in
+			currentUser = user
+		}
 		
 		print("hello\n\n")
 	}
@@ -53,7 +58,7 @@ class HomeViewController: UIViewController {
 	}
 	
 	@IBAction func freindButtonTapped(_ sender: Any) {
-		let vc = storyboard?.instantiateViewController(identifier: "CalendarViewController")
+		let vc = storyboard?.instantiateViewController(identifier: "YourFriendsViewController")
 		
 		vc!.modalPresentationStyle = .fullScreen
 		
@@ -164,6 +169,7 @@ extension HomeViewController: UITableViewDataSource {
 //			cellOne.nameLabel.text = Auth.auth().currentUser?.displayName
 			cellOne.nameLabel.text = "Erika Vanderhoff"
 			cellOne.emailLabel.text = Auth.auth().currentUser?.email
+			
 			if initialLoadingOfDataForAccountInfo == true {
 				userService.shared.loadProfilePhoto(for: Auth.auth().currentUser!.uid) { [weak self] result in
 					switch result {
